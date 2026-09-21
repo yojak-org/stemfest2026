@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7A1C24">
+<title>STEM FEST by YOJAK</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A1C24'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<style>
+:root{
+  --maroon:#7A1C24; --maroon-dk:#5A1219; --maroon-tint:#F8EDEE; --rose:#E9B9BE;
+  --ink:#2B1517; --muted:#6F5A5C; --line:#ECDFE0; --bg:#FFFFFF; --soft:#FBF7F7;
+  --sci:#2E7D4F; --sci-t:#E7F3EB; --math:#A85F14; --math-t:#FBF0E2; --tech:#56479A; --tech-t:#EEEBF8;
+  --ok:#2E7D4F; --err:#B42318;
+  --nav-h:66px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:'Hind',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:17px;line-height:1.55;color:var(--ink);background:var(--bg);
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 20px)}
+h1,h2,h3{font-family:'Baloo 2','Hind',system-ui,sans-serif;line-height:1.12;margin:0;color:var(--ink);font-weight:700}
+p{margin:0}
+a{color:var(--maroon)}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px;border-radius:6px}
+.wrap{max-width:680px;margin:0 auto;padding:0 18px}
+.page{padding-top:22px;padding-bottom:12px}
+.muted{color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--maroon);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:54px}
+.brand{color:#fff;text-decoration:none;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;letter-spacing:.01em}
+.by{font-size:14px;opacity:.85}
+#notice:empty{display:none}
+.announce{background:#FFF4D6;color:#5A3B00;border-bottom:1px solid #F1DFA6}
+.announce .wrap{padding-top:10px;padding-bottom:10px;display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:16px}
+.demo{background:var(--maroon-tint);color:var(--maroon-dk);font-size:14px}
+.demo .wrap{padding-top:7px;padding-bottom:7px}
+
+/* Bottom tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs .wrap{display:grid;grid-template-columns:repeat(5,1fr);height:var(--nav-h);padding:0 6px}
+.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:500}
+.tabs a svg{width:24px;height:24px}
+.tabs a.on{color:var(--maroon);font-weight:600}
+.tabs a.on svg{stroke-width:2.3}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;border:0;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;line-height:1.1;text-align:center}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-primary{background:var(--maroon);color:#fff}
+.btn-primary:hover{background:var(--maroon-dk)}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-light{background:#fff;color:var(--maroon)}
+.btn-outline-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+.btn-block{width:100%}
+.btn-big{min-height:58px;font-size:18px}
+.btn[disabled]{opacity:.7;cursor:progress}
+.btn-sm{min-height:40px;padding:0 14px;font-size:15px;white-space:nowrap}
+
+/* Hero */
+.hero{background:var(--maroon);color:#fff;padding:26px 0 70px}
+.presents{font-size:16px;opacity:.85}
+.title{color:#fff;font-weight:800;font-size:clamp(52px,17vw,96px);line-height:.92;letter-spacing:-.01em;margin:6px 0 10px}
+.tagline{font-size:18px;max-width:30ch;opacity:.95}
+.facts{margin:22px 0 0;display:grid;gap:12px}
+.facts div{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:baseline}
+.facts dt{font-size:14px;opacity:.75}
+.facts dd{margin:0;font-weight:600;font-size:17px}
+.facts .addr{display:block;font-weight:400;opacity:.85;font-size:15px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* Category tiles: the signature */
+.corners-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:-46px;position:relative}
+.ctile{border-radius:18px;padding:14px 12px 12px;min-height:118px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:#fff;background:var(--c);box-shadow:0 8px 20px -12px rgba(60,10,15,.55)}
+.ctile-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(22px,6.4vw,30px);line-height:1}
+.ctile-count{font-size:14px;opacity:.92}
+.c-sci{--c:var(--sci);--t:var(--sci-t)}
+.c-math{--c:var(--math);--t:var(--math-t)}
+.c-tech{--c:var(--tech);--t:var(--tech-t)}
+
+.block{margin-top:30px}
+.block h2{font-size:24px;margin-bottom:8px}
+.card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
+.nownext{margin-top:22px;display:grid;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.nn-row{padding:14px 16px;display:grid;gap:2px}
+.nn-row + .nn-row{border-top:1px solid var(--line)}
+.nn-label{font-size:14px;color:var(--muted);font-weight:600}
+.nn-row.now{background:var(--maroon-tint)}
+.nn-row.now .nn-label{color:var(--maroon)}
+.nn-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:20px;line-height:1.2}
+.nn-meta{font-size:15px;color:var(--muted)}
+.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--maroon-tint);color:var(--maroon);display:grid;place-items:center;font-family:'Baloo 2',sans-serif;font-weight:800}
+.results-teaser{margin-top:22px;display:flex;gap:14px;align-items:center;background:var(--maroon-tint);border-radius:16px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.results-teaser svg{width:34px;height:34px;color:var(--maroon);flex:none}
+
+/* Page heads */
+.phead h1{font-size:32px}
+.phead p{margin-top:4px;color:var(--muted)}
+.back{display:inline-flex;align-items:center;gap:4px;text-decoration:none;font-weight:600;margin-bottom:14px}
+.back svg{width:18px;height:18px}
+
+/* Schedule */
+.tl{list-style:none;margin:20px 0 0;padding:0;position:relative}
+.tl li{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tl .t{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;line-height:1.25;color:var(--maroon)}
+.tl .t small{display:block;font-family:'Hind',sans-serif;font-weight:400;font-size:14px;color:var(--muted)}
+.tl h3{font-size:19px}
+.tl .loc{font-size:15px;color:var(--muted)}
+.tl .desc{font-size:15px;margin-top:2px}
+.tl li.done{opacity:.55}
+.tl li.now{background:var(--maroon-tint);margin:0 -12px;padding:14px 12px;border-radius:12px;border-bottom-color:transparent}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:1px 10px;border-radius:999px;background:var(--maroon);color:#fff;margin-left:6px;vertical-align:2px}
+
+/* Filters */
+.search{position:relative;margin-top:18px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.search input{width:100%;height:50px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px 0 44px;font-size:17px;background:#fff}
+.chips{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:2px}
+.chip{flex:none;min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:15px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.c-sci[aria-pressed="true"],.chip.c-math[aria-pressed="true"],.chip.c-tech[aria-pressed="true"]{background:var(--c);border-color:var(--c)}
+.select{margin-top:10px;width:100%;height:46px;border:1.5px solid var(--line);border-radius:12px;padding:0 12px;background:#fff;font-size:16px}
+.count{margin:14px 0 8px;font-size:15px;color:var(--muted)}
+
+/* Project cards */
+.plist{display:grid;gap:10px}
+.pcard{display:flex;gap:14px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;text-decoration:none;color:var(--ink);background:#fff;position:relative}
+.stall{flex:none;width:60px;height:60px;border-radius:14px;background:var(--c);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:24px;line-height:1}
+.stall small{font-family:'Hind',sans-serif;font-weight:500;font-size:11px;opacity:.9;margin-bottom:2px}
+.stall.big{width:76px;height:76px;font-size:32px}
+.pbody{min-width:0;display:grid;gap:1px}
+.ptitle{font-weight:600;font-size:17px;line-height:1.3}
+.pmeta{font-size:15px;color:var(--muted)}
+.ptag{font-size:13px;font-weight:600;color:var(--c)}
+.voted-mark{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--ok);background:var(--sci-t);padding:3px 9px;border-radius:999px}
+.voted-mark svg{width:15px;height:15px}
+
+/* Project detail */
+.pd-head{display:flex;gap:16px;align-items:center}
+.pd-head h1{font-size:28px;margin-top:2px}
+.pphoto{margin-top:18px;border-radius:16px;width:100%;max-height:380px;object-fit:cover;background:var(--soft)}
+.pdesc{margin-top:16px;font-size:18px}
+.h-sm{font-size:18px;margin-top:18px}
+.votebox{margin-top:24px;border:2px solid var(--maroon);border-radius:20px;padding:18px;display:grid;gap:10px}
+.votebox h2{font-size:23px}
+.votebox.muted-box{border-color:var(--line);background:var(--soft)}
+.votebox.done{border-color:var(--ok);background:var(--sci-t);grid-template-columns:48px 1fr;align-items:center}
+.vb-icon{width:48px;height:48px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center}
+.vb-icon svg{width:28px;height:28px;stroke-width:3}
+.pop .vb-icon{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(.3)}100%{transform:scale(1)}}
+.err{color:var(--err);font-weight:500;font-size:15px}
+.field{display:grid;gap:6px}
+.field span{font-weight:600;font-size:15px}
+.field input,.field select,.field textarea{height:52px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:18px;background:#fff;width:100%}
+.field textarea{height:96px;padding:10px 14px;font-size:16px;resize:vertical}
+#codein{text-transform:uppercase;letter-spacing:.15em;font-weight:600}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Venue */
+.floor{margin-top:18px;border-radius:16px;border:1px solid var(--line)}
+.corner{display:grid;grid-template-columns:8px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.corner .bar{border-radius:4px;background:var(--c,var(--line))}
+.corner h3{font-size:20px}
+.corner .where{font-size:15px;color:var(--muted)}
+.corner a{font-weight:600;font-size:15px}
+
+/* Contacts */
+.contacts{display:grid;gap:12px;margin-top:18px}
+.contact h3{font-size:20px}
+.contact .role{font-weight:600;color:var(--maroon)}
+.contact .resp{font-size:15px;color:var(--muted);margin-top:2px}
+.contact .acts{display:flex;gap:8px;margin-top:12px}
+.contact .acts .btn{flex:1}
+
+/* Results */
+.res-cat{margin-top:26px;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
+.res-head{background:var(--c);color:#fff;padding:14px 18px}
+.res-head h2{color:#fff;font-size:26px}
+.res-body{padding:6px 18px 16px}
+.res-body h3{font-size:17px;color:var(--muted);margin:14px 0 6px;font-family:'Hind',sans-serif;font-weight:600}
+.podium{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.podium li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center}
+.medal{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:18px;background:var(--t);color:var(--c)}
+.podium li:first-child .medal{background:var(--c);color:#fff}
+.locked{text-align:center;padding:40px 10px}
+.locked svg{width:56px;height:56px;color:var(--maroon);margin:0 auto 12px}
+
+/* Judge */
+.jhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.jhead h1{font-size:26px}
+.progress{margin-top:16px}
+.bar-o{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar-o span{display:block;height:100%;background:var(--maroon);border-radius:999px}
+.progress p{font-size:15px;color:var(--muted);margin-top:6px}
+.banner{margin-top:14px;padding:12px 14px;border-radius:12px;background:#FFF4D6;color:#5A3B00;font-weight:500}
+.jstatus{margin-left:auto;flex:none;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.jstatus.ok{background:var(--sci-t);color:var(--ok)}
+.crit{padding:16px 0;border-bottom:1px solid var(--line)}
+.crit-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px}
+.crit-head span{font-weight:600}
+.crit-head strong{font-family:'Baloo 2',sans-serif;font-size:20px;color:var(--maroon);white-space:nowrap}
+.crit-head strong.unset{color:var(--muted);font-family:'Hind',sans-serif;font-size:14px;font-weight:500}
+.nums{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.num{height:44px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:17px;cursor:pointer}
+.num[aria-pressed="true"]{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.savebar{position:sticky;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 8px);margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 24px -16px rgba(60,10,15,.5)}
+.savebar .tot{font-size:15px;color:var(--muted)}
+.savebar .tot b{font-family:'Baloo 2',sans-serif;font-size:24px;color:var(--ink)}
+.savebar .btn{margin-left:auto}
+
+/* Admin */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-family:'Baloo 2',sans-serif;font-size:30px;line-height:1.1}
+.stat span{font-size:14px;color:var(--muted)}
+.flags{display:grid;gap:6px;margin-top:10px}
+.flag{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}
+.flag b.on{color:var(--ok)}
+.flag b.off{color:var(--err)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tbl-wrap{overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+table.wide{min-width:420px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num-c{text-align:right;white-space:nowrap}
+.warn{color:var(--err);font-size:13px;font-weight:600}
+.adm-cat{margin-top:26px}
+.adm-cat h2{display:flex;align-items:center;gap:10px;font-size:24px}
+.adm-cat h2::before{content:"";width:14px;height:14px;border-radius:4px;background:var(--c)}
+.adm-cat h3{font-size:17px;margin-top:14px;font-family:'Hind',sans-serif;font-weight:600}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 14px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:500;font-size:15px;z-index:30;max-width:90vw}
+
+/* Empty and loading */
+.empty{text-align:center;padding:48px 8px}
+.empty h1{font-size:26px}
+.empty p{margin:8px auto 18px;max-width:34ch;color:var(--muted)}
+.loading{padding:80px 0;text-align:center;color:var(--muted)}
+.loading .spin{border-color:var(--line);border-top-color:var(--maroon);width:30px;height:30px;margin:0 auto 12px}
+
+/* Print sheets */
+.print-bar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.qr-card{border:1.5px dashed #bbb;border-radius:14px;padding:16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff}
+.qr-card .qh{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--maroon);font-size:22px;line-height:1}
+.qr-card .qcat{font-weight:600;color:var(--c,var(--muted))}
+.qr-card .qstall{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--c,var(--ink))}
+.qr-card .qtitle{font-weight:600;font-size:16px;line-height:1.3}
+.qr-box{width:170px;height:170px;margin:6px 0}
+.qr-box img,.qr-box canvas{width:170px!important;height:170px!important}
+.qr-card .qhint{font-size:14px;color:var(--muted)}
+.code-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.code-card{border:1.5px dashed #bbb;border-radius:10px;padding:10px;text-align:center}
+.code-card b{display:block;font-size:22px;letter-spacing:.12em}
+.code-card span{font-size:12px;color:var(--muted)}
+
+@media (min-width:720px){
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .facts div{grid-template-columns:80px 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  @page{size:A4;margin:8mm}
+  body{padding:0;font-size:14px}
+  .top,.tabs,#notice,.no-print,.toast{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .qr-grid{grid-template-columns:1fr 1fr;gap:0}
+  .qr-card{height:138mm;border-radius:0;justify-content:center;break-inside:avoid;page-break-inside:avoid}
+  .qr-box,.qr-box img,.qr-box canvas{width:60mm!important;height:60mm!important}
+  .qr-card .qstall{font-size:60px}
+  .qr-card .qtitle{font-size:20px}
+  .code-grid{grid-template-columns:repeat(4,1fr);gap:0}
+  .code-card{border-radius:0;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/">STEM FEST</a>
+    <span class="by" id="by">by YOJAK</span>
+  </div>
+</header>
+<div id="notice"></div>
+<main id="app"><div class="loading"><div class="spin"></div>Loading STEM FEST</div></main>
+<nav class="tabs" aria-label="Main">
+  <div class="wrap">
+    <a href="#/" data-p="home"></a>
+    <a href="#/schedule" data-p="schedule"></a>
+    <a href="#/projects" data-p="projects"></a>
+    <a href="#/venue" data-p="venue"></a>
+    <a href="#/help" data-p="help"></a>
+  </div>
+</nav>
+
+<script>
+/* ================================================================
+   SETTINGS: paste your Apps Script web app URL below.
+   Leave API_URL empty to run in preview mode with sample data.
+   SITE_URL is your GitHub Pages address (used inside the QR codes).
+   ================================================================ */
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/AKfycbymyJExjZvy0qmrWzY8PJPn4wS3_d2oF9nnX3KnsQahvSHbuAL6YboMB2kT1kqqdLlC/exec',
+  SITE_URL: ''
+};
+
+/* ---------------- basics ---------------- */
+const DEMO = !CONFIG.API_URL;
+const CATS = ['Science', 'Math', 'Tech'];
+const CAT_CLS = { Science: 'sci', Math: 'math', Tech: 'tech' };
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const toBool = v => ['TRUE', 'YES', '1', 'ON'].includes(String(v ?? '').trim().toUpperCase());
+const isTbd = v => !String(v ?? '').trim() || /^tbd/i.test(String(v).trim());
+const orTbd = (v, fb) => isTbd(v) ? fb : v;
+function normCat(c) {
+  const s = String(c || '').trim().toLowerCase();
+  if (s.startsWith('sci')) return 'Science';
+  if (s.startsWith('mat')) return 'Math';
+  if (s.startsWith('tec')) return 'Tech';
+  return '';
+}
+const store = {
+  get(k, ses) { try { return (ses ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } },
+  set(k, v, ses) { try { (ses ? sessionStorage : localStorage).setItem(k, v); } catch (e) {} },
+  del(k, ses) { try { (ses ? sessionStorage : localStorage).removeItem(k); } catch (e) {} }
+};
+const jparse = (s, fb) => { try { return s ? JSON.parse(s) : fb; } catch (e) { return fb; } };
+
+const ICONS = {
+  home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  grid: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+  pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  phone: '<path d="M5 4h3.5l2 5-2.4 1.6a11 11 0 0 0 5.3 5.3L15 13.5l5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  chat: '<path d="M4 20l1.4-4.1A8 8 0 1 1 8.2 19z"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  heart: '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M10 17h4v3h-4z"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+  megaphone: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>'
+};
+const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
+
+/* nav icons */
+[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['pin', 'Venue'], ['phone', 'Help']].forEach(([i, t], k) => {
+  $$('.tabs a')[k].innerHTML = icon(i) + `<span>${t}</span>`;
+});
+
+/* ---------------- time and date helpers ---------------- */
+function parseTime(s) {
+  const m = String(s || '').trim().match(/^(\d{1,2})[:.](\d{2})\s*(am|pm)?$/i);
+  if (!m) return null;
+  let h = +m[1]; const min = +m[2]; const ap = (m[3] || '').toLowerCase();
+  if (ap === 'pm' && h < 12) h += 12;
+  if (ap === 'am' && h === 12) h = 0;
+  return h * 60 + min;
+}
+function fmtTime(mins) {
+  if (mins == null) return '';
+  let h = Math.floor(mins / 60), m = mins % 60;
+  const ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}:${String(m).padStart(2, '0')} ${ap}`;
+}
+function parseDate(s) {
+  const m = String(s || '').trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (!m) return null;
+  const d = new Date(+m[1], +m[2] - 1, +m[3]);
+  return isNaN(d) ? null : d;
+}
+function fmtDate(s) {
+  const d = parseDate(s);
+  if (d) return d.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  return orTbd(s, 'Date to be announced');
+}
+const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+/* Google Drive share links do not show as images, so convert them */
+function imgUrl(u) {
+  u = String(u || '').trim();
+  if (!u) return '';
+  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{10,})/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200` : u;
+}
+
+/* ================================================================
+   PREVIEW MODE (no API_URL): sample data, everything saved on this phone
+   ================================================================ */
+const SAMPLE = {
+  settings: {
+    event_name: 'STEM FEST 2026',
+    tagline: 'Working models built by students of YOJAK STEM centres',
+    event_date: 'TBD', event_hours: 'TBD', venue_name: 'TBD', venue_address: 'TBD', map_link: '',
+    welcome_note: 'Welcome to STEM FEST! Walk through the Science, Math and Tech corners, talk to the young makers about how their models work, and vote for the ones you like best.',
+    announcement: '', floor_plan_url: '',
+    voting_open: 'TRUE', voting_mode: 'device', judging_locked: 'FALSE', results_revealed: 'FALSE',
+    min_judges: '2', max_per_criterion: '10',
+    criteria: 'Concept and Understanding; Innovation and Creativity; Working of the Model; Presentation by Students; Real Life Relevance'
+  },
+  schedule: [
+    { start: '09:00', end: '09:45', title: 'Registration and stall setup', location: 'Registration Desk', description: 'Centres check in and set up their models' },
+    { start: '10:00', end: '10:30', title: 'Inauguration', location: 'Main Stage', description: '' },
+    { start: '10:30', end: '13:00', title: 'Exhibition open, judging round 1', location: 'All corners', description: 'Visitors walk around and vote' },
+    { start: '13:00', end: '13:45', title: 'Lunch break', location: 'TBD', description: '' },
+    { start: '13:45', end: '15:30', title: 'Exhibition continues, judging round 2', location: 'All corners', description: '' },
+    { start: '15:30', end: '15:30', title: 'Voting closes', location: '', description: '' },
+    { start: '16:00', end: '17:00', title: 'Prize distribution', location: 'Main Stage', description: "Judges' awards and People's Choice awards" }
+  ],
+  corners: [
+    { name: 'Science Corner', category: 'Science', description: 'Models that explain how nature works', where: 'TBD' },
+    { name: 'Math Corner', category: 'Math', description: 'Ideas you can see, touch and measure', where: 'TBD' },
+    { name: 'Tech Corner', category: 'Tech', description: 'Machines, circuits and smart solutions', where: 'TBD' },
+    { name: 'Main Stage', category: '', description: 'Inauguration and prize distribution', where: 'TBD' },
+    { name: 'Help Desk', category: '', description: 'Questions, lost and found, first aid', where: 'TBD' },
+    { name: 'Washrooms', category: '', description: '', where: 'TBD' },
+    { name: 'Drinking Water', category: '', description: '', where: 'TBD' }
+  ],
+  contacts: [
+    { name: 'TBD', role: 'Event Coordinator', responsibility: 'Overall event, any urgent issue', phone: 'TBD' },
+    { name: 'TBD', role: 'Registration Desk', responsibility: 'Centre check in, entry passes', phone: 'TBD' },
+    { name: 'TBD', role: 'Judging Coordinator', responsibility: 'Judges, score sheets, judging rounds', phone: 'TBD' },
+    { name: 'TBD', role: 'Help Desk', responsibility: 'Visitor questions, lost and found', phone: 'TBD' },
+    { name: 'TBD', role: 'Website and Voting Support', responsibility: 'Problems with the website or voting', phone: 'TBD' }
+  ],
+  projects: [
+    { project_id: 'P01', stall: '1', title: 'Solar Water Purifier (sample)', category: 'Science', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'P02', stall: '2', title: 'Working Model of the Human Heart (sample)', category: 'Science', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'P03', stall: '3', title: 'Pythagoras Theorem with Water (sample)', category: 'Math', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'P04', stall: '4', title: 'Probability Spinner Game (sample)', category: 'Math', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'P05', stall: '5', title: 'Smart Dustbin (sample)', category: 'Tech', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'P06', stall: '6', title: 'Line Following Robot (sample)', category: 'Tech', centre: 'TBD Centre', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' }
+  ],
+  judges: [
+    { judge_id: 'J01', name: 'Judge 1', pin: '4821', categories: 'All' },
+    { judge_id: 'J02', name: 'Judge 2', pin: '7390', categories: 'Science, Math' },
+    { judge_id: 'J03', name: 'Judge 3', pin: '1564', categories: 'Tech' }
+  ],
+  codes: ['K7M2QX', 'P4TR9B', 'Z8HN3W', 'C6VD2L']
+};
+
+const Demo = {
+  settings() { return Object.assign({}, SAMPLE.settings, jparse(store.get('sfd_set'), {})); },
+  votes() { return jparse(store.get('sfd_votes'), []); },
+  scores() { return jparse(store.get('sfd_scores'), {}); },
+  cats(v) { const s = String(v || '').trim(); if (!s || /^all$/i.test(s)) return CATS.slice(); const c = s.split(/[,;]/).map(normCat).filter(Boolean); return c.length ? c : CATS.slice(); },
+  results() {
+    const s = this.settings(); const minJ = parseInt(s.min_judges, 10) || 1;
+    const sc = Object.values(this.scores()); const vs = this.votes(); const out = {};
+    CATS.forEach(c => {
+      const list = SAMPLE.projects.filter(p => p.category === c).map(p => {
+        const mine = sc.filter(x => x.project_id === p.project_id);
+        const sum = mine.reduce((a, x) => a + x.total, 0);
+        return { project_id: p.project_id, stall: p.stall, title: p.title, centre: p.centre, avg: mine.length ? Math.round(sum / mine.length * 100) / 100 : 0, n: mine.length, votes: vs.filter(v => v.project_id === p.project_id).length, below_min: mine.length < minJ };
+      });
+      out[c] = { judges: list.filter(x => x.n).sort((a, b) => b.avg - a.avg || b.n - a.n), people: list.filter(x => x.votes).sort((a, b) => b.votes - a.votes) };
+    });
+    return out;
+  },
+  publicResults() {
+    const r = this.results(); const out = {};
+    CATS.forEach(c => { const top = r[c].people[0]?.votes || 0; out[c] = { judges: r[c].judges.slice(0, 3), people: r[c].people.filter(x => top && x.votes === top) }; });
+    return out;
+  },
+  judge(id, pin) { const j = SAMPLE.judges.find(x => x.judge_id === id); return j && j.pin === String(pin).trim() ? j : null; },
+  async get(p) {
+    await sleep(200);
+    if (p.action === 'data') {
+      const s = this.settings();
+      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, contacts: SAMPLE.contacts, projects: SAMPLE.projects, results: toBool(s.results_revealed) ? this.publicResults() : null };
+    }
+    if (p.action === 'myvotes') return { ok: true, project_ids: this.votes().filter(v => v.voter_id === p.voter_id).map(v => v.project_id) };
+    if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })) };
+    return { ok: false, error: 'Unknown action' };
+  },
+  async post(b) {
+    await sleep(450);
+    const s = this.settings();
+    if (b.action === 'checkcode') return { ok: true, valid: SAMPLE.codes.includes(String(b.code || '').toUpperCase()) };
+    if (b.action === 'vote') {
+      if (!toBool(s.voting_open)) return { ok: false, code: 'closed', error: 'Voting is closed.' };
+      if (s.voting_mode === 'code' && !SAMPLE.codes.includes(String(b.voter_id).slice(2))) return { ok: false, code: 'badcode', error: 'This voter code is not valid.' };
+      const v = this.votes();
+      if (v.some(x => x.voter_id === b.voter_id && x.project_id === b.project_id)) return { ok: true, already: true };
+      v.push({ voter_id: b.voter_id, project_id: b.project_id }); store.set('sfd_votes', JSON.stringify(v));
+      return { ok: true };
+    }
+    if (b.action === 'judgelogin') {
+      const j = this.judge(b.judge_id, b.pin); if (!j) return { ok: false, error: 'Name or PIN is not correct.' };
+      const scores = {}; Object.values(this.scores()).filter(x => x.judge_id === j.judge_id).forEach(x => scores[x.project_id] = x);
+      return { ok: true, judge: { judge_id: j.judge_id, name: j.name, categories: this.cats(j.categories) }, scores };
+    }
+    if (b.action === 'score') {
+      const j = this.judge(b.judge_id, b.pin); if (!j) return { ok: false, error: 'Name or PIN is not correct.' };
+      if (toBool(s.judging_locked)) return { ok: false, code: 'locked', error: 'Judging is locked. Scores can no longer be changed.' };
+      const all = this.scores(); const total = b.scores.reduce((a, x) => a + x, 0);
+      all[j.judge_id + '|' + b.project_id] = { judge_id: j.judge_id, project_id: b.project_id, scores: b.scores, total, remarks: b.remarks || '' };
+      store.set('sfd_scores', JSON.stringify(all));
+      return { ok: true, total };
+    }
+    if (b.action === 'admin') {
+      if (b.key !== 'demo') return { ok: false, code: 'badkey', error: 'That admin key is not correct. In preview mode the key is: demo' };
+      const v = this.votes(); const sc = Object.values(this.scores());
+      return {
+        ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(),
+        stats: {
+          projects: SAMPLE.projects.length, votes: v.length, voters: new Set(v.map(x => x.voter_id)).size, scores: sc.length,
+          judges: SAMPLE.judges.map(j => { const cats = this.cats(j.categories); return { name: j.name, categories: cats.join(', '), total: SAMPLE.projects.filter(p => cats.includes(p.category)).length, done: sc.filter(x => x.judge_id === j.judge_id).length }; })
+        }
+      };
+    }
+    return { ok: false, error: 'Unknown action' };
+  }
+};
+
+/* ---------------- API ---------------- */
+async function apiGet(params) {
+  if (DEMO) return Demo.get(params);
+  const r = await fetch(CONFIG.API_URL + '?' + new URLSearchParams(params), { cache: 'no-store' });
+  if (!r.ok) throw new Error('network');
+  return r.json();
+}
+async function apiPost(body) {
+  if (DEMO) return Demo.post(body);
+  const r = await fetch(CONFIG.API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error('network');
+  return r.json();
+}
+
+/* ---------------- state ---------------- */
+const S = {
+  data: null, error: null, voted: new Set(),
+  filter: { cat: 'All', q: '', centre: '' },
+  judge: jparse(store.get('sf_judge', true), null), judgeScores: null, judgesList: null,
+  adminKey: store.get('sf_admin', true), admin: null
+};
+let timer = null;
+
+function randStr(n) {
+  const a = 'abcdefghijkmnpqrstuvwxyz23456789';
+  const buf = new Uint32Array(n);
+  (window.crypto || window.msCrypto).getRandomValues(buf);
+  return Array.from(buf, x => a[x % a.length]).join('');
+}
+function deviceId() {
+  let id = store.get('sf_device');
+  if (!id) { id = 'D:' + randStr(20); store.set('sf_device', id); }
+  return id;
+}
+const votingMode = () => String(S.data?.settings?.voting_mode || '').trim().toLowerCase() === 'code' ? 'code' : 'device';
+function voterId() {
+  if (votingMode() === 'code') { const c = store.get('sf_code'); return c ? 'C:' + c : null; }
+  return deviceId();
+}
+function markVoted(id) {
+  S.voted.add(id);
+  const vid = voterId(); if (vid) store.set('sf_voted:' + vid, JSON.stringify([...S.voted]));
+}
+async function syncVotes() {
+  const vid = voterId();
+  S.voted = new Set(vid ? jparse(store.get('sf_voted:' + vid), []) : []);
+  if (!vid) return;
+  try {
+    const r = await apiGet({ action: 'myvotes', voter_id: vid });
+    if (r.ok) { r.project_ids.forEach(x => S.voted.add(x)); store.set('sf_voted:' + vid, JSON.stringify([...S.voted])); }
+  } catch (e) { /* offline: keep local list */ }
+}
+
+function prepData(d) {
+  d.projects = (d.projects || []).map(p => ({ ...p, category: normCat(p.category) })).filter(p => p.category && p.title);
+  d.schedule = (d.schedule || []).map(i => ({ ...i, s: parseTime(i.start), e: parseTime(i.end) })).sort((a, b) => (a.s ?? 9999) - (b.s ?? 9999));
+  d.corners = d.corners || []; d.contacts = d.contacts || []; d.settings = d.settings || {};
+  return d;
+}
+async function loadData() {
+  try {
+    const d = await apiGet({ action: 'data' });
+    if (!d.ok) throw new Error(d.error || 'load');
+    S.data = prepData(d); S.error = null;
+    if (!DEMO) store.set('sf_cache', JSON.stringify(d));
+  } catch (e) {
+    if (!S.data) S.error = 'The fest details could not load. Check your internet connection and reload the page.';
+  }
+}
+
+/* ---------------- helpers for views ---------------- */
+const projectsIn = c => S.data.projects.filter(p => p.category === c);
+const byStall = (a, b) => String(a.stall).localeCompare(String(b.stall), undefined, { numeric: true });
+const findProject = id => S.data.projects.find(p => p.project_id === id);
+const criteria = () => {
+  const list = String(S.data.settings.criteria || '').split(';').map(x => x.trim()).filter(Boolean);
+  const def = ['Concept and Understanding', 'Innovation and Creativity', 'Working of the Model', 'Presentation by Students', 'Real Life Relevance'];
+  return def.map((d, i) => list[i] || d);
+};
+const maxMark = () => parseInt(S.data.settings.max_per_criterion, 10) || 10;
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+function emptyState(title, text, href, label) {
+  return `<div class="wrap"><div class="empty"><h1>${esc(title)}</h1><p>${esc(text)}</p>${href ? `<a class="btn btn-primary" href="${href}">${esc(label)}</a>` : ''}</div></div>`;
+}
+const metaLine = w => [isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', ');
+function stallBadge(p, big) {
+  return `<span class="stall ${big ? 'big' : ''}"><small>Stall</small>${esc(p.stall || '?')}</span>`;
+}
+
+/* ================================================================
+   VIEWS
+   ================================================================ */
+const VIEWS = {};
+
+/* ---------- Home ---------- */
+VIEWS.home = () => {
+  const s = S.data.settings;
+  const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
+  const map = s.map_link ? `<a class="btn btn-light" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
+  const steps = votingMode() === 'code'
+    ? ['Scan the QR code at any stall, or pick a model from the Models tab.', 'The first time, type the voter code printed on your entry pass.', 'Tap Vote for this model. Vote for as many models as you like, once each.']
+    : ['Scan the QR code at any stall, or pick a model from the Models tab.', 'Read about the model and talk to the students.', 'Tap Vote for this model. Vote for as many models as you like, once each.'];
+  return {
+    html: `
+    <section class="hero"><div class="wrap">
+      <p class="presents">YOJAK presents</p>
+      <h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>
+      ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
+      <dl class="facts">
+        <div><dt>Date</dt><dd>${esc(fmtDate(s.event_date))}</dd></div>
+        <div><dt>Time</dt><dd>${esc(orTbd(s.event_hours, 'To be announced'))}</dd></div>
+        <div><dt>Venue</dt><dd>${esc(orTbd(s.venue_name, 'To be announced'))}${addr}</dd></div>
+      </dl>
+      <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
+    </div></section>
+    <div class="wrap">
+      <section class="corners-strip" aria-label="Corners">
+        ${CATS.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}"><span class="ctile-name">${c}</span><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></a>`; }).join('')}
+      </section>
+      ${S.data.results ? `<a class="results-teaser" href="#/results">${icon('trophy')}<span><b>The winners are out!</b><br><span class="muted">See the results for every corner</span></span></a>` : ''}
+      ${nowNext()}
+      ${s.welcome_note ? `<section class="block"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
+      <section class="block"><h2>How to vote</h2>
+        ${toBool(s.voting_open) ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Voting is closed. Thank you to everyone who voted.</p>'}
+      </section>
+    </div>`
+  };
+};
+
+function nowNext() {
+  const items = S.data.schedule.filter(i => i.s != null);
+  if (!items.length) return '';
+  const d = parseDate(S.data.settings.event_date);
+  const today = new Date();
+  const row = (label, i, now) => `<div class="nn-row ${now ? 'now' : ''}"><span class="nn-label">${label}</span><span class="nn-title">${esc(i.title)}</span><span class="nn-meta">${esc(fmtTime(i.s))}${i.e != null && i.e !== i.s ? ' to ' + esc(fmtTime(i.e)) : ''}${!isTbd(i.location) ? ', ' + esc(i.location) : ''}</span></div>`;
+  if (d && sameDay(d, today)) {
+    const m = today.getHours() * 60 + today.getMinutes();
+    const now = items.filter(i => m >= i.s && m < (i.e != null && i.e > i.s ? i.e : i.s + 1));
+    const next = items.find(i => i.s > m);
+    if (!now.length && !next) return '';
+    return `<section class="nownext" aria-live="polite">${now.map(i => row('Happening now', i, true)).join('')}${next ? row('Up next', next) : ''}</section>`;
+  }
+  if (d && today > d) return '';
+  return `<section class="nownext">${row('First on the schedule', items[0])}</section>`;
+}
+
+/* ---------- Schedule ---------- */
+VIEWS.schedule = () => {
+  const d = parseDate(S.data.settings.event_date); const today = new Date();
+  const live = d && sameDay(d, today); const m = today.getHours() * 60 + today.getMinutes();
+  const items = S.data.schedule;
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Schedule</h1><p>${esc(fmtDate(S.data.settings.event_date))}</p></div>
+      ${items.length ? `<ol class="tl">${items.map(i => {
+        let st = '';
+        if (live && i.s != null) {
+          const end = i.e != null && i.e > i.s ? i.e : i.s + 1;
+          st = m >= end ? 'done' : (m >= i.s ? 'now' : '');
+        }
+        const time = i.s != null ? `${esc(fmtTime(i.s))}${i.e != null && i.e !== i.s ? `<small>to ${esc(fmtTime(i.e))}</small>` : ''}` : esc(i.start || '');
+        return `<li class="${st}"><div class="t">${time}</div><div><h3>${esc(i.title)}${st === 'now' ? '<span class="pill">Now</span>' : ''}</h3>${!isTbd(i.location) ? `<p class="loc">${esc(i.location)}</p>` : ''}${!isTbd(i.description) ? `<p class="desc">${esc(i.description)}</p>` : ''}</div></li>`;
+      }).join('')}</ol>` : '<p class="count">The schedule will be shared soon.</p>'}
+    </div>`
+  };
+};
+
+/* ---------- Projects list ---------- */
+VIEWS.projects = (cat) => {
+  S.filter.cat = cat && CATS.includes(cat) ? cat : 'All';
+  const centres = [...new Set(S.data.projects.map(p => p.centre).filter(c => c && !isTbd(c)))].sort();
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Models on display</h1><p>Tap a model to read about it and vote.</p></div>
+      <label class="search"><span class="sr">Search models</span>${icon('search')}<input id="q" type="search" placeholder="Search by name, stall or centre" value="${esc(S.filter.q)}" autocomplete="off"></label>
+      <div class="chips" role="group" aria-label="Filter by corner">
+        ${['All', ...CATS].map(c => `<button class="chip ${c !== 'All' ? 'c-' + CAT_CLS[c] : ''}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c}</button>`).join('')}
+      </div>
+      ${centres.length > 1 ? `<select class="select" id="centre" aria-label="Filter by centre"><option value="">All centres</option>${centres.map(c => `<option ${S.filter.centre === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>` : ''}
+      <p class="count" id="count"></p>
+      <div class="plist" id="plist"></div>
+    </div>`,
+    mount() {
+      const draw = () => {
+        const q = S.filter.q.trim().toLowerCase();
+        const list = S.data.projects.filter(p =>
+          (S.filter.cat === 'All' || p.category === S.filter.cat) &&
+          (!S.filter.centre || p.centre === S.filter.centre) &&
+          (!q || [p.title, p.centre, p.students, p.stall].join(' ').toLowerCase().includes(q))
+        ).sort(byStall);
+        $('#count').textContent = `${list.length} ${list.length === 1 ? 'model' : 'models'}`;
+        $('#plist').innerHTML = list.length ? list.map(projectCard).join('') : `<div class="empty"><p>No models match your search. Try a different word or pick All.</p></div>`;
+      };
+      $('#q').addEventListener('input', e => { S.filter.q = e.target.value; draw(); });
+      $$('.chip').forEach(b => b.addEventListener('click', () => {
+        S.filter.cat = b.dataset.cat;
+        $$('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+        history.replaceState(null, '', S.filter.cat === 'All' ? '#/projects' : '#/projects/' + S.filter.cat);
+        draw();
+      }));
+      const c = $('#centre'); if (c) c.addEventListener('change', e => { S.filter.centre = e.target.value; draw(); });
+      draw();
+    }
+  };
+};
+function projectCard(p) {
+  return `<a class="pcard c-${CAT_CLS[p.category]}" href="#/project/${encodeURIComponent(p.project_id)}">
+    ${stallBadge(p)}
+    <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc(orTbd(p.centre, ''))}</span><span class="ptag">${p.category}</span></span>
+    ${S.voted.has(p.project_id) ? `<span class="voted-mark">${icon('check')}Voted</span>` : ''}
+  </a>`;
+}
+
+/* ---------- Project detail and voting ---------- */
+VIEWS.project = (id) => {
+  const p = findProject(id);
+  if (!p) return { html: emptyState('This model was not found', 'The QR code may belong to an older list. Browse all the models instead.', '#/projects', 'Browse all models') };
+  const photo = imgUrl(p.photo_url);
+  return {
+    html: `<div class="wrap page">
+      <a class="back" href="#/projects">${icon('back')}All models</a>
+      <article class="c-${CAT_CLS[p.category]}">
+        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
+        ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
+        ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
+        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
+      </article>
+      <div id="votebox"></div>
+    </div>`,
+    mount() { renderVoteBox(p); }
+  };
+};
+
+function renderVoteBox(p, st = {}) {
+  const box = $('#votebox'); if (!box) return;
+  const s = S.data.settings; const mode = votingMode();
+  let html;
+  if (S.voted.has(p.project_id)) {
+    html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Vote saved' : 'You voted for this model'}</h2><p>You can vote for other models too, once each.</p></div></div>
+      <p style="margin-top:12px"><a class="btn btn-ghost btn-block" href="#/projects">Browse more models</a></p>`;
+  } else if (!toBool(s.voting_open)) {
+    html = `<div class="votebox muted-box"><h2>Voting is closed</h2><p>Thank you for visiting. The winners will be announced at the prize distribution.</p></div>`;
+  } else if (mode === 'code' && !store.get('sf_code')) {
+    html = `<div class="votebox"><h2>Enter your voter code</h2><p>You will find it printed on your entry pass. You only need to enter it once.</p>
+      <label class="field"><span>Voter code</span><input id="codein" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="For example K7M2QX"></label>
+      ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
+      <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
+  } else {
+    html = `<div class="votebox"><h2>Like this model?</h2><p>Your vote counts towards the People's Choice award for the ${p.category} corner.</p>
+      ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
+      <button class="btn btn-primary btn-block btn-big" id="votebtn">${icon('heart')}Vote for this model</button></div>`;
+  }
+  box.innerHTML = html;
+
+  const vb = $('#votebtn');
+  if (vb) vb.addEventListener('click', async () => {
+    vb.disabled = true; vb.innerHTML = '<span class="spin"></span>Saving your vote...';
+    try {
+      const r = await apiPost({ action: 'vote', voter_id: voterId(), project_id: p.project_id });
+      if (r.ok) { markVoted(p.project_id); renderVoteBox(p, { fresh: !r.already }); }
+      else if (r.code === 'closed') { s.voting_open = 'FALSE'; renderVoteBox(p); }
+      else if (r.code === 'badcode') { store.del('sf_code'); renderVoteBox(p, { err: 'That voter code is not valid. Please type it again.' }); }
+      else renderVoteBox(p, { err: r.error || 'Your vote was not saved. Tap Vote again.' });
+    } catch (e) {
+      renderVoteBox(p, { err: 'Your vote was not saved because the connection dropped. Tap Vote again.' });
+    }
+  });
+
+  const cb = $('#codebtn');
+  if (cb) {
+    const input = $('#codein');
+    const go = async () => {
+      const code = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (code.length < 4) { renderVoteBox(p, { err: 'Type the full code from your entry pass.' }); return; }
+      cb.disabled = true; cb.innerHTML = '<span class="spin"></span>Checking code...';
+      try {
+        const r = await apiPost({ action: 'checkcode', code });
+        if (r.ok && r.valid) { store.set('sf_code', code); await syncVotes(); renderVoteBox(p); toast('Code saved. You can vote now.'); }
+        else renderVoteBox(p, { err: 'That code was not found. Check the letters and try again.' });
+      } catch (e) { renderVoteBox(p, { err: 'The code could not be checked because the connection dropped. Try again.' }); }
+    };
+    cb.addEventListener('click', go);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  }
+}
+
+/* ---------- Venue ---------- */
+VIEWS.venue = () => {
+  const s = S.data.settings; const fp = imgUrl(s.floor_plan_url);
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Venue and corners</h1><p>${esc(orTbd(s.venue_name, 'Venue to be announced'))}${!isTbd(s.venue_address) ? ', ' + esc(s.venue_address) : ''}</p></div>
+      ${s.map_link ? `<p style="margin-top:14px"><a class="btn btn-primary" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a></p>` : ''}
+      ${fp ? `<img class="floor" src="${esc(fp)}" alt="Floor plan of the venue" onerror="this.remove()">` : ''}
+      <div style="margin-top:12px">
+      ${S.data.corners.map(c => {
+        const cat = normCat(c.category); const n = cat ? projectsIn(cat).length : 0;
+        return `<div class="corner ${cat ? 'c-' + CAT_CLS[cat] : ''}"><span class="bar"></span><div>
+          <h3>${esc(c.name)}</h3>
+          ${!isTbd(c.where) ? `<p class="where">${esc(c.where)}</p>` : ''}
+          ${!isTbd(c.description) ? `<p>${esc(c.description)}</p>` : ''}
+          ${cat ? `<a href="#/projects/${cat}">See the ${n} ${n === 1 ? 'model' : 'models'}</a>` : ''}
+        </div></div>`;
+      }).join('')}
+      </div>
+    </div>`
+  };
+};
+
+/* ---------- Help and contacts ---------- */
+VIEWS.help = () => ({
+  html: `<div class="wrap page">
+    <div class="phead"><h1>Help and contacts</h1><p>Call or message the right person for your question.</p></div>
+    <div class="contacts">
+      ${S.data.contacts.map(c => {
+        let digits = String(c.phone || '').replace(/\D/g, '');
+        if (digits.length === 10) digits = '91' + digits;
+        const has = digits.length >= 10;
+        return `<div class="card contact">
+          <p class="role">${esc(c.role)}</p>
+          <h3>${esc(orTbd(c.name, 'To be announced'))}</h3>
+          ${!isTbd(c.responsibility) ? `<p class="resp">${esc(c.responsibility)}</p>` : ''}
+          ${has ? `<div class="acts"><a class="btn btn-primary btn-sm" href="tel:+${digits}">${icon('phone')}Call</a><a class="btn btn-ghost btn-sm" href="https://wa.me/${digits}" target="_blank" rel="noopener">${icon('chat')}WhatsApp</a></div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`
+});
+
+/* ---------- Results ---------- */
+VIEWS.results = () => {
+  const r = S.data.results;
+  if (!r) return { html: `<div class="wrap page"><div class="locked">${icon('trophy')}<h1>Results coming soon</h1><p class="muted" style="margin-top:6px">The winners will be announced at the prize distribution. Check this page again then.</p><p style="margin-top:18px"><a class="btn btn-ghost" href="#/schedule">See the schedule</a></p></div></div>` };
+  const places = ['1st', '2nd', '3rd'];
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>STEM FEST winners</h1><p>Congratulations to every young maker who took part.</p></div>
+      ${CATS.map(c => {
+        const x = r[c] || { judges: [], people: [] };
+        return `<section class="res-cat c-${CAT_CLS[c]}">
+          <div class="res-head"><h2>${c} corner</h2></div>
+          <div class="res-body">
+            <h3>Judges' awards</h3>
+            ${x.judges.length ? `<ol class="podium">${x.judges.map((w, i) => `<li><span class="medal">${places[i]}</span><span><b>${esc(w.title)}</b><br><span class="muted">${esc(metaLine(w))}</span></span></li>`).join('')}</ol>` : '<p class="muted">No awards in this corner.</p>'}
+            <h3>People's Choice</h3>
+            ${x.people.length ? `<ol class="podium">${x.people.map(w => `<li><span class="medal">${icon('heart').replace('<svg', '<svg style="width:22px;height:22px"')}</span><span><b>${esc(w.title)}</b><br><span class="muted">${esc(metaLine(w))}</span></span></li>`).join('')}</ol>` : '<p class="muted">No votes in this corner.</p>'}
+          </div>
+        </section>`;
+      }).join('')}
+    </div>`
+  };
+};
+
+/* ---------- Judge portal ---------- */
+VIEWS.judge = (pid) => {
+  if (!S.judge) return judgeLogin();
+  if (!S.judgeScores) {
+    return {
+      html: `<div class="loading"><div class="spin"></div>Loading your scores</div>`,
+      async mount() {
+        try {
+          const r = await apiPost({ action: 'judgelogin', judge_id: S.judge.judge_id, pin: S.judge.pin });
+          if (r.ok) { S.judgeScores = r.scores || {}; S.judge = { ...S.judge, ...r.judge }; store.set('sf_judge', JSON.stringify(S.judge), true); }
+          else { S.judge = null; store.del('sf_judge', true); }
+        } catch (e) { S.judgeScores = {}; toast('Could not load your saved scores. Check the connection.'); }
+        render();
+      }
+    };
+  }
+  return pid ? judgeScore(pid) : judgeList();
+};
+
+function judgeLogin() {
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Judge sign in</h1><p>Choose your name and enter the PIN given to you by the organisers.</p></div>
+      <div class="card" style="margin-top:18px;display:grid;gap:14px">
+        <label class="field"><span>Your name</span><select id="jsel"><option value="">Loading names...</option></select></label>
+        <label class="field"><span>PIN</span><input id="jpin" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></label>
+        <p class="err" id="jerr" role="alert"></p>
+        <button class="btn btn-primary btn-block" id="jgo">Sign in</button>
+        ${DEMO ? '<p class="muted" style="font-size:14px">Preview mode PINs: Judge 1 is 4821, Judge 2 is 7390, Judge 3 is 1564.</p>' : ''}
+      </div>
+    </div>`,
+    async mount() {
+      const sel = $('#jsel');
+      try {
+        if (!S.judgesList) { const r = await apiGet({ action: 'judges' }); S.judgesList = r.ok ? r.judges : []; }
+        sel.innerHTML = '<option value="">Select your name</option>' + S.judgesList.map(j => `<option value="${esc(j.judge_id)}">${esc(j.name)}</option>`).join('');
+      } catch (e) { sel.innerHTML = '<option value="">Could not load names, reload the page</option>'; }
+      const go = async () => {
+        const id = sel.value, pin = $('#jpin').value.trim(), err = $('#jerr'), btn = $('#jgo');
+        if (!id || !pin) { err.textContent = 'Choose your name and enter your PIN.'; return; }
+        btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Signing in...';
+        try {
+          const r = await apiPost({ action: 'judgelogin', judge_id: id, pin });
+          if (r.ok) {
+            S.judge = { ...r.judge, pin }; S.judgeScores = r.scores || {};
+            store.set('sf_judge', JSON.stringify(S.judge), true); render();
+          } else { err.textContent = r.error || 'Name or PIN is not correct.'; btn.disabled = false; btn.textContent = 'Sign in'; }
+        } catch (e) { err.textContent = 'Could not sign in because the connection dropped. Try again.'; btn.disabled = false; btn.textContent = 'Sign in'; }
+      };
+      $('#jgo').addEventListener('click', go);
+      $('#jpin').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+    }
+  };
+}
+
+function judgeProjects() {
+  const cats = S.judge.categories && S.judge.categories.length ? S.judge.categories : CATS;
+  return S.data.projects.filter(p => cats.includes(p.category)).sort(byStall);
+}
+
+function judgeList() {
+  const list = judgeProjects(); const done = list.filter(p => S.judgeScores[p.project_id]).length;
+  const pct = list.length ? Math.round(done / list.length * 100) : 0;
+  const cats = CATS.filter(c => list.some(p => p.category === c));
+  const max = maxMark() * 5;
+  return {
+    html: `<div class="wrap page">
+      <div class="jhead"><div><p class="muted">Signed in as</p><h1>${esc(S.judge.name)}</h1></div><button class="btn btn-ghost btn-sm" id="jout">Sign out</button></div>
+      ${toBool(S.data.settings.judging_locked) ? '<p class="banner">Judging is locked. Scores can no longer be changed.</p>' : ''}
+      <div class="progress"><div class="bar-o"><span style="width:${pct}%"></span></div><p>${done} of ${list.length} models scored</p></div>
+      ${cats.map(c => `<section class="block"><h2>${c} corner</h2><div class="plist">
+        ${list.filter(p => p.category === c).map(p => {
+          const sc = S.judgeScores[p.project_id];
+          return `<a class="pcard c-${CAT_CLS[c]}" href="#/judge/${encodeURIComponent(p.project_id)}">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc(orTbd(p.centre, ''))}</span></span><span class="jstatus ${sc ? 'ok' : ''}">${sc ? `${sc.total} of ${max}` : 'Not scored'}</span></a>`;
+        }).join('')}
+      </div></section>`).join('')}
+      ${!list.length ? '<p class="count">No models have been assigned to you yet.</p>' : ''}
+    </div>`,
+    mount() {
+      $('#jout').addEventListener('click', () => { S.judge = null; S.judgeScores = null; store.del('sf_judge', true); render(); });
+    }
+  };
+}
+
+function judgeScore(pid) {
+  const p = findProject(pid);
+  if (!p || !judgeProjects().includes(p)) return { html: emptyState('This model is not on your list', 'Go back to your list of models to score.', '#/judge', 'Back to my list') };
+  const crit = criteria(); const max = maxMark();
+  const prev = S.judgeScores[p.project_id];
+  const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
+  const locked = toBool(S.data.settings.judging_locked);
+  return {
+    html: `<div class="wrap page">
+      <a class="back" href="#/judge">${icon('back')}My list</a>
+      <div class="pd-head c-${CAT_CLS[p.category]}">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
+      ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
+      ${prev ? '<p class="banner" style="background:var(--sci-t);color:var(--ok)">You already scored this model. Change any mark and save again to update it.</p>' : ''}
+      <div style="margin-top:8px">
+        ${crit.map((c, i) => `<div class="crit">
+          <div class="crit-head"><span>${esc(c)}</span><strong id="cv${i}"></strong></div>
+          <div class="nums" role="group" aria-label="${esc(c)}">${Array.from({ length: max + 1 }, (_, v) => `<button class="num" data-i="${i}" data-v="${v}" aria-pressed="false" ${locked ? 'disabled' : ''}>${v}</button>`).join('')}</div>
+        </div>`).join('')}
+      </div>
+      <label class="field" style="margin-top:16px"><span>Remarks (optional)</span><textarea id="remarks" maxlength="500" ${locked ? 'disabled' : ''}>${esc(prev?.remarks || '')}</textarea></label>
+      <p class="err" id="serr" role="alert" style="margin-top:10px"></p>
+      <div class="savebar"><span class="tot">Total <b id="tot">0</b> of ${max * 5}</span>${locked ? '' : '<button class="btn btn-primary" id="save">Save score</button>'}</div>
+    </div>`,
+    mount() {
+      const paint = () => {
+        vals.forEach((v, i) => {
+          const el = $('#cv' + i);
+          el.textContent = v == null ? 'Not marked' : `${v} of ${max}`;
+          el.className = v == null ? 'unset' : '';
+        });
+        $$('.num').forEach(b => b.setAttribute('aria-pressed', String(vals[+b.dataset.i] === +b.dataset.v)));
+        $('#tot').textContent = vals.reduce((a, v) => a + (v || 0), 0);
+      };
+      $$('.num').forEach(b => b.addEventListener('click', () => { vals[+b.dataset.i] = +b.dataset.v; paint(); }));
+      paint();
+      const save = $('#save');
+      if (save) save.addEventListener('click', async () => {
+        const err = $('#serr');
+        if (vals.some(v => v == null)) { err.textContent = 'Give a mark for every criterion before saving.'; return; }
+        err.textContent = ''; save.disabled = true; save.innerHTML = '<span class="spin"></span>Saving...';
+        try {
+          const r = await apiPost({ action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals, remarks: $('#remarks').value });
+          if (r.ok) {
+            S.judgeScores[p.project_id] = { scores: vals.slice(), total: r.total, remarks: $('#remarks').value };
+            toast(`Score saved for stall ${p.stall}`);
+            const next = judgeProjects().find(x => !S.judgeScores[x.project_id] && x.category === p.category) || judgeProjects().find(x => !S.judgeScores[x.project_id]);
+            location.hash = next ? '#/judge/' + encodeURIComponent(next.project_id) : '#/judge';
+          } else {
+            if (r.code === 'locked') S.data.settings.judging_locked = 'TRUE';
+            err.textContent = r.error || 'The score was not saved. Try again.'; save.disabled = false; save.textContent = 'Save score';
+          }
+        } catch (e) { err.textContent = 'The score was not saved because the connection dropped. Tap Save again.'; save.disabled = false; save.textContent = 'Save score'; }
+      });
+    }
+  };
+}
+
+/* ---------- Admin ---------- */
+VIEWS.admin = (sub) => {
+  if (!S.adminKey || !S.admin) return adminLogin();
+  if (sub === 'qr') return qrSheet();
+  if (sub === 'codes') return codesSheet();
+  return adminDash();
+};
+
+async function fetchAdmin() {
+  const r = await apiPost({ action: 'admin', key: S.adminKey });
+  if (r.ok) { S.admin = r; return true; }
+  if (r.code === 'badkey') { S.adminKey = null; store.del('sf_admin', true); }
+  throw new Error(r.error || 'Could not load');
+}
+
+function adminLogin() {
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Organiser dashboard</h1><p>Live results, QR cards and voter codes. For the organising team only.</p></div>
+      <div class="card" style="margin-top:18px;display:grid;gap:14px">
+        <label class="field"><span>Admin key</span><input id="akey" type="password" autocomplete="off"></label>
+        <p class="err" id="aerr" role="alert"></p>
+        <button class="btn btn-primary btn-block" id="ago">Open dashboard</button>
+        ${DEMO ? '<p class="muted" style="font-size:14px">Preview mode admin key: demo</p>' : ''}
+      </div>
+    </div>`,
+    mount() {
+      const go = async () => {
+        const btn = $('#ago'); const err = $('#aerr');
+        S.adminKey = $('#akey').value.trim(); if (!S.adminKey) { err.textContent = 'Enter the admin key.'; return; }
+        btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Opening...';
+        try { await fetchAdmin(); store.set('sf_admin', S.adminKey, true); render(); }
+        catch (e) { err.textContent = e.message === 'network' ? 'Could not connect. Check the internet and try again.' : e.message; btn.disabled = false; btn.textContent = 'Open dashboard'; }
+      };
+      $('#ago').addEventListener('click', go);
+      $('#akey').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+    }
+  };
+}
+
+function adminDash() {
+  const a = S.admin; const s = a.settings; const st = a.stats;
+  const flag = (label, on, onTxt, offTxt) => `<div class="flag"><span>${label}</span><b class="${on ? 'on' : 'off'}">${on ? onTxt : offTxt}</b></div>`;
+  const t = new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+  return {
+    html: `<div class="wrap page">
+      <div class="jhead"><div><h1>Organiser dashboard</h1><p class="muted">Updated at ${t}, refreshes every 30 seconds</p></div><button class="btn btn-ghost btn-sm" id="aout">Sign out</button></div>
+      ${a.default_key ? '<p class="banner">The admin key is still the default one. Change admin_key in the Settings tab before the event.</p>' : ''}
+      <div class="stats">
+        <div class="stat"><b>${st.projects}</b><span>Models</span></div>
+        <div class="stat"><b>${st.votes}</b><span>Visitor votes</span></div>
+        <div class="stat"><b>${st.voters}</b><span>People who voted</span></div>
+        <div class="stat"><b>${st.scores}</b><span>Judge scores</span></div>
+      </div>
+      <div class="tools no-print">
+        <button class="btn btn-primary btn-sm" id="arefresh">Refresh now</button>
+        <a class="btn btn-ghost btn-sm" href="#/admin/qr">Print QR cards</a>
+        ${a.codes.length ? `<a class="btn btn-ghost btn-sm" href="#/admin/codes">Print voter codes (${a.codes.length})</a>` : ''}
+        <button class="btn btn-ghost btn-sm" id="acsv">Download results (CSV)</button>
+      </div>
+
+      <section class="block"><h2>Switches</h2>
+        <div class="flags">
+          ${flag('Visitor voting', toBool(s.voting_open), 'Open', 'Closed')}
+          ${flag('Voting mode', true, votingModeLabel(s.voting_mode), '')}
+          ${flag('Judging', !toBool(s.judging_locked), 'Open', 'Locked')}
+          ${flag('Public results page', toBool(s.results_revealed), 'Showing winners', 'Hidden')}
+        </div>
+        ${DEMO ? `<div class="tools">
+            <button class="btn btn-ghost btn-sm" data-flip="voting_open">Flip voting</button>
+            <button class="btn btn-ghost btn-sm" data-flip="judging_locked">Flip judging lock</button>
+            <button class="btn btn-ghost btn-sm" data-flip="results_revealed">Flip results</button>
+            <button class="btn btn-ghost btn-sm" data-flip="voting_mode">Switch voting mode</button>
+            <button class="btn btn-ghost btn-sm" id="dreset">Clear preview votes and scores</button>
+          </div><p class="muted" style="font-size:14px;margin-top:8px">Preview mode only. On the live site, change these in the Settings tab of the Google Sheet.</p>`
+        : '<p class="muted" style="font-size:14px;margin-top:8px">To change these, edit the Settings tab in the Google Sheet. The website picks up changes within 30 seconds.</p>'}
+      </section>
+
+      <section class="block"><h2>Judges' progress</h2>
+        <div class="tbl-wrap"><table><thead><tr><th>Judge</th><th>Corners</th><th>Scored</th></tr></thead><tbody>
+          ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(j.categories)}</td><td class="num-c">${j.done} of ${j.total}</td></tr>`).join('')}
+        </tbody></table></div>
+      </section>
+
+      ${CATS.map(c => {
+        const r = a.results[c];
+        return `<section class="adm-cat c-${CAT_CLS[c]}"><h2>${c}</h2>
+          <h3>Judges' ranking, by average score</h3>
+          ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
+            ${r.judges.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
+          </tbody></table></div>` : '<p class="muted">No scores yet.</p>'}
+          <h3>People's Choice, by visitor votes</h3>
+          ${r.people.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Votes</th></tr></thead><tbody>
+            ${r.people.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.votes}</b></td></tr>`).join('')}
+          </tbody></table></div>` : '<p class="muted">No votes yet.</p>'}
+        </section>`;
+      }).join('')}
+      <p class="muted" style="font-size:14px;margin-top:22px">If two models have the same average, check the Results tab in the Sheet and decide the tie with the judges.</p>
+    </div>`,
+    mount() {
+      const refresh = async (manual) => {
+        try { await fetchAdmin(); if (route()[0] === 'admin' && !route()[1]) render(); if (manual) toast('Dashboard updated'); }
+        catch (e) { if (manual) toast('Could not refresh. Check the connection.'); if (!S.adminKey) render(); }
+      };
+      $('#arefresh').addEventListener('click', () => refresh(true));
+      $('#aout').addEventListener('click', () => { S.adminKey = null; S.admin = null; store.del('sf_admin', true); render(); });
+      $('#acsv').addEventListener('click', downloadCsv);
+      $$('[data-flip]').forEach(b => b.addEventListener('click', async () => {
+        const k = b.dataset.flip; const cur = Demo.settings(); const o = jparse(store.get('sfd_set'), {});
+        o[k] = k === 'voting_mode' ? (cur.voting_mode === 'code' ? 'device' : 'code') : (toBool(cur[k]) ? 'FALSE' : 'TRUE');
+        store.set('sfd_set', JSON.stringify(o)); await loadData(); await syncVotes(); refresh(true);
+      }));
+      const dr = $('#dreset'); if (dr) dr.addEventListener('click', async () => { store.del('sfd_votes'); store.del('sfd_scores'); S.voted = new Set(); store.del('sf_voted:' + voterId()); refresh(true); });
+      timer = setInterval(() => refresh(false), 30000);
+    }
+  };
+}
+const votingModeLabel = m => String(m || '').trim().toLowerCase() === 'code' ? 'Printed voter codes' : 'One vote per phone';
+
+function downloadCsv() {
+  const rows = [['Category', 'List', 'Rank', 'Stall', 'Model', 'Centre', 'Average score', 'Judges who scored', 'Votes']];
+  CATS.forEach(c => {
+    const r = S.admin.results[c];
+    r.judges.forEach((x, i) => rows.push([c, 'Judges', i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.votes]));
+    r.people.forEach((x, i) => rows.push([c, "People's Choice", i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.votes]));
+  });
+  const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' }));
+  a.download = 'stem-fest-results.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+
+function siteBase() {
+  const b = (CONFIG.SITE_URL || (location.origin + location.pathname)).replace(/#.*$/, '');
+  return b;
+}
+async function waitForQR() {
+  for (let i = 0; i < 50 && !window.QRCode; i++) await sleep(100);
+  return !!window.QRCode;
+}
+
+function qrSheet() {
+  const base = siteBase();
+  const list = S.data.projects.slice().sort(byStall);
+  return {
+    html: `<div class="wrap page">
+      <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
+        <div class="phead"><h1>QR cards</h1><p>One card for the entrance and one for each stall. Prints 4 cards per A4 sheet.</p></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+        ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones after the site is live on GitHub Pages.</p>' : ''}
+      </div>
+      <div class="qr-grid">
+        <div class="qr-card"><span class="qh">STEM FEST</span><span class="qcat">Scan for the schedule, venue map and voting</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span></div>
+        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}"><span class="qh">STEM FEST</span><span class="qcat">${p.category} corner</span><span class="qstall">Stall ${esc(p.stall)}</span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and vote</span></div>`).join('')}
+      </div>
+    </div>`,
+    async mount() {
+      $('#doprint').addEventListener('click', () => window.print());
+      if (!(await waitForQR())) { toast('QR tool did not load. Check the internet and reload.'); return; }
+      $$('.qr-box').forEach(el => { el.innerHTML = ''; new QRCode(el, { text: el.dataset.url, width: 340, height: 340, correctLevel: QRCode.CorrectLevel.M }); });
+    }
+  };
+}
+
+function codesSheet() {
+  const codes = S.admin.codes || [];
+  return {
+    html: `<div class="wrap page">
+      <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
+        <div class="phead"><h1>Voter codes</h1><p>${codes.length} codes. Cut along the dashed lines and hand one to each visitor, or print them on entry passes.</p></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+      </div>
+      <div class="code-grid">${codes.map(c => `<div class="code-card"><span>STEM FEST voter code</span><b>${esc(c)}</b><span>Scan a stall QR code and enter this once</span></div>`).join('')}</div>
+    </div>`,
+    mount() { $('#doprint').addEventListener('click', () => window.print()); }
+  };
+}
+
+/* ================================================================
+   ROUTER
+   ================================================================ */
+function route() { return location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent); }
+
+function renderNotice() {
+  const n = $('#notice'); let html = '';
+  if (DEMO) html += `<div class="demo"><div class="wrap">Preview mode: sample data, and votes are saved only on this phone.</div></div>`;
+  const a = S.data?.settings?.announcement;
+  if (a && !isTbd(a)) html += `<div class="announce" role="status"><div class="wrap">${icon('megaphone').replace('<svg', '<svg style="width:22px;height:22px;flex:none;margin-top:1px"')}<span>${esc(a)}</span></div></div>`;
+  n.innerHTML = html;
+}
+
+let lastPage = null;
+function render() {
+  clearInterval(timer); timer = null;
+  const [page = 'home', a] = route();
+  const navPage = page === 'project' ? 'projects' : page;
+  $$('.tabs a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
+  $('#by').textContent = page === 'judge' ? 'Judge portal' : page === 'admin' ? 'Organisers' : 'by YOJAK';
+  renderNotice();
+  const app = $('#app');
+  if (!S.data) {
+    app.innerHTML = S.error ? emptyState('Could not load', S.error, '', '') : '<div class="loading"><div class="spin"></div>Loading STEM FEST</div>';
+    return;
+  }
+  const v = (VIEWS[page] || VIEWS.home)(a);
+  app.innerHTML = v.html;
+  const key = page + '/' + (a || '');
+  if (key !== lastPage) window.scrollTo(0, 0);
+  lastPage = key;
+  if (v.mount) v.mount(app);
+}
+
+window.addEventListener('hashchange', render);
+
+/* Refresh public info every minute (announcements, schedule changes) */
+setInterval(async () => {
+  if (document.hidden) return;
+  const page = route()[0] || 'home';
+  if (!['home', 'schedule', 'venue', 'help', 'results'].includes(page)) return;
+  await loadData(); render();
+}, 60000);
+
+(async function start() {
+  if (!DEMO) {
+    const cached = jparse(store.get('sf_cache'), null);
+    if (cached) { S.data = prepData(cached); render(); }
+  }
+  await loadData();
+  await syncVotes();
+  render();
+})();
+</script>
+</body>
+</html>
