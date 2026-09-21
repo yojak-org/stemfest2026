@@ -176,6 +176,15 @@ button,input,select,textarea{font:inherit;color:inherit}
 .vb-icon svg{width:28px;height:28px;stroke-width:3}
 .pop .vb-icon{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes pop{0%{transform:scale(.3)}100%{transform:scale(1)}}
+.rq{padding:12px 0;border-top:1px solid var(--line)}
+.rq:first-of-type{border-top:0}
+.rq p{font-weight:600;font-size:17px;line-height:1.35}
+.stars{display:flex;flex-wrap:wrap;gap:2px;margin-top:8px;align-items:center}
+.star{width:44px;height:44px;flex:none;border:0;background:none;padding:4px;cursor:pointer;color:#D9C9CB;border-radius:10px}
+.star svg{width:100%;height:100%}
+.star.on{color:#E0A100}
+.star.on svg{fill:currentColor}
+.slabel{margin-left:6px;font-size:14px;color:var(--muted)}
 .err{color:var(--err);font-weight:500;font-size:15px}
 .field{display:grid;gap:6px}
 .field span{font-weight:600;font-size:15px}
@@ -373,6 +382,7 @@ const ICONS = {
   back: '<path d="M15 5l-7 7 7 7"/>',
   trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M10 17h4v3h-4z"/>',
   search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+  star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   megaphone: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>'
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
@@ -427,17 +437,18 @@ const SAMPLE = {
     event_name: 'STEM FEST 2026',
     tagline: 'Working models built by students of YOJAK STEM centres',
     event_date: 'TBD', event_hours: 'TBD', venue_name: 'TBD', venue_address: 'TBD', map_link: '',
-    welcome_note: 'Welcome to STEM FEST! Walk through the Science, Math and Tech corners, talk to the young makers about how their models work, and vote for the ones you like best.',
+    welcome_note: 'Welcome to STEM FEST! Walk through the Science, Math and Tech corners, talk to the young makers about how their models work, and rate the ones you like best.',
     announcement: '', floor_plan_url: '',
     yojak_logo: '', fest_logo: '', partner_label: 'Supported by', partner_name: '', partner_logo: '',
     voting_open: 'TRUE', voting_mode: 'device', judging_locked: 'FALSE', results_revealed: 'FALSE',
     min_judges: '2', max_per_criterion: '10',
+    visitor_questions: 'How well did the students explain it?; How creative or interesting is it?; How useful is it in real life?',
     criteria: 'Concept and Understanding; Innovation and Creativity; Working of the Model; Presentation by Students; Real Life Relevance'
   },
   schedule: [
     { start: '09:00', end: '09:45', title: 'Registration and stall setup', location: 'Registration Desk', description: 'Centres check in and set up their models' },
     { start: '10:00', end: '10:30', title: 'Inauguration', location: 'Main Stage', description: '' },
-    { start: '10:30', end: '13:00', title: 'Exhibition open, judging round 1', location: 'All corners', description: 'Visitors walk around and vote' },
+    { start: '10:30', end: '13:00', title: 'Exhibition open, judging round 1', location: 'All corners', description: 'Visitors walk around and rate models' },
     { start: '13:00', end: '13:45', title: 'Lunch break', location: 'TBD', description: '' },
     { start: '13:45', end: '15:30', title: 'Exhibition continues, judging round 2', location: 'All corners', description: '' },
     { start: '15:30', end: '15:30', title: 'Voting closes', location: '', description: '' },
@@ -477,25 +488,26 @@ const SAMPLE = {
 
 const Demo = {
   settings() { return Object.assign({}, SAMPLE.settings, jparse(store.get('sfd_set'), {})); },
-  votes() { return jparse(store.get('sfd_votes'), []); },
+  ratings() { return Object.values(jparse(store.get('sfd_ratings'), {})); },
   scores() { return jparse(store.get('sfd_scores'), {}); },
   cats(v) { const s = String(v || '').trim(); if (!s || /^all$/i.test(s)) return CATS.slice(); const c = s.split(/[,;]/).map(normCat).filter(Boolean); return c.length ? c : CATS.slice(); },
   results() {
     const s = this.settings(); const minJ = parseInt(s.min_judges, 10) || 1;
-    const sc = Object.values(this.scores()); const vs = this.votes(); const out = {};
+    const sc = Object.values(this.scores()); const rs = this.ratings(); const out = {};
     CATS.forEach(c => {
       const list = SAMPLE.projects.filter(p => p.category === c).map(p => {
         const mine = sc.filter(x => x.project_id === p.project_id);
         const sum = mine.reduce((a, x) => a + x.total, 0);
-        return { project_id: p.project_id, stall: p.stall, title: p.title, centre: p.centre, avg: mine.length ? Math.round(sum / mine.length * 100) / 100 : 0, n: mine.length, votes: vs.filter(v => v.project_id === p.project_id).length, below_min: mine.length < minJ };
+        const pr = rs.filter(v => v.project_id === p.project_id); const points = pr.reduce((a, x) => a + x.total, 0);
+        return { project_id: p.project_id, stall: p.stall, title: p.title, centre: p.centre, avg: mine.length ? Math.round(sum / mine.length * 100) / 100 : 0, n: mine.length, below_min: mine.length < minJ, points, raters: pr.length, pavg: pr.length ? Math.round(points / pr.length * 100) / 100 : 0 };
       });
-      out[c] = { judges: list.filter(x => x.n).sort((a, b) => b.avg - a.avg || b.n - a.n), people: list.filter(x => x.votes).sort((a, b) => b.votes - a.votes) };
+      out[c] = { judges: list.filter(x => x.n).sort((a, b) => b.avg - a.avg || b.n - a.n), people: list.filter(x => x.raters).sort((a, b) => b.points - a.points || b.pavg - a.pavg) };
     });
     return out;
   },
   publicResults() {
     const r = this.results(); const out = {};
-    CATS.forEach(c => { const top = r[c].people[0]?.votes || 0; out[c] = { judges: r[c].judges.slice(0, 3), people: r[c].people.filter(x => top && x.votes === top) }; });
+    CATS.forEach(c => { const f = r[c].people[0]; out[c] = { judges: r[c].judges.slice(0, 3), people: r[c].people.filter(x => f && x.points === f.points && x.pavg === f.pavg) }; });
     return out;
   },
   judge(id, pin) { const j = SAMPLE.judges.find(x => x.judge_id === id); return j && j.pin === String(pin).trim() ? j : null; },
@@ -505,7 +517,7 @@ const Demo = {
       const s = this.settings();
       return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, contacts: SAMPLE.contacts, projects: SAMPLE.projects, results: toBool(s.results_revealed) ? this.publicResults() : null };
     }
-    if (p.action === 'myvotes') return { ok: true, project_ids: this.votes().filter(v => v.voter_id === p.voter_id).map(v => v.project_id) };
+    if (p.action === 'myratings') { const out = {}; this.ratings().filter(v => v.voter_id === p.voter_id).forEach(v => out[v.project_id] = v.scores); return { ok: true, ratings: out }; }
     if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })) };
     return { ok: false, error: 'Unknown action' };
   },
@@ -513,13 +525,14 @@ const Demo = {
     await sleep(450);
     const s = this.settings();
     if (b.action === 'checkcode') return { ok: true, valid: SAMPLE.codes.includes(String(b.code || '').toUpperCase()) };
-    if (b.action === 'vote') {
-      if (!toBool(s.voting_open)) return { ok: false, code: 'closed', error: 'Voting is closed.' };
+    if (b.action === 'rate') {
+      if (!toBool(s.voting_open)) return { ok: false, code: 'closed', error: 'Rating is closed.' };
       if (s.voting_mode === 'code' && !SAMPLE.codes.includes(String(b.voter_id).slice(2))) return { ok: false, code: 'badcode', error: 'This voter code is not valid.' };
-      const v = this.votes();
-      if (v.some(x => x.voter_id === b.voter_id && x.project_id === b.project_id)) return { ok: true, already: true };
-      v.push({ voter_id: b.voter_id, project_id: b.project_id }); store.set('sfd_votes', JSON.stringify(v));
-      return { ok: true };
+      if (!Array.isArray(b.scores) || b.scores.length !== 3 || b.scores.some(x => !(x >= 1 && x <= 5))) return { ok: false, error: 'Please answer all three questions.' };
+      const all = jparse(store.get('sfd_ratings'), {}); const key = b.voter_id + '|' + b.project_id; const updated = !!all[key];
+      const total = b.scores.reduce((a, x) => a + x, 0);
+      all[key] = { voter_id: b.voter_id, project_id: b.project_id, scores: b.scores, total }; store.set('sfd_ratings', JSON.stringify(all));
+      return { ok: true, updated, total };
     }
     if (b.action === 'judgelogin') {
       const j = this.judge(b.judge_id, b.pin); if (!j) return { ok: false, error: 'Name or PIN is not correct.' };
@@ -536,11 +549,11 @@ const Demo = {
     }
     if (b.action === 'admin') {
       if (b.key !== 'demo') return { ok: false, code: 'badkey', error: 'That admin key is not correct. In preview mode the key is: demo' };
-      const v = this.votes(); const sc = Object.values(this.scores());
+      const v = this.ratings(); const sc = Object.values(this.scores());
       return {
         ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(),
         stats: {
-          projects: SAMPLE.projects.length, votes: v.length, voters: new Set(v.map(x => x.voter_id)).size, scores: sc.length,
+          projects: SAMPLE.projects.length, ratings: v.length, raters: new Set(v.map(x => x.voter_id)).size, scores: sc.length,
           judges: SAMPLE.judges.map(j => { const cats = this.cats(j.categories); return { name: j.name, categories: cats.join(', '), total: SAMPLE.projects.filter(p => cats.includes(p.category)).length, done: sc.filter(x => x.judge_id === j.judge_id).length }; })
         }
       };
@@ -565,7 +578,7 @@ async function apiPost(body) {
 
 /* ---------------- state ---------------- */
 const S = {
-  data: null, error: null, voted: new Set(),
+  data: null, error: null, rated: {},
   filter: { cat: 'All', q: '', centre: '' },
   judge: jparse(store.get('sf_judge', true), null), judgeScores: null, judgesList: null,
   adminKey: store.get('sf_admin', true), admin: null
@@ -588,17 +601,17 @@ function voterId() {
   if (votingMode() === 'code') { const c = store.get('sf_code'); return c ? 'C:' + c : null; }
   return deviceId();
 }
-function markVoted(id) {
-  S.voted.add(id);
-  const vid = voterId(); if (vid) store.set('sf_voted:' + vid, JSON.stringify([...S.voted]));
+function markRated(id, scores) {
+  S.rated[id] = scores;
+  const vid = voterId(); if (vid) store.set('sf_rated:' + vid, JSON.stringify(S.rated));
 }
-async function syncVotes() {
+async function syncRatings() {
   const vid = voterId();
-  S.voted = new Set(vid ? jparse(store.get('sf_voted:' + vid), []) : []);
+  S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {};
   if (!vid) return;
   try {
-    const r = await apiGet({ action: 'myvotes', voter_id: vid });
-    if (r.ok) { r.project_ids.forEach(x => S.voted.add(x)); store.set('sf_voted:' + vid, JSON.stringify([...S.voted])); }
+    const r = await apiGet({ action: 'myratings', voter_id: vid });
+    if (r.ok) { Object.assign(S.rated, r.ratings || {}); store.set('sf_rated:' + vid, JSON.stringify(S.rated)); }
   } catch (e) { /* offline: keep local list */ }
 }
 
@@ -628,6 +641,12 @@ const criteria = () => {
   const def = ['Concept and Understanding', 'Innovation and Creativity', 'Working of the Model', 'Presentation by Students', 'Real Life Relevance'];
   return def.map((d, i) => list[i] || d);
 };
+const visitorQs = () => {
+  const list = String(S.data.settings.visitor_questions || '').split(';').map(x => x.trim()).filter(Boolean);
+  const def = ['How well did the students explain it?', 'How creative or interesting is it?', 'How useful is it in real life?'];
+  return def.map((d, i) => list[i] || d);
+};
+const STAR_WORDS = ['', 'Not good', 'Okay', 'Good', 'Very good', 'Excellent'];
 const maxMark = () => parseInt(S.data.settings.max_per_criterion, 10) || 10;
 function toast(msg) {
   const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg;
@@ -674,8 +693,8 @@ VIEWS.home = () => {
   const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
   const map = s.map_link ? `<a class="btn btn-light" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const steps = votingMode() === 'code'
-    ? ['Scan the QR code at any stall, or pick a model from the Models tab.', 'The first time, type the voter code printed on your entry pass.', 'Tap Vote for this model. Vote for as many models as you like, once each.']
-    : ['Scan the QR code at any stall, or pick a model from the Models tab.', 'Read about the model and talk to the students.', 'Tap Vote for this model. Vote for as many models as you like, once each.'];
+    ? ['Scan the QR code at any stall, or pick a model from the Models tab.', 'The first time, type the voter code printed on your entry pass.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.']
+    : ['Scan the QR code at any stall, or pick a model from the Models tab.', 'Talk to the students about how their model works.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.'];
   return {
     html: `
     <section class="hero"><div class="wrap">
@@ -696,8 +715,8 @@ VIEWS.home = () => {
       ${S.data.results ? `<a class="results-teaser" href="#/results">${icon('trophy')}<span><b>The winners are out!</b><br><span class="muted">See the results for every corner</span></span></a>` : ''}
       ${nowNext()}
       ${s.welcome_note ? `<section class="block"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
-      <section class="block"><h2>How to vote</h2>
-        ${toBool(s.voting_open) ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Voting is closed. Thank you to everyone who voted.</p>'}
+      <section class="block"><h2>How to rate a model</h2>
+        ${toBool(s.voting_open) ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Rating is closed. Thank you to everyone who took part.</p>'}
       </section>
       ${partnersBlock()}
     </div>`
@@ -748,7 +767,7 @@ VIEWS.projects = (cat) => {
   const centres = [...new Set(S.data.projects.map(p => p.centre).filter(c => c && !isTbd(c)))].sort();
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Models on display</h1><p>Tap a model to read about it and vote.</p></div>
+      <div class="phead"><h1>Models on display</h1><p>Tap a model to read about it and rate it.</p></div>
       <label class="search"><span class="sr">Search models</span>${icon('search')}<input id="q" type="search" placeholder="Search by name, stall or centre" value="${esc(S.filter.q)}" autocomplete="off"></label>
       <div class="chips" role="group" aria-label="Filter by corner">
         ${['All', ...CATS].map(c => `<button class="chip ${c !== 'All' ? 'c-' + CAT_CLS[c] : ''}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c}</button>`).join('')}
@@ -784,7 +803,7 @@ function projectCard(p) {
   return `<a class="pcard c-${CAT_CLS[p.category]}" href="#/project/${encodeURIComponent(p.project_id)}">
     ${stallBadge(p)}
     <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc(orTbd(p.centre, ''))}</span><span class="ptag">${p.category}</span></span>
-    ${S.voted.has(p.project_id) ? `<span class="voted-mark">${icon('check')}Voted</span>` : ''}
+    ${S.rated[p.project_id] ? `<span class="voted-mark">${icon('check')}Rated</span>` : ''}
   </a>`;
 }
 
@@ -804,57 +823,77 @@ VIEWS.project = (id) => {
       </article>
       <div id="votebox"></div>
     </div>`,
-    mount() { renderVoteBox(p); }
+    mount() { renderRateBox(p); }
   };
 };
 
-function renderVoteBox(p, st = {}) {
+function renderRateBox(p, st = {}) {
   const box = $('#votebox'); if (!box) return;
-  const s = S.data.settings; const mode = votingMode();
+  const s = S.data.settings; const mode = votingMode(); const open = toBool(s.voting_open);
+  const mine = S.rated[p.project_id]; const qs = visitorQs();
+  const sum = a => a.reduce((x, y) => x + y, 0);
   let html;
-  if (S.voted.has(p.project_id)) {
-    html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Vote saved' : 'You voted for this model'}</h2><p>You can vote for other models too, once each.</p></div></div>
-      <p style="margin-top:12px"><a class="btn btn-ghost btn-block" href="#/projects">Browse more models</a></p>`;
-  } else if (!toBool(s.voting_open)) {
-    html = `<div class="votebox muted-box"><h2>Voting is closed</h2><p>Thank you for visiting. The winners will be announced at the prize distribution.</p></div>`;
+  if (mine && !st.edit) {
+    html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Rating saved' : 'You rated this model'}</h2><p>Your score: ${sum(mine)} out of 15. You can rate other models too.</p></div></div>
+      <div style="display:grid;gap:10px;margin-top:12px">
+        ${open ? '<button class="btn btn-ghost btn-block" id="editrate">Change my rating</button>' : ''}
+        <a class="btn btn-ghost btn-block" href="#/projects">Browse more models</a>
+      </div>`;
+  } else if (!open) {
+    html = `<div class="votebox muted-box"><h2>Rating is closed</h2><p>Thank you for visiting. The winners will be announced at the prize distribution.</p></div>`;
   } else if (mode === 'code' && !store.get('sf_code')) {
     html = `<div class="votebox"><h2>Enter your voter code</h2><p>You will find it printed on your entry pass. You only need to enter it once.</p>
       <label class="field"><span>Voter code</span><input id="codein" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="For example K7M2QX"></label>
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
       <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
   } else {
-    html = `<div class="votebox"><h2>Like this model?</h2><p>Your vote counts towards the People's Choice award for the ${p.category} corner.</p>
+    const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
+    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${p.category} corner.</p>
+      ${qs.map((q, i) => `<div class="rq"><p>${esc(q)}</p><div class="stars" role="radiogroup" aria-label="${esc(q)}">
+        ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${STAR_WORDS[n]}">${icon('star')}</button>`).join('')}
+        <span class="slabel" id="sl${i}">${vals[i] ? STAR_WORDS[vals[i]] : 'Tap a star'}</span></div></div>`).join('')}
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
-      <button class="btn btn-primary btn-block btn-big" id="votebtn">${icon('heart')}Vote for this model</button></div>`;
+      <button class="btn btn-primary btn-block btn-big" id="ratebtn">${mine ? 'Save changes' : 'Submit rating'}</button>
+      ${mine ? '<button class="btn btn-ghost btn-block" id="canceledit">Keep my old rating</button>' : ''}</div>`;
+    box.innerHTML = html;
+    $$('.star', box).forEach(b => b.addEventListener('click', () => {
+      const q = +b.dataset.q, n = +b.dataset.n; vals[q] = n;
+      $$(`.star[data-q="${q}"]`, box).forEach(x => { const k = +x.dataset.n; x.classList.toggle('on', k <= n); x.setAttribute('aria-checked', String(k === n)); });
+      $('#sl' + q).textContent = STAR_WORDS[n];
+      const e = $('.err', box); if (e && vals.every(Boolean)) e.remove();
+    }));
+    const ce = $('#canceledit'); if (ce) ce.addEventListener('click', () => renderRateBox(p));
+    const rb = $('#ratebtn');
+    rb.addEventListener('click', async () => {
+      if (vals.some(v => !v)) { renderRateBox(p, { edit: true, vals, err: 'Answer all three questions before submitting.' }); return; }
+      rb.disabled = true; rb.innerHTML = '<span class="spin"></span>Saving your rating...';
+      try {
+        const r = await apiPost({ action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals });
+        if (r.ok) { markRated(p.project_id, vals.slice()); renderRateBox(p, { fresh: true }); }
+        else if (r.code === 'closed') { s.voting_open = 'FALSE'; renderRateBox(p); }
+        else if (r.code === 'badcode') { store.del('sf_code'); renderRateBox(p, { err: 'That voter code is not valid. Please type it again.' }); }
+        else renderRateBox(p, { edit: true, vals, err: r.error || 'Your rating was not saved. Tap Submit again.' });
+      } catch (e) {
+        renderRateBox(p, { edit: true, vals, err: 'Your rating was not saved because the connection dropped. Tap Submit again.' });
+      }
+    });
+    return;
   }
   box.innerHTML = html;
-
-  const vb = $('#votebtn');
-  if (vb) vb.addEventListener('click', async () => {
-    vb.disabled = true; vb.innerHTML = '<span class="spin"></span>Saving your vote...';
-    try {
-      const r = await apiPost({ action: 'vote', voter_id: voterId(), project_id: p.project_id });
-      if (r.ok) { markVoted(p.project_id); renderVoteBox(p, { fresh: !r.already }); }
-      else if (r.code === 'closed') { s.voting_open = 'FALSE'; renderVoteBox(p); }
-      else if (r.code === 'badcode') { store.del('sf_code'); renderVoteBox(p, { err: 'That voter code is not valid. Please type it again.' }); }
-      else renderVoteBox(p, { err: r.error || 'Your vote was not saved. Tap Vote again.' });
-    } catch (e) {
-      renderVoteBox(p, { err: 'Your vote was not saved because the connection dropped. Tap Vote again.' });
-    }
-  });
+  const ed = $('#editrate'); if (ed) ed.addEventListener('click', () => renderRateBox(p, { edit: true }));
 
   const cb = $('#codebtn');
   if (cb) {
     const input = $('#codein');
     const go = async () => {
       const code = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-      if (code.length < 4) { renderVoteBox(p, { err: 'Type the full code from your entry pass.' }); return; }
+      if (code.length < 4) { renderRateBox(p, { err: 'Type the full code from your entry pass.' }); return; }
       cb.disabled = true; cb.innerHTML = '<span class="spin"></span>Checking code...';
       try {
         const r = await apiPost({ action: 'checkcode', code });
-        if (r.ok && r.valid) { store.set('sf_code', code); await syncVotes(); renderVoteBox(p); toast('Code saved. You can vote now.'); }
-        else renderVoteBox(p, { err: 'That code was not found. Check the letters and try again.' });
-      } catch (e) { renderVoteBox(p, { err: 'The code could not be checked because the connection dropped. Try again.' }); }
+        if (r.ok && r.valid) { store.set('sf_code', code); await syncRatings(); renderRateBox(p); toast('Code saved. You can rate models now.'); }
+        else renderRateBox(p, { err: 'That code was not found. Check the letters and try again.' });
+      } catch (e) { renderRateBox(p, { err: 'The code could not be checked because the connection dropped. Try again.' }); }
     };
     cb.addEventListener('click', go);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
@@ -920,7 +959,7 @@ VIEWS.results = () => {
             <h3>Judges' awards</h3>
             ${x.judges.length ? `<ol class="podium">${x.judges.map((w, i) => `<li><span class="medal">${places[i]}</span><span><b>${esc(w.title)}</b><br><span class="muted">${esc(metaLine(w))}</span></span></li>`).join('')}</ol>` : '<p class="muted">No awards in this corner.</p>'}
             <h3>People's Choice</h3>
-            ${x.people.length ? `<ol class="podium">${x.people.map(w => `<li><span class="medal">${icon('heart').replace('<svg', '<svg style="width:22px;height:22px"')}</span><span><b>${esc(w.title)}</b><br><span class="muted">${esc(metaLine(w))}</span></span></li>`).join('')}</ol>` : '<p class="muted">No votes in this corner.</p>'}
+            ${x.people.length ? `<ol class="podium">${x.people.map(w => `<li><span class="medal">${icon('heart').replace('<svg', '<svg style="width:22px;height:22px"')}</span><span><b>${esc(w.title)}</b><br><span class="muted">${esc(metaLine(w))}</span></span></li>`).join('')}</ol>` : '<p class="muted">No ratings in this corner.</p>'}
           </div>
         </section>`;
       }).join('')}
@@ -1120,8 +1159,8 @@ function adminDash() {
       ${a.default_key ? '<p class="banner">The admin key is still the default one. Change admin_key in the Settings tab before the event.</p>' : ''}
       <div class="stats">
         <div class="stat"><b>${st.projects}</b><span>Models</span></div>
-        <div class="stat"><b>${st.votes}</b><span>Visitor votes</span></div>
-        <div class="stat"><b>${st.voters}</b><span>People who voted</span></div>
+        <div class="stat"><b>${st.ratings}</b><span>Visitor ratings</span></div>
+        <div class="stat"><b>${st.raters}</b><span>People who rated</span></div>
         <div class="stat"><b>${st.scores}</b><span>Judge scores</span></div>
       </div>
       <div class="tools no-print">
@@ -1133,17 +1172,17 @@ function adminDash() {
 
       <section class="block"><h2>Switches</h2>
         <div class="flags">
-          ${flag('Visitor voting', toBool(s.voting_open), 'Open', 'Closed')}
+          ${flag('Visitor rating', toBool(s.voting_open), 'Open', 'Closed')}
           ${flag('Voting mode', true, votingModeLabel(s.voting_mode), '')}
           ${flag('Judging', !toBool(s.judging_locked), 'Open', 'Locked')}
           ${flag('Public results page', toBool(s.results_revealed), 'Showing winners', 'Hidden')}
         </div>
         ${DEMO ? `<div class="tools">
-            <button class="btn btn-ghost btn-sm" data-flip="voting_open">Flip voting</button>
+            <button class="btn btn-ghost btn-sm" data-flip="voting_open">Flip rating</button>
             <button class="btn btn-ghost btn-sm" data-flip="judging_locked">Flip judging lock</button>
             <button class="btn btn-ghost btn-sm" data-flip="results_revealed">Flip results</button>
             <button class="btn btn-ghost btn-sm" data-flip="voting_mode">Switch voting mode</button>
-            <button class="btn btn-ghost btn-sm" id="dreset">Clear preview votes and scores</button>
+            <button class="btn btn-ghost btn-sm" id="dreset">Clear preview ratings and scores</button>
           </div><p class="muted" style="font-size:14px;margin-top:8px">Preview mode only. On the live site, change these in the Settings tab of the Google Sheet.</p>`
         : '<p class="muted" style="font-size:14px;margin-top:8px">To change these, edit the Settings tab in the Google Sheet. The website picks up changes within 30 seconds.</p>'}
       </section>
@@ -1161,10 +1200,10 @@ function adminDash() {
           ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
             ${r.judges.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
           </tbody></table></div>` : '<p class="muted">No scores yet.</p>'}
-          <h3>People's Choice, by visitor votes</h3>
-          ${r.people.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Votes</th></tr></thead><tbody>
-            ${r.people.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.votes}</b></td></tr>`).join('')}
-          </tbody></table></div>` : '<p class="muted">No votes yet.</p>'}
+          <h3>People's Choice, by total visitor points</h3>
+          ${r.people.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Points</th><th>Ratings</th><th>Average</th></tr></thead><tbody>
+            ${r.people.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.points}</b></td><td class="num-c">${x.raters}</td><td class="num-c">${x.pavg} of 15</td></tr>`).join('')}
+          </tbody></table></div>` : '<p class="muted">No ratings yet.</p>'}
         </section>`;
       }).join('')}
       <p class="muted" style="font-size:14px;margin-top:22px">If two models have the same average, check the Results tab in the Sheet and decide the tie with the judges.</p>
@@ -1180,21 +1219,21 @@ function adminDash() {
       $$('[data-flip]').forEach(b => b.addEventListener('click', async () => {
         const k = b.dataset.flip; const cur = Demo.settings(); const o = jparse(store.get('sfd_set'), {});
         o[k] = k === 'voting_mode' ? (cur.voting_mode === 'code' ? 'device' : 'code') : (toBool(cur[k]) ? 'FALSE' : 'TRUE');
-        store.set('sfd_set', JSON.stringify(o)); await loadData(); await syncVotes(); refresh(true);
+        store.set('sfd_set', JSON.stringify(o)); await loadData(); await syncRatings(); refresh(true);
       }));
-      const dr = $('#dreset'); if (dr) dr.addEventListener('click', async () => { store.del('sfd_votes'); store.del('sfd_scores'); S.voted = new Set(); store.del('sf_voted:' + voterId()); refresh(true); });
+      const dr = $('#dreset'); if (dr) dr.addEventListener('click', async () => { store.del('sfd_ratings'); store.del('sfd_scores'); S.rated = {}; store.del('sf_rated:' + voterId()); refresh(true); });
       timer = setInterval(() => refresh(false), 30000);
     }
   };
 }
-const votingModeLabel = m => String(m || '').trim().toLowerCase() === 'code' ? 'Printed voter codes' : 'One vote per phone';
+const votingModeLabel = m => String(m || '').trim().toLowerCase() === 'code' ? 'Printed voter codes' : 'One rating per phone';
 
 function downloadCsv() {
-  const rows = [['Category', 'List', 'Rank', 'Stall', 'Model', 'Centre', 'Average score', 'Judges who scored', 'Votes']];
+  const rows = [['Category', 'List', 'Rank', 'Stall', 'Model', 'Centre', 'Judges average (of 50)', 'Judges who scored', 'Visitor points', 'Visitor ratings', 'Visitor average (of 15)']];
   CATS.forEach(c => {
     const r = S.admin.results[c];
-    r.judges.forEach((x, i) => rows.push([c, 'Judges', i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.votes]));
-    r.people.forEach((x, i) => rows.push([c, "People's Choice", i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.votes]));
+    r.judges.forEach((x, i) => rows.push([c, 'Judges', i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg]));
+    r.people.forEach((x, i) => rows.push([c, "People's Choice", i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg]));
   });
   const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
   const a = document.createElement('a');
@@ -1226,8 +1265,8 @@ function qrSheet() {
         ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones after the site is live on GitHub Pages.</p>' : ''}
       </div>
       <div class="qr-grid">
-        <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and voting</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
-        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${p.category} corner</span><span class="qstall">Stall ${esc(p.stall)}</span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and vote</span>${foot}</div>`).join('')}
+        <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and rating</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
+        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${p.category} corner</span><span class="qstall">Stall ${esc(p.stall)}</span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and rate it</span>${foot}</div>`).join('')}
       </div>
     </div>`,
     async mount() {
@@ -1246,7 +1285,7 @@ function codesSheet() {
         <div class="phead"><h1>Voter codes</h1><p>${codes.length} codes. Cut along the dashed lines and hand one to each visitor, or print them on entry passes.</p></div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
       </div>
-      <div class="code-grid">${codes.map(c => `<div class="code-card"><span>STEM FEST voter code</span><b>${esc(c)}</b><span>Scan a stall QR code and enter this once</span></div>`).join('')}</div>
+      <div class="code-grid">${codes.map(c => `<div class="code-card"><span>STEM FEST voter code</span><b>${esc(c)}</b><span>Scan a stall QR code and enter this once to rate models</span></div>`).join('')}</div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); }
   };
@@ -1259,7 +1298,7 @@ function route() { return location.hash.replace(/^#\/?/, '').split('/').filter(B
 
 function renderNotice() {
   const n = $('#notice'); let html = '';
-  if (DEMO) html += `<div class="demo"><div class="wrap">Preview mode: sample data, and votes are saved only on this phone.</div></div>`;
+  if (DEMO) html += `<div class="demo"><div class="wrap">Preview mode: sample data, and ratings are saved only on this phone.</div></div>`;
   const a = S.data?.settings?.announcement;
   if (a && !isTbd(a)) html += `<div class="announce" role="status"><div class="wrap">${icon('megaphone').replace('<svg', '<svg style="width:22px;height:22px;flex:none;margin-top:1px"')}<span>${esc(a)}</span></div></div>`;
   n.innerHTML = html;
@@ -1303,7 +1342,7 @@ setInterval(async () => {
     if (cached) { S.data = prepData(cached); render(); }
   }
   await loadData();
-  await syncVotes();
+  await syncRatings();
   render();
 })();
 </script>
