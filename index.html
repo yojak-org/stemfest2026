@@ -39,6 +39,22 @@ button,input,select,textarea{font:inherit;color:inherit}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:54px}
 .brand{color:#fff;text-decoration:none;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;letter-spacing:.01em}
 .by{font-size:14px;opacity:.85}
+.toplogo{height:36px;width:auto;max-width:130px;object-fit:contain;background:#fff;border-radius:8px;padding:3px 8px;display:block}
+.presents-logo{display:flex;align-items:center;gap:10px}
+.presents-logo img{height:44px;width:auto;max-width:160px;object-fit:contain;background:#fff;border-radius:10px;padding:4px 10px}
+.festlogo-plate{display:inline-block;background:#fff;border-radius:22px;padding:14px 20px;margin:14px 0 14px}
+.festlogo-plate img{max-height:140px;max-width:min(100%,320px);width:auto;object-fit:contain}
+.partners{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);text-align:center}
+.partners .plabel{font-size:15px;color:var(--muted);font-weight:600}
+.plogos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 28px;margin-top:14px}
+.plogo{display:flex;flex-direction:column;align-items:center;gap:6px}
+.plogo img{max-height:72px;max-width:200px;width:auto;object-fit:contain}
+.plogo span{font-size:14px;color:var(--muted)}
+.qr-head-logo{height:40px;width:auto;max-width:180px;object-fit:contain}
+.qr-foot{margin-top:6px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.qr-foot small{font-size:11px;color:var(--muted)}
+.qr-foot div{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.qr-foot img{height:26px;width:auto;max-width:110px;object-fit:contain}
 #notice:empty{display:none}
 .announce{background:#FFF4D6;color:#5A3B00;border-bottom:1px solid #F1DFA6}
 .announce .wrap{padding-top:10px;padding-bottom:10px;display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:16px}
@@ -413,6 +429,7 @@ const SAMPLE = {
     event_date: 'TBD', event_hours: 'TBD', venue_name: 'TBD', venue_address: 'TBD', map_link: '',
     welcome_note: 'Welcome to STEM FEST! Walk through the Science, Math and Tech corners, talk to the young makers about how their models work, and vote for the ones you like best.',
     announcement: '', floor_plan_url: '',
+    yojak_logo: '', fest_logo: '', partner_label: 'Supported by', partner_name: '', partner_logo: '',
     voting_open: 'TRUE', voting_mode: 'device', judging_locked: 'FALSE', results_revealed: 'FALSE',
     min_judges: '2', max_per_criterion: '10',
     criteria: 'Concept and Understanding; Innovation and Creativity; Working of the Model; Presentation by Students; Real Life Relevance'
@@ -620,6 +637,27 @@ function emptyState(title, text, href, label) {
   return `<div class="wrap"><div class="empty"><h1>${esc(title)}</h1><p>${esc(text)}</p>${href ? `<a class="btn btn-primary" href="${href}">${esc(label)}</a>` : ''}</div></div>`;
 }
 const metaLine = w => [isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', ');
+/* Logos: a file name uploaded next to index.html on GitHub (yojak-logo.png) or a full link */
+function logoSrc(v) {
+  v = String(v || '').trim();
+  if (!v || isTbd(v)) return '';
+  return /^https?:\/\//i.test(v) ? imgUrl(v) : v;
+}
+function partnerList() {
+  const s = S.data.settings;
+  const n = String(s.partner_name || '').split(';').map(x => x.trim());
+  const l = String(s.partner_logo || '').split(';').map(x => x.trim());
+  const out = [];
+  for (let i = 0; i < Math.max(n.length, l.length); i++) {
+    const name = isTbd(n[i]) ? '' : n[i] || ''; const logo = logoSrc(l[i]);
+    if (name || logo) out.push({ name, logo });
+  }
+  return out;
+}
+function partnersBlock() {
+  const list = partnerList(); if (!list.length) return '';
+  return `<section class="partners"><p class="plabel">${esc(orTbd(S.data.settings.partner_label, 'Supported by'))}</p><div class="plogos">${list.map(p => `<div class="plogo">${p.logo ? `<img src="${esc(p.logo)}" alt="${esc(p.name || 'Partner logo')}" onerror="this.remove()">` : ''}${p.name ? `<span>${esc(p.name)}</span>` : ''}</div>`).join('')}</div></section>`;
+}
 function stallBadge(p, big) {
   return `<span class="stall ${big ? 'big' : ''}"><small>Stall</small>${esc(p.stall || '?')}</span>`;
 }
@@ -632,6 +670,7 @@ const VIEWS = {};
 /* ---------- Home ---------- */
 VIEWS.home = () => {
   const s = S.data.settings;
+  const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo);
   const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
   const map = s.map_link ? `<a class="btn btn-light" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const steps = votingMode() === 'code'
@@ -640,8 +679,8 @@ VIEWS.home = () => {
   return {
     html: `
     <section class="hero"><div class="wrap">
-      <p class="presents">YOJAK presents</p>
-      <h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>
+      ${yl ? `<p class="presents presents-logo"><img src="${esc(yl)}" alt="YOJAK" onerror="this.replaceWith('YOJAK')">presents</p>` : '<p class="presents">YOJAK presents</p>'}
+      ${fl ? `<div class="festlogo-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.parentNode.nextElementSibling.className='title';this.parentNode.remove()"></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
       <dl class="facts">
         <div><dt>Date</dt><dd>${esc(fmtDate(s.event_date))}</dd></div>
@@ -660,6 +699,7 @@ VIEWS.home = () => {
       <section class="block"><h2>How to vote</h2>
         ${toBool(s.voting_open) ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Voting is closed. Thank you to everyone who voted.</p>'}
       </section>
+      ${partnersBlock()}
     </div>`
   };
 };
@@ -884,6 +924,7 @@ VIEWS.results = () => {
           </div>
         </section>`;
       }).join('')}
+      ${partnersBlock()}
     </div>`
   };
 };
@@ -1173,6 +1214,10 @@ async function waitForQR() {
 function qrSheet() {
   const base = siteBase();
   const list = S.data.projects.slice().sort(byStall);
+  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo);
+  const head = fl ? `<img class="qr-head-logo" src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>';
+  const pl = partnerList().filter(p => p.logo);
+  const foot = (yl || pl.length) ? `<div class="qr-foot">${pl.length ? `<small>${esc(orTbd(st.partner_label, 'Supported by'))}</small>` : ''}<div>${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}${pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name || 'Partner')}">`).join('')}</div></div>` : '';
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
@@ -1181,8 +1226,8 @@ function qrSheet() {
         ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones after the site is live on GitHub Pages.</p>' : ''}
       </div>
       <div class="qr-grid">
-        <div class="qr-card"><span class="qh">STEM FEST</span><span class="qcat">Scan for the schedule, venue map and voting</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span></div>
-        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}"><span class="qh">STEM FEST</span><span class="qcat">${p.category} corner</span><span class="qstall">Stall ${esc(p.stall)}</span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and vote</span></div>`).join('')}
+        <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and voting</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
+        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${p.category} corner</span><span class="qstall">Stall ${esc(p.stall)}</span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and vote</span>${foot}</div>`).join('')}
       </div>
     </div>`,
     async mount() {
@@ -1226,7 +1271,8 @@ function render() {
   const [page = 'home', a] = route();
   const navPage = page === 'project' ? 'projects' : page;
   $$('.tabs a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
-  $('#by').textContent = page === 'judge' ? 'Judge portal' : page === 'admin' ? 'Organisers' : 'by YOJAK';
+  const yl = logoSrc(S.data?.settings?.yojak_logo);
+  $('#by').innerHTML = page === 'judge' ? 'Judge portal' : page === 'admin' ? 'Organisers' : (yl ? `<img class="toplogo" src="${esc(yl)}" alt="YOJAK" onerror="this.replaceWith('by YOJAK')">` : 'by YOJAK');
   renderNotice();
   const app = $('#app');
   if (!S.data) {
