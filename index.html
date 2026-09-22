@@ -679,17 +679,23 @@ body.projector #bgfx{display:none}
   #app > *{animation:none}
   .wrap{max-width:none;padding:0}
   .qr-grid{grid-template-columns:1fr 1fr;gap:0}
-  .qr-card{height:138mm;border-radius:0;justify-content:center;break-inside:avoid;page-break-inside:avoid}
-  .qr-card .qr-box,.qr-card .qr-box img,.qr-card .qr-box canvas{width:60mm!important;height:60mm!important}
+  .qr-card{height:136mm;box-sizing:border-box;overflow:hidden;border-radius:0;padding:5mm 5mm 4mm;gap:1.6mm;justify-content:flex-start;break-inside:avoid;page-break-inside:avoid}
+  .qr-card .qr-box,.qr-card .qr-box img,.qr-card .qr-box canvas{width:50mm!important;height:50mm!important}
+  .qr-card .qr-box{margin:1mm 0}
+  .qr-card .qcat{font-size:12px}
+  .qr-card .qid small{font-size:10px}
+  .qr-card .qhint{font-size:11px}
+  .qr-card .qr-foot{margin-top:auto;width:100%}
+  .qr-card .qr-foot small{font-size:9px}
   #bgfx,#syncpill{display:none!important}
   .page{padding-top:0}
   .env-sheet{page-break-after:always;break-after:page;margin:0;gap:4mm}
   .env-sheet > svg{width:170mm!important;height:136mm!important}
   .jc{box-shadow:none}
-  .qr-card .qid b{font-size:60px}
-  .qr-card .qtitle{font-size:20px}
-  .qr-head-logo{height:30mm}
-  .qr-foot img{height:13mm}
+  .qr-card .qid b{font-size:44px}
+  .qr-card .qtitle{font-size:16px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .qr-head-logo{height:18mm}
+  .qr-foot img{height:10mm}
   .code-grid{grid-template-columns:repeat(4,1fr);gap:0}
   .code-card{border-radius:0;break-inside:avoid}
   .jc-grid{grid-template-columns:repeat(2,95mm);gap:3mm}
@@ -1045,7 +1051,7 @@ async function processQueue() {
   } finally { qBusy = false; syncPill(); }
 }
 function queueDone(it, r) {
-  if (it.type === 'score' && S.judgeScores && S.judgeScores[it.pid]) { S.judgeScores[it.pid].total = r.total; refreshJudgeHeader(it.pid); }
+  if (it.type === 'score' && S.judgeScores && S.judgeScores[it.pid]) { S.judgeScores[it.pid].total = r.total; saveJudgeScores(); refreshJudgeHeader(it.pid); }
   if (it.type === 'rate') { const b = $('#votebox .sendnote'); if (b && route()[1] === it.pid) b.textContent = 'Sent to the fest server.'; }
 }
 function queueFailed(it, r) {
@@ -1055,7 +1061,7 @@ function queueFailed(it, r) {
     toast(r.code === 'closed' ? 'Rating had closed, so one rating could not be counted.' : (r.error || 'One rating could not be saved. Please rate that model again.'));
     if (route()[0] === 'project' && route()[1] === it.pid) render();
   } else if (it.type === 'score') {
-    if (S.judgeScores) delete S.judgeScores[it.pid];
+    if (S.judgeScores) { delete S.judgeScores[it.pid]; saveJudgeScores(); }
     toast(r.error || `The score for ${it.pid} could not be saved. Please score it again.`);
     refreshJudgeHeader(it.pid);
   }
@@ -1063,11 +1069,23 @@ function queueFailed(it, r) {
 window.addEventListener('online', () => { syncPill(); processQueue(); });
 window.addEventListener('offline', syncPill);
 
+/* ---------------- Judge session: stays signed in on this phone for the event day ---------------- */
+const JUDGE_HOURS = 20;
+function loadJudgeSession() {
+  const j = jparse(store.get('sf_judge'), null);
+  if (!j || !j.judge_id || !j.pin) return null;
+  if (!j.ts || Date.now() - j.ts > JUDGE_HOURS * 3600 * 1000) { store.del('sf_judge'); return null; }
+  return j;
+}
+function saveJudgeSession(j) { store.set('sf_judge', JSON.stringify({ ...j, ts: j.ts || Date.now() })); }
+function clearJudgeSession() { const id = S.judge && S.judge.judge_id; store.del('sf_judge'); if (id) store.del('sf_jscores:' + id); }
+function saveJudgeScores() { if (S.judge && S.judgeScores) store.set('sf_jscores:' + S.judge.judge_id, JSON.stringify(S.judgeScores)); }
+
 /* ---------------- state ---------------- */
 const S = {
   data: null, error: null, rated: {},
   filter: { cat: 'All', q: '', centre: '' },
-  judge: jparse(store.get('sf_judge', true), null), judgeScores: null, judgesList: null,
+  judge: loadJudgeSession(), judgeScores: null, judgesList: null,
   adminKey: store.get('sf_admin', true), admin: null
 };
 let timer = null, ticker = null, observer = null;
@@ -1680,20 +1698,29 @@ VIEWS.judgein = (id) => {
 VIEWS.judge = (pid) => {
   if (!S.judge) return judgeLogin();
   if (!S.judgeScores) {
-    return {
-      html: `<div class="loading"><div class="spin"></div>Loading your scores</div>`,
-      async mount() {
-        try {
-          const r = await apiPost({ action: 'judgelogin', judge_id: S.judge.judge_id, pin: S.judge.pin });
-          if (r.ok) { S.judgeScores = r.scores || {}; S.judge = { ...S.judge, ...r.judge }; store.set('sf_judge', JSON.stringify(S.judge), true); }
-          else { S.judge = null; store.del('sf_judge', true); }
-        } catch (e) { S.judgeScores = {}; toast('Could not load your saved scores. Check the connection.'); }
-        render();
-      }
-    };
+    /* Show the list straight away from this phone's memory, then refresh quietly */
+    S.judgeScores = jparse(store.get('sf_jscores:' + S.judge.judge_id), {});
+    refreshJudgeScores();
   }
   return judgeList(pid);
 };
+async function refreshJudgeScores() {
+  const j = S.judge; if (!j) return;
+  try {
+    const r = await apiPost({ action: 'judgelogin', judge_id: j.judge_id, pin: j.pin });
+    if (!S.judge || S.judge.judge_id !== j.judge_id) return;
+    if (r.ok) {
+      const local = S.judgeScores || {};
+      const merged = { ...(r.scores || {}) };
+      Queue.list().filter(x => x.type === 'score').forEach(x => { if (local[x.pid]) merged[x.pid] = local[x.pid]; });  /* keep scores still being sent */
+      S.judgeScores = merged; S.judge = { ...S.judge, ...r.judge }; saveJudgeSession(S.judge); saveJudgeScores();
+      if (route()[0] === 'judge') judgeProjects().forEach(p => refreshJudgeHeader(p.project_id));
+    } else if (/PIN/i.test(r.error || '')) {
+      clearJudgeSession(); S.judge = null; S.judgeScores = null;
+      toast('Please sign in again.'); if (route()[0] === 'judge') render();
+    }
+  } catch (e) { /* offline: keep what the phone has */ }
+}
 
 function judgeLogin() {
   const pre = store.get('sf_jpre', true);
@@ -1710,6 +1737,7 @@ function judgeLogin() {
     </div>`,
     async mount() {
       bindEyes(document);
+      if (!DEMO) fetch(CONFIG.API_URL + '?action=judges', { cache: 'no-store' }).catch(() => {});  /* warm up the connection while the judge types */
       const sel = $('#jsel');
       try {
         if (!S.judgesList) S.judgesList = (S.data.judges && S.data.judges.length) ? S.data.judges : null;
@@ -1725,7 +1753,7 @@ function judgeLogin() {
           const r = await apiPost({ action: 'judgelogin', judge_id: id, pin });
           if (r.ok) {
             S.judge = { ...r.judge, pin }; S.judgeScores = r.scores || {};
-            store.set('sf_judge', JSON.stringify(S.judge), true); store.del('sf_jpre', true); render();
+            S.judge.ts = Date.now(); saveJudgeSession(S.judge); saveJudgeScores(); store.del('sf_jpre', true); render();
           } else { err.textContent = r.error || 'Name or PIN is not correct. Please try again.'; btn.disabled = false; btn.textContent = 'Sign in'; }
         } catch (e) { err.textContent = 'Could not sign in because the connection dropped. Try again.'; btn.disabled = false; btn.textContent = 'Sign in'; }
       };
@@ -1762,7 +1790,7 @@ function judgeList(openPid) {
     </div>`,
     mount() {
       updateJudgeProgress();
-      $('#jout').addEventListener('click', () => { S.judge = null; S.judgeScores = null; store.del('sf_judge', true); render(); });
+      $('#jout').addEventListener('click', () => { clearJudgeSession(); S.judge = null; S.judgeScores = null; render(); });
       $$('.jitem').forEach(bindJudgeItem);
       if (openPid) { const it = document.getElementById('ji-' + openPid); if (it) toggleJudgeItem(it, true); }
     }
@@ -1835,6 +1863,7 @@ function bindScorePanel(it, p) {
     const remarks = $('.jrem', panel).value;
     const total = vals.reduce((a, v) => a + v, 0);
     S.judgeScores[p.project_id] = { scores: vals.slice(), total, remarks };
+    saveJudgeScores();
     Queue.add({ id: Date.now() + '-' + randStr(4), key: 'score|' + p.project_id, type: 'score', pid: p.project_id, body: { action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals.slice(), remarks } });
     closeJudgeItem(it);
     it.innerHTML = judgeHeader(p, true); bindJudgeItem(it);
@@ -2229,7 +2258,7 @@ function heartFx() {
 function slideHtml(sl) {
   const s = S.data.settings; const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo); const pl = partnerList().filter(p => p.logo);
   const logos = [yl && `<img src="${esc(yl)}" alt="YOJAK">`, fl && `<img src="${esc(fl)}" alt="STEM FEST">`, ...pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`)].filter(Boolean).join('');
-  if (sl.type === 'intro') return `<div class="slide">${logos ? `<div class="s-logos">${logos}</div>` : ''}<p class="s-kicker">Prize distribution</p><p class="s-big">${esc(s.event_name || 'STEM FEST')}</p><div class="s-spark">${sparkWords()}</div><p class="s-sub" style="margin-top:4vh">Press the right arrow or click to begin</p></div>`;
+  if (sl.type === 'intro') return `<div class="slide">${logos ? `<div class="s-logos">${logos}</div>` : ''}<p class="s-kicker">Prize distribution</p><p class="s-big">${esc(s.event_name || 'STEM FEST')}</p><div class="s-spark">${sparkWords()}</div></div>`;
   const sub = w => esc([isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', '));
   if (sl.type === 'cat') return themeFx(sl.cat, 0) + `<div class="slide"><div class="s-icon" style="width:14vh;height:14vh;margin:0 auto 3vh;color:#fff">${icon(CAT_ICON[sl.cat])}</div><p class="s-kicker" style="color:#fff;opacity:.85">Judges' awards for the</p><p class="s-big">${sl.cat} corner</p></div>`;
   if (sl.type === 'place') return themeFx(sl.cat, sl.place === 1 ? 2 : 1) + `<div class="slide"><p class="s-kicker">${sl.cat} corner, Judges' award</p><div class="s-place ${sl.place === 1 ? 'first' : ''}" style="margin-top:3vh">${['', '1st', '2nd', '3rd'][sl.place]}</div><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
@@ -2252,7 +2281,7 @@ VIEWS.reveal = () => {
         stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : (sl.cat ? ' th c-' + CAT_CLS[sl.cat] : ''));
         stage.innerHTML = slideHtml(sl) + `<span class="s-count">${revealIdx + 1} / ${slides.length}</span><span class="s-hint">Right arrow or click: next. Left arrow: back. F: full screen. Esc: dashboard.</span>`;
         $$('.poppers').forEach(x => x.remove());
-        if (sl.type === 'place' || sl.type === 'people') setTimeout(poppers, 350);
+        if (sl.type === 'place' || sl.type === 'people') setTimeout(() => confetti(130), 300);
         if (sl.type === 'end') confetti(160);
       };
       const next = () => { if (revealIdx < slides.length - 1) { revealIdx++; show(); } };
