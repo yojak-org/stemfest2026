@@ -583,7 +583,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .jc-pin small{font-size:2.3mm;color:var(--muted);font-weight:600}
 .jc-pin b{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:7mm;letter-spacing:.18em;color:var(--maroon);line-height:1}
 .jc-logos{display:flex;gap:2mm;align-items:center;margin-top:1.2mm}
-.jc-logos img{height:5mm;width:auto;max-width:22mm;object-fit:contain}
+.jc-logos img{height:5mm;width:auto;max-width:15mm;object-fit:contain}
 /* ===== Envelopes ===== */
 .env-page{display:flex;flex-direction:column;align-items:center;gap:4mm;margin-bottom:10mm}
 .env-page > svg{width:181mm;height:190mm;max-width:100%;height:auto;background:#fff}
@@ -615,6 +615,63 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .floatheart{position:absolute;bottom:-10vh;color:rgba(255,120,130,.55);animation:symRise linear infinite}
 .floatheart svg{width:100%;height:100%;fill:currentColor}
 
+
+/* ===== Background theme animation layer ===== */
+#bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;transition:opacity .7s ease}
+#bgfx.fade{opacity:0}
+#bgfx .fx{color:var(--c)}
+#bgfx .bub{border-color:currentColor;background:none;border-width:2px}
+#bgfx .msym{color:currentColor}
+#bgfx .bits{color:currentColor}
+#bgfx .fx-spin{color:currentColor;opacity:.55}
+#bgfx svg.geo,#bgfx svg.trace{stroke:currentColor;opacity:.8}
+#bgfx .node{fill:currentColor}
+body.projector #bgfx{display:none}
+/* ===== Sending pill ===== */
+#syncpill{position:fixed;left:12px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 12px);z-index:40;display:none;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);box-shadow:0 8px 20px -12px rgba(60,10,15,.5);border-radius:999px;padding:7px 14px 7px 10px;font-size:14px;font-weight:600;color:var(--ink)}
+#syncpill.show{display:flex}
+#syncpill .spin{border-color:var(--line);border-top-color:var(--maroon);width:16px;height:16px}
+#syncpill.off{background:var(--gold-t);border-color:#F1DFA6}
+.jstatus.wait{background:var(--gold-t);color:var(--gold-dk)}
+.jstatus.wait svg{width:14px;height:14px}
+/* ===== Home page (new order) ===== */
+.hero.v2{padding-bottom:30px}
+.facts dd.tbd{font-weight:400;opacity:.62}
+.hero-logos{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.hero-logos img{height:48px;width:auto;max-width:150px;object-fit:contain;background:#fff;border-radius:12px;padding:5px 10px}
+.hero-logos .lr-text{background:#fff;color:var(--maroon);border-radius:12px;padding:10px 14px;font-weight:800;line-height:1}
+.welcome-card{margin-top:22px}
+.welcome-card h2{font-size:22px;margin-bottom:6px}
+.theme.hl{margin-top:22px;border:2px solid var(--gold);box-shadow:0 0 0 5px rgba(242,169,0,.14),0 14px 30px -18px rgba(60,10,15,.7)}
+.theme.hl .theme-kicker{display:block;font-size:13px;letter-spacing:.08em;color:var(--gold);font-weight:700;margin-bottom:4px}
+.theme.hl .theme-list li{grid-template-columns:48px 1fr}
+.theme.hl .tl-l{width:48px;height:48px;font-size:26px;animation:popIn .5s cubic-bezier(.2,1.5,.4,1) both}
+@media (min-width:720px){ .theme.hl .theme-list{grid-template-columns:repeat(5,1fr);gap:14px} .theme.hl .theme-list li{grid-template-columns:1fr;justify-items:start} }
+.sched-strip{display:flex;align-items:center;gap:12px;margin-top:30px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.sched-strip svg{width:22px;height:22px;color:var(--gold-dk);flex:none}
+.sched-strip small{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.sched-strip b{font-size:16px;line-height:1.25}
+.sched-strip .when{margin-left:auto;font-size:14px;color:var(--muted);white-space:nowrap}
+.corners-strip.flat{margin-top:12px}
+/* ===== Paper poppers ===== */
+.poppers{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.poppers i{position:absolute;bottom:-2vh;width:1.1vh;height:2.2vh;border-radius:.2vh;animation:pop var(--t,2.6s) cubic-bezier(.15,.7,.35,1) forwards;animation-delay:var(--dl,0s);opacity:0}
+.poppers i.l{left:2vw}
+.poppers i.r{right:2vw}
+@keyframes pop{0%{opacity:1;transform:translate(0,0) rotate(0)}45%{opacity:1;transform:translate(calc(var(--dx) * .65),calc(var(--h) * -1)) rotate(calc(var(--rot) * .5))}100%{opacity:0;transform:translate(var(--dx),calc(var(--h) * -0.35)) rotate(var(--rot))}}
+/* ===== Judge card, filled middle ===== */
+.jc-chips{display:flex;gap:1.2mm;flex-wrap:wrap;margin-top:1.6mm}
+.jc-chip{font-size:2.4mm;font-weight:700;color:#fff;border-radius:1mm;padding:.4mm 1.6mm;background:var(--c)}
+.jc-spark{display:flex;gap:.8mm;margin-top:1.6mm}
+.jc-spark span{width:4.6mm;height:4.6mm;border-radius:1mm;background:var(--gold-t);border:.25mm solid var(--gold);color:var(--maroon);display:grid;place-items:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:2.8mm;line-height:1}
+.jc-url{font-size:2.2mm;color:var(--muted);margin-top:1.2mm;line-height:1.25}
+.jc-url b{color:var(--maroon)}
+.jc-bottom{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:2mm}
+.jc-bottom .jc-pin{margin-top:0}
+/* ===== Envelopes, two per page ===== */
+.env-sheet{display:flex;flex-direction:column;align-items:center;gap:6mm;margin-bottom:10mm}
+.env-sheet > svg{width:170mm;height:136mm;max-width:100%;height:auto;background:#fff}
+
 @media print{
   @page{size:A4;margin:8mm}
   body{padding:0;font-size:14px}
@@ -623,7 +680,12 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   .wrap{max-width:none;padding:0}
   .qr-grid{grid-template-columns:1fr 1fr;gap:0}
   .qr-card{height:138mm;border-radius:0;justify-content:center;break-inside:avoid;page-break-inside:avoid}
-  .qr-box,.qr-box img,.qr-box canvas{width:60mm!important;height:60mm!important}
+  .qr-card .qr-box,.qr-card .qr-box img,.qr-card .qr-box canvas{width:60mm!important;height:60mm!important}
+  #bgfx,#syncpill{display:none!important}
+  .page{padding-top:0}
+  .env-sheet{page-break-after:always;break-after:page;margin:0;gap:4mm}
+  .env-sheet > svg{width:170mm!important;height:136mm!important}
+  .jc{box-shadow:none}
   .qr-card .qid b{font-size:60px}
   .qr-card .qtitle{font-size:20px}
   .qr-head-logo{height:30mm}
@@ -650,6 +712,8 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   </div>
 </header>
 <div id="notice"></div>
+<div id="bgfx" aria-hidden="true"></div>
+<div id="syncpill" role="status" aria-live="polite"></div>
 <main id="app"><div class="loading"><div class="spin"></div>Loading STEM FEST</div></main>
 <nav class="tabs" aria-label="Main">
   <div class="wrap">
@@ -944,6 +1008,61 @@ async function apiPost(body) {
   }
 }
 
+/* ---------------- Save queue: saves are kept on the phone and sent in the background ---------------- */
+const QKEY = 'sf_queue';
+const Queue = {
+  list() { return jparse(store.get(QKEY), []); },
+  set(q) { store.set(QKEY, JSON.stringify(q)); },
+  add(item) {
+    const q = this.list().filter(x => x.key !== item.key); /* keep only the newest save for the same model */
+    q.push(item); this.set(q); syncPill(); processQueue();
+  },
+  pending(type, pid) { return this.list().some(x => x.type === type && x.pid === pid); }
+};
+let qBusy = false, qTimer = null;
+function syncPill() {
+  const el = $('#syncpill'); if (!el) return;
+  const n = Queue.list().length;
+  if (!n) { el.className = ''; el.innerHTML = ''; return; }
+  const off = navigator.onLine === false;
+  el.className = 'show' + (off ? ' off' : '');
+  el.innerHTML = off ? `${icon('clock').replace('<svg', '<svg style="width:16px;height:16px"')}${n} saved on this phone, waiting for signal` : `<span class="spin"></span>Sending ${n} ${n === 1 ? 'save' : 'saves'}...`;
+}
+async function processQueue() {
+  if (qBusy) return;
+  qBusy = true; clearTimeout(qTimer);
+  try {
+    let q = Queue.list();
+    while (q.length) {
+      const it = q[0]; let r;
+      try { r = await apiPostOnce(it.body); }
+      catch (e) { syncPill(); qTimer = setTimeout(processQueue, 6000); return; }  /* no signal: try again soon */
+      if (r && !r.ok && /busy/i.test(r.error || '')) { await sleep(2500); q = Queue.list(); continue; }
+      Queue.set(Queue.list().filter(x => x.id !== it.id));
+      if (r && r.ok) queueDone(it, r); else queueFailed(it, r || {});
+      q = Queue.list(); syncPill();
+    }
+  } finally { qBusy = false; syncPill(); }
+}
+function queueDone(it, r) {
+  if (it.type === 'score' && S.judgeScores && S.judgeScores[it.pid]) { S.judgeScores[it.pid].total = r.total; refreshJudgeHeader(it.pid); }
+  if (it.type === 'rate') { const b = $('#votebox .sendnote'); if (b && route()[1] === it.pid) b.textContent = 'Sent to the fest server.'; }
+}
+function queueFailed(it, r) {
+  if (it.type === 'rate') {
+    delete S.rated[it.pid]; const vid = voterId(); if (vid) store.set('sf_rated:' + vid, JSON.stringify(S.rated));
+    if (r.code === 'badcode') store.del('sf_code');
+    toast(r.code === 'closed' ? 'Rating had closed, so one rating could not be counted.' : (r.error || 'One rating could not be saved. Please rate that model again.'));
+    if (route()[0] === 'project' && route()[1] === it.pid) render();
+  } else if (it.type === 'score') {
+    if (S.judgeScores) delete S.judgeScores[it.pid];
+    toast(r.error || `The score for ${it.pid} could not be saved. Please score it again.`);
+    refreshJudgeHeader(it.pid);
+  }
+}
+window.addEventListener('online', () => { syncPill(); processQueue(); });
+window.addEventListener('offline', syncPill);
+
 /* ---------------- state ---------------- */
 const S = {
   data: null, error: null, rated: {},
@@ -1212,47 +1331,56 @@ function journey() {
   return `<section class="block" data-reveal><h2>Your day at STEM FEST</h2><ol class="journey">${steps.map((x, i) => `<li class="jstep ${x.state || ''}"><span class="jn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol></section>`;
 }
 
+function scheduleStrip() {
+  const items = S.data.schedule.filter(i => i.s != null); if (!items.length) return '';
+  const d = parseDate(S.data.settings.event_date); const today = new Date();
+  let label = 'First on the schedule', it = items[0];
+  if (d && sameDay(d, today)) {
+    const m = nowMins();
+    const now = items.find(i => m >= i.s && m < (i.e != null && i.e > i.s ? i.e : i.s + 1));
+    const next = items.find(i => i.s > m);
+    if (now) { label = 'Happening now'; it = now; } else if (next) { label = 'Up next'; it = next; } else return '';
+  } else if (d && today > d) return '';
+  return `<a class="sched-strip" href="#/schedule">${icon('clock')}<span><small>${label}</small><b>${esc(it.title)}</b></span><span class="when">${esc(fmtTime(it.s))}</span></a>`;
+}
+
 VIEWS.home = () => {
   const s = S.data.settings; const th = theme();
-  const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo);
+  const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo); const pl = partnerList();
   const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
   const map = s.map_link ? `<a class="btn btn-gold" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const open = toBool(s.voting_open);
-  const steps = votingMode() === 'code'
-    ? ['Scan the QR code at any stall, or pick a model from the Models tab.', 'The first time, type the voter code printed on your entry pass.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.']
-    : ['Scan the QR code at any stall, or pick a model from the Models tab.', 'Talk to the students about how their model works.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.'];
-  const revealed = !!S.data.results;
+  const val = (v, fb) => isTbd(v) ? `<dd class="tbd">${esc(fb)}</dd>` : `<dd>${esc(v)}</dd>`;
+  const logoChip = (src, name) => src ? `<img src="${esc(src)}" alt="${esc(name)}" onerror="this.outerHTML='<span class=&quot;lr-text&quot;>${esc(name).replace(/'/g, '')}</span>'">` : `<span class="lr-text">${esc(name)}</span>`;
+  const dateTxt = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
   return {
     html: `
-    <section class="hero">${floaters()}<div class="wrap"><div class="hero-in">
-      ${heroLogos()}
-      ${fl ? `<div class="festlogo-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.parentNode.nextElementSibling.className='title';this.parentNode.remove()"></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
+    <section class="hero v2">${floaters()}<div class="wrap"><div class="hero-in">
+      <p class="presents">YOJAK presents</p>
+      <h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
-      <div class="spark-row" aria-label="Theme ${esc(th.name)}: ${esc(th.words.join(', '))}"><span class="spark-label">Theme: ${esc(th.name)}</span>${sparkWords()}</div>
       <dl class="facts">
-        <div><dt>Date</dt><dd>${esc(fmtDate(s.event_date))}</dd></div>
-        <div><dt>Time</dt><dd>${esc(orTbd(s.event_hours, 'To be announced'))}</dd></div>
-        <div><dt>Venue</dt><dd>${esc(orTbd(s.venue_name, 'To be announced'))}${addr}</dd></div>
+        <div><dt>Date</dt>${dateTxt ? `<dd>${esc(dateTxt)}</dd>` : `<dd class="tbd">To be announced</dd>`}</div>
+        <div><dt>Time</dt>${val(s.event_hours, 'To be announced')}</div>
+        <div><dt>Venue</dt>${isTbd(s.venue_name) ? '<dd class="tbd">To be announced</dd>' : `<dd>${esc(s.venue_name)}${addr}</dd>`}</div>
       </dl>
       ${heroTimer()}
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
+      <div class="hero-logos">${logoChip(yl, 'YOJAK')}${pl.map(p => logoChip(p.logo, p.name || 'Partner')).join('')}${fl ? logoChip(fl, s.event_name || 'STEM FEST') : ''}</div>
     </div></div></section>
     <div class="wrap">
-      <section class="corners-strip" aria-label="Corners">
+      ${s.welcome_note ? `<section class="card welcome-card"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
+      <section class="theme hl">
+        <span class="theme-kicker">THE THEME OF ${esc(String(s.event_name || 'STEM FEST').toUpperCase())}</span>
+        <h2>${esc(th.name)}</h2>
+        <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l" style="animation-delay:${0.1 + i * 0.12}s">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
+      </section>
+      ${journey()}
+      ${scheduleStrip()}
+      <section class="corners-strip flat" aria-label="Corners">
         ${CATS.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}">${icon(CAT_ICON[c])}<span><span class="ctile-name">${c}</span><br><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></span></a>`; }).join('')}
       </section>
-      <div class="duo">
-        ${nowNext() || `<a class="results-card ${revealed ? 'out' : ''}" href="#/results" data-reveal>${icon('trophy')}<span>${revealed ? '<b>The winners are out!</b><br><span class="muted">See the results for every corner</span>' : '<b>Results</b><br><span class="muted">Winners will be announced at the prize distribution</span>'}</span></a>`}
-        ${s.welcome_note ? `<section class="card" style="margin-top:22px" data-reveal><h2 style="font-size:22px;margin-bottom:6px">Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
-      </div>
-      ${journey()}
-      <div class="duo">
-        ${open || ratingProgress().count ? progressCard() : '<span></span>'}
-        <section class="theme" data-reveal>
-          <h2>Our theme: ${esc(th.name)}</h2>
-          <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
-        </section>
-      </div>
+      ${open || ratingProgress().count ? progressCard() : ''}
       ${partnersBlock()}
       <a class="staff-link" href="#/staff">Judges and organisers sign in</a>
     </div>`,
@@ -1393,7 +1521,7 @@ function renderRateBox(p, st = {}) {
   const sum = a => a.reduce((x, y) => x + y, 0);
   let html;
   if (mine && !st.edit) {
-    html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Rating saved' : 'You rated this model'}</h2><p>Your score: ${sum(mine)} out of 15.</p></div></div>
+    html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Rating saved' : 'You rated this model'}</h2><p>Your score: ${sum(mine)} out of 15.</p><p class="sendnote muted" style="font-size:14px">${Queue.pending('rate', p.project_id) ? 'Sending to the fest server. It keeps trying even if the signal is weak.' : 'Sent to the fest server.'}</p></div></div>
       ${progressCard()}
       <div style="display:grid;gap:10px;margin-top:12px">
         <a class="btn btn-primary btn-block" href="#/projects">Rate another model</a>
@@ -1429,22 +1557,13 @@ function renderRateBox(p, st = {}) {
     const rb = $('#ratebtn');
     rb.addEventListener('click', async () => {
       if (vals.some(v => !v)) { renderRateBox(p, { edit: true, vals, err: 'Answer all three questions before submitting.' }); return; }
-      rb.disabled = true; rb.innerHTML = '<span class="spin"></span>Saving your rating...';
       const before = ratingProgress();
-      try {
-        const r = await apiPost({ action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals });
-        if (r.ok) {
-          markRated(p.project_id, vals.slice()); renderRateBox(p, { fresh: true });
-          const after = ratingProgress();
-          if (after.champ && !before.champ) { toast('Badge unlocked: SPARK champion!', true); confetti(80); }
-          else { const nb = after.done.find(c => !before.done.includes(c)); if (nb) toast(`Badge unlocked: ${nb} explorer`, true); }
-        }
-        else if (r.code === 'closed') { s.voting_open = 'FALSE'; renderRateBox(p); }
-        else if (r.code === 'badcode') { store.del('sf_code'); renderRateBox(p, { err: 'That voter code is not valid. Please type it again.' }); }
-        else renderRateBox(p, { edit: true, vals, err: r.error || 'Your rating was not saved. Tap Submit again.' });
-      } catch (e) {
-        renderRateBox(p, { edit: true, vals, err: 'Your rating was not saved because the connection dropped. Tap Submit again.' });
-      }
+      markRated(p.project_id, vals.slice());
+      Queue.add({ id: Date.now() + '-' + randStr(4), key: 'rate|' + p.project_id, type: 'rate', pid: p.project_id, body: { action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals.slice() } });
+      renderRateBox(p, { fresh: true });
+      const after = ratingProgress();
+      if (after.champ && !before.champ) { toast('Badge unlocked: SPARK champion!', true); confetti(80); }
+      else { const nb = after.done.find(c => !before.done.includes(c)); if (nb) toast(`Badge unlocked: ${nb} explorer`, true); }
     });
     return;
   }
@@ -1623,7 +1742,8 @@ function judgeProjects() {
 
 function judgeHeader(p, fresh) {
   const sc = S.judgeScores[p.project_id]; const max = maxMark() * 5;
-  return `<button class="pcard jtoggle c-${CAT_CLS[p.category]} ${sc ? 'scored' : ''} ${fresh ? 'justdone' : ''}" data-pid="${esc(p.project_id)}" aria-expanded="false">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span></span><span class="jstatus ${sc ? 'ok' : ''} ${fresh ? 'fresh' : ''}">${sc ? `${icon('check')}${sc.total} of ${max}` : 'Not scored'}</span><span class="chev">${icon('back').replace('<svg', '<svg style="transform:rotate(180deg)"')}</span></button>`;
+  const wait = sc && Queue.pending('score', p.project_id);
+  return `<button class="pcard jtoggle c-${CAT_CLS[p.category]} ${sc ? 'scored' : ''} ${fresh ? 'justdone' : ''}" data-pid="${esc(p.project_id)}" aria-expanded="false">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span></span><span class="jstatus ${sc ? (wait ? 'wait' : 'ok') : ''} ${fresh ? 'fresh' : ''}" title="${wait ? 'Sending' : ''}">${sc ? `${icon(wait ? 'clock' : 'check')}${sc.total} of ${max}` : 'Not scored'}</span><span class="chev">${icon('back').replace('<svg', '<svg style="transform:rotate(180deg)"')}</span></button>`;
 }
 
 function judgeList(openPid) {
@@ -1648,6 +1768,11 @@ function judgeList(openPid) {
     }
   };
 }
+function refreshJudgeHeader(pid) {
+  const it = document.getElementById('ji-' + pid); const p = findProject(pid);
+  if (!it || !p || it.classList.contains('open')) { updateJudgeProgress(); return; }
+  it.innerHTML = judgeHeader(p); bindJudgeItem(it); updateJudgeProgress();
+}
 function updateJudgeProgress() {
   const list = judgeProjects(); const done = list.filter(p => S.judgeScores[p.project_id]).length;
   const pct = list.length ? Math.round(done / list.length * 100) : 0;
@@ -1666,12 +1791,13 @@ function closeJudgeItem(it) {
 function toggleJudgeItem(it, forceOpen) {
   const isOpen = it.classList.contains('open');
   $$('.jitem.open').forEach(x => { if (x !== it) closeJudgeItem(x); });
-  if (isOpen && !forceOpen) { closeJudgeItem(it); return; }
+  if (isOpen && !forceOpen) { closeJudgeItem(it); setBgFx('cycle'); return; }
   if (isOpen) return;
   const p = findProject(it.id.slice(3)); if (!p) return;
   it.classList.add('open'); $('.jtoggle', it).setAttribute('aria-expanded', 'true');
   it.insertAdjacentHTML('beforeend', scorePanel(p));
   bindScorePanel(it, p);
+  setBgFx(p.category);
   setTimeout(() => it.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }), 50);
 }
 function scorePanel(p) {
@@ -1705,22 +1831,17 @@ function bindScorePanel(it, p) {
   const save = $('.jsave', panel);
   if (save) save.addEventListener('click', async () => {
     if (vals.some(v => v == null)) { err.textContent = 'Give a mark for every criterion before saving.'; return; }
-    err.textContent = ''; save.disabled = true; save.innerHTML = '<span class="spin"></span>Saving...';
+    err.textContent = '';
     const remarks = $('.jrem', panel).value;
-    try {
-      const r = await apiPost({ action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals, remarks });
-      if (r.ok) {
-        S.judgeScores[p.project_id] = { scores: vals.slice(), total: r.total, remarks };
-        closeJudgeItem(it);
-        it.innerHTML = judgeHeader(p, true); bindJudgeItem(it);
-        const pr = updateJudgeProgress();
-        toast(`Score saved for ${p.project_id}`);
-        if (pr.done === pr.total && pr.total) confetti(70);
-      } else {
-        if (r.code === 'locked') S.data.settings.judging_locked = 'TRUE';
-        err.textContent = r.error || 'The score was not saved. Try again.'; save.disabled = false; save.textContent = 'Save score';
-      }
-    } catch (e) { err.textContent = 'The score was not saved because the connection dropped. Tap Save again.'; save.disabled = false; save.textContent = 'Save score'; }
+    const total = vals.reduce((a, v) => a + v, 0);
+    S.judgeScores[p.project_id] = { scores: vals.slice(), total, remarks };
+    Queue.add({ id: Date.now() + '-' + randStr(4), key: 'score|' + p.project_id, type: 'score', pid: p.project_id, body: { action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals.slice(), remarks } });
+    closeJudgeItem(it);
+    it.innerHTML = judgeHeader(p, true); bindJudgeItem(it);
+    setBgFx('cycle');
+    const pr = updateJudgeProgress();
+    toast(`Score saved for ${p.project_id}`);
+    if (pr.done === pr.total && pr.total) confetti(70);
   });
 }
 
@@ -1792,7 +1913,7 @@ function adminDash() {
       </div>
       <div class="tools no-print">
         <button class="btn btn-primary btn-sm" id="arefresh">Refresh now</button>
-        <a class="btn btn-gold btn-sm" href="#/reveal">${icon('screen')}Projector reveal</a>
+        <a class="btn btn-gold btn-sm" href="#/reveal">${icon('screen')}Winners reveal</a>
         <a class="btn btn-ghost btn-sm" href="#/admin/qr">Print QR cards</a>
         <a class="btn btn-ghost btn-sm" href="#/admin/judgecards">Print judge cards</a>
         <a class="btn btn-ghost btn-sm" href="#/admin/envelopes">Print judge envelopes</a>
@@ -1930,9 +2051,11 @@ function judgeCards() {
           <div class="jc-r">
             <div class="jc-top">${fl ? `<img src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>'}<span class="jc-tag">JUDGE</span></div>
             <span class="jc-name">${esc(j.name)}</span>
-            <span class="jc-cats">Corners: ${esc(j.categories)}</span>
-            <div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
-            <div class="jc-logos">${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}${pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`).join('')}</div>
+            <div class="jc-chips">${String(j.categories).split(',').map(c => normCat(c)).filter(Boolean).map(c => `<span class="jc-chip c-${CAT_CLS[c]}">${c}</span>`).join('')}</div>
+            <div class="jc-spark">${theme().words.map(w => `<span>${esc(w.charAt(0))}</span>`).join('')}</div>
+            <p class="jc-url">Or open <b>${esc(siteBase().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b> and tap Judges</p>
+            <div class="jc-bottom"><div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
+            <div class="jc-logos">${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}${pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`).join('')}</div></div>
           </div>
         </div>`).join('')}
       </div>
@@ -1945,77 +2068,51 @@ function envelopeSvg(j) {
   const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo); const pl = partnerList().filter(p => p.logo);
   const th = theme();
   const icons = ['atom', 'gear', 'pi', 'flask', 'circuit', 'bulb', 'dna', 'rocket'];
-  const pattern = [[48, 62], [124, 82], [131, 100], [96, 72], [110, 108], [88, 62]].map(([x, y], i) => `<svg x="${x}" y="${y}" width="9" height="9" viewBox="0 0 48 48" fill="none" stroke="#F2A900" stroke-width="2" opacity=".35">${STEM[icons[i % icons.length]]}</svg>`).join('');
-  const flapPattern = (pts) => pts.map(([x, y], i) => `<svg x="${x}" y="${y}" width="8" height="8" viewBox="0 0 48 48" fill="none" stroke="#7A1C24" stroke-width="2" opacity=".25">${STEM[icons[(i + 3) % icons.length]]}</svg>`).join('');
+  const ico = (n, x, y, sz, col, op) => `<svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 48 48" fill="none" stroke="${col}" stroke-width="2" opacity="${op}">${STEM[n]}</svg>`;
+  const front = [[40, 36], [118, 58], [124, 80], [92, 48], [104, 86], [80, 36]].map(([x, y], i) => ico(icons[i % 8], x, y, 9, '#F2A900', .33)).join('');
+  const flaps = [[52, 14], [106, 14], [12, 52], [148, 52], [12, 76], [148, 76], [56, 108], [102, 110], [80, 118]].map(([x, y], i) => ico(icons[(i + 3) % 8], x, y, 8, '#7A1C24', .22)).join('');
   const logoRow = [yl, ...pl.map(p => p.logo)].filter(Boolean).slice(0, 3);
-  return `<svg viewBox="0 0 181 190" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
-    <!-- flaps (fill) -->
-    <path d="M40 56 L60 22 Q90.5 8 121 22 L141 56 Z" fill="#F8EDEE"/>
-    <path d="M40 122 L141 122 L130 170 Q90.5 178 51 170 Z" fill="#F8EDEE"/>
-    <path d="M40 60 L14 66 Q10 89 14 112 L40 118 Z" fill="#FBF4F4"/>
-    <path d="M141 60 L167 66 Q171 89 167 112 L141 118 Z" fill="#FBF4F4"/>
-    ${flapPattern([[58, 36], [112, 36], [62, 140], [108, 144], [86, 156], [20, 84], [152, 84]])}
-    <!-- glue areas -->
-    <defs><pattern id="hatch" width="2.5" height="2.5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="2.5" stroke="#B77F00" stroke-width=".6"/></pattern></defs>
-    <path d="M40 96 L15.5 100 Q14.5 106 14 112 L40 118 Z" fill="url(#hatch)" opacity=".8"/>
-    <path d="M141 96 L165.5 100 Q166.5 106 167 112 L141 118 Z" fill="url(#hatch)" opacity=".8"/>
-    <text x="27" y="110" font-size="3" fill="#B77F00" text-anchor="middle" font-weight="700">GLUE</text>
-    <text x="154" y="110" font-size="3" fill="#B77F00" text-anchor="middle" font-weight="700">GLUE</text>
-    <!-- seal on top flap -->
-    <circle cx="90.5" cy="30" r="8" fill="#F2A900"/><svg x="84.5" y="24" width="12" height="12" viewBox="0 0 48 48" fill="none" stroke="#7A1C24" stroke-width="2.6">${STEM.atom}</svg>
-    <!-- front panel -->
-    <rect x="40" y="56" width="101" height="66" fill="#7A1C24"/>
-    ${pattern}
-    <rect x="46" y="61" width="${fl ? 38 : 40}" height="14" rx="2.5" fill="#fff"/>
-    ${fl ? `<image href="${esc(fl)}" x="47.5" y="62" width="35" height="12" preserveAspectRatio="xMidYMid meet"/>` : `<text x="66" y="70.5" font-size="6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
-    <text x="135" y="68" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
-    <text x="47" y="86" font-size="3.4" fill="#F2A900">For our honoured judge</text>
-    <text x="47" y="95.5" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
-    <text x="47" y="101.5" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}, theme ${esc(th.name)}</text>
-    ${logoRow.map((src, i) => `<rect x="${47 + i * 24}" y="106" width="22" height="11" rx="2" fill="#fff"/><image href="${esc(src)}" x="${48 + i * 24}" y="107" width="20" height="9" preserveAspectRatio="xMidYMid meet"/>`).join('')}
-    <text x="135" y="116" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
-    <!-- cut lines (solid) -->
-    <g fill="none" stroke="#2B1517" stroke-width=".35">
-      <path d="M40 56 L60 22 Q90.5 8 121 22 L141 56"/>
-      <path d="M40 122 L51 170 Q90.5 178 130 170 L141 122"/>
-      <path d="M40 60 L14 66 Q10 89 14 112 L40 118"/>
-      <path d="M141 60 L167 66 Q171 89 167 112 L141 118"/>
-      <path d="M40 56 V60 M40 118 V122 M141 56 V60 M141 118 V122"/>
+  /* Pocket 101 x 66 mm (card 95 x 60). Flaps are attached along the full length of every edge. */
+  return `<svg viewBox="0 0 170 136" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
+    <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32 Z" fill="#F8EDEE"/>
+    <path d="M34 98 L135 98 L125 129 Q84.5 137 44 129 Z" fill="#F8EDEE"/>
+    <path d="M34 32 L7 38 Q3 65 7 92 L34 98 Z" fill="#FBF4F4"/>
+    <path d="M135 32 L162 38 Q166 65 162 92 L135 98 Z" fill="#FBF4F4"/>
+    ${flaps}
+    <circle cx="84.5" cy="17" r="7" fill="#F2A900"/>${ico('atom', 79, 11.5, 11, '#7A1C24', 1)}
+    <rect x="34" y="32" width="101" height="66" fill="#7A1C24"/>
+    ${front}
+    <rect x="40" y="37" width="38" height="14" rx="2.5" fill="#fff"/>
+    ${fl ? `<image href="${esc(fl)}" x="41.5" y="38" width="35" height="12" preserveAspectRatio="xMidYMid meet"/>` : `<text x="59" y="46.5" font-size="6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
+    <text x="129" y="44" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
+    <text x="41" y="62" font-size="3.4" fill="#F2A900">For our honoured judge</text>
+    <text x="41" y="71.5" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
+    <text x="41" y="77.5" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}, theme ${esc(th.name)}</text>
+    ${logoRow.map((src, i) => `<rect x="${41 + i * 24}" y="82" width="22" height="11" rx="2" fill="#fff"/><image href="${esc(src)}" x="${42 + i * 24}" y="83" width="20" height="9" preserveAspectRatio="xMidYMid meet"/>`).join('')}
+    <text x="129" y="92" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
+    <g fill="none" stroke="#2B1517" stroke-width=".3">
+      <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32"/>
+      <path d="M34 98 L44 129 Q84.5 137 125 129 L135 98"/>
+      <path d="M34 32 L7 38 Q3 65 7 92 L34 98"/>
+      <path d="M135 32 L162 38 Q166 65 162 92 L135 98"/>
     </g>
-    <!-- fold lines (dashed) -->
-    <g fill="none" stroke="#7A1C24" stroke-width=".35" stroke-dasharray="2 1.5">
-      <path d="M40 56 H141 M40 122 H141 M40 60 V118 M141 60 V118"/>
+    <g stroke="#9A8A8C" stroke-width=".3">
+      <path d="M28 32 H31.5 M137.5 32 H141 M28 98 H31.5 M137.5 98 H141 M34 25 V28.5 M34 101.5 V105 M135 25 V28.5 M135 101.5 V105"/>
     </g>
-    <g font-size="2.6" fill="#7A1C24" font-weight="700">
-      <text x="90.5" y="54.5" text-anchor="middle">FOLD 4 (top flap, last)</text>
-      <text x="90.5" y="126" text-anchor="middle">FOLD 3</text>
-      <text x="37.5" y="89" text-anchor="middle" transform="rotate(-90 37.5 89)">FOLD 1</text>
-      <text x="143.5" y="89" text-anchor="middle" transform="rotate(90 143.5 89)">FOLD 2</text>
-    </g>
-    <g font-size="2.8" fill="#6F5A5C">
-      <text x="4" y="186">Cut along the solid lines. Fold along the dashed lines. Envelope fits a 95 x 60 mm judge card.</text>
-    </g>
-    <svg x="4" y="8" width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#2B1517" stroke-width="1.6"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg>
   </svg>`;
 }
 
 function judgeEnvelopes() {
   const judges = S.admin.stats.judges || [];
+  const sheets = []; for (let i = 0; i < judges.length; i += 2) sheets.push(judges.slice(i, i + 2));
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
-        <div class="phead"><h1>Judge envelopes</h1><p>One envelope per judge, each on its own A4 page with the judge's name on the front. Print at 100% scale (not "fit to page"). The template has cut, fold and glue markings.</p></div>
+        <div class="phead"><h1>Judge envelopes</h1><p>Two envelopes per A4 page, each with the judge's name on the front. Print at 100% scale (not "fit to page").</p></div>
+        <div class="card" style="margin-top:14px;font-size:15px"><b>How to make them:</b> cut along the solid outline. The small grey ticks outside the outline show where each fold goes. Fold the two side flaps in, glue the bottom flap over them, slide the card in and close the top flap. Nothing is printed where it would show on the outside.</div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><a class="btn btn-ghost" href="#/admin/judgecards">Judge cards</a></div>
       </div>
-      ${judges.map(j => `<div class="env-page">${envelopeSvg(j)}
-        <div class="env-steps"><b>How to make it:</b><ol>
-          <li>Cut along the solid outer lines.</li>
-          <li>Turn the sheet printed side down.</li>
-          <li>Fold the two side flaps in along FOLD 1 and FOLD 2.</li>
-          <li>Put glue on the hatched GLUE areas, fold the bottom flap up along FOLD 3 and press it onto them.</li>
-          <li>Turn it over: the maroon front with the judge's name faces you. Slide the judge card in and close the top flap along FOLD 4. It can be tucked in or sealed with a small sticker.</li>
-        </ol></div>
-      </div>`).join('')}
+      ${sheets.map(pair => `<div class="env-sheet">${pair.map(envelopeSvg).join('')}</div>`).join('')}
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); }
   };
@@ -2035,7 +2132,21 @@ function codesSheet() {
   };
 }
 
-/* ---------- Projector reveal (organisers only) ---------- */
+/* ---------- Winners reveal (organisers only) ---------- */
+function poppers() {
+  if (REDUCED) return;
+  const box = document.createElement('div'); box.className = 'poppers';
+  const colors = ['#F2A900', '#FFFFFF', '#E9B9BE', '#7A1C24', '#2E7D4F', '#C0680F', '#6E5FD0', '#FFD66B'];
+  let h = '';
+  ['l', 'r'].forEach(side => {
+    for (let i = 0; i < 55; i++) {
+      const dx = (side === 'l' ? 1 : -1) * rnd(8, 55);
+      h += `<i class="${side}" style="background:${colors[i % colors.length]};--dx:${dx.toFixed(1)}vw;--h:${rnd(45, 95).toFixed(0)}vh;--rot:${rnd(-900, 900).toFixed(0)}deg;--t:${rnd(2.2, 3.4).toFixed(2)}s;--dl:${rnd(0, .35).toFixed(2)}s;width:${rnd(.7, 1.3).toFixed(2)}vh;height:${rnd(1.4, 2.8).toFixed(2)}vh"></i>`;
+    }
+  });
+  box.innerHTML = h;
+  document.body.appendChild(box); setTimeout(() => box.remove(), 4200);
+}
 let revealIdx = 0;
 function revealSlides() {
   const out = [{ type: 'intro' }];
@@ -2092,6 +2203,23 @@ function themeFx(cat, level) {
   }
   return `<div class="fx" aria-hidden="true">${h}</div>`;
 }
+let bgMode = null, bgTimer = null, bgIdx = 0;
+function paintBg(cat) {
+  const el = $('#bgfx'); if (!el) return;
+  el.className = 'c-' + CAT_CLS[cat];
+  el.innerHTML = themeFx(cat, 0);
+}
+function setBgFx(mode) {
+  const el = $('#bgfx'); if (!el || REDUCED) return;
+  if (mode === bgMode) return;
+  bgMode = mode; clearInterval(bgTimer); bgTimer = null;
+  if (!mode) { el.innerHTML = ''; return; }
+  const swap = cat => { el.classList.add('fade'); setTimeout(() => { paintBg(cat); el.classList.remove('fade'); }, 700); };
+  if (mode === 'cycle') {
+    swap(CATS[bgIdx % 3]);
+    bgTimer = setInterval(() => { bgIdx++; swap(CATS[bgIdx % 3]); }, 12000);
+  } else swap(mode);
+}
 function heartFx() {
   if (REDUCED) return '';
   let h = '';
@@ -2117,12 +2245,14 @@ VIEWS.reveal = () => {
     html: `<div class="stage" id="stage"></div>`,
     mount() {
       document.body.classList.add('projector');
-      if (revealIdx === 0 && hasTies() && !confirm('There is an exact tie affecting a winning place. Check the dashboard first. Continue anyway?')) { location.hash = '#/admin'; return; }
+      if (revealIdx === 0 && hasTies() && !confirm('There is an exact tie affecting a winning place. Check the dashboard first. Continue with the Winners reveal anyway?')) { location.hash = '#/admin'; return; }
       const stage = $('#stage');
       const show = () => {
         const sl = slides[revealIdx];
         stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : (sl.cat ? ' th c-' + CAT_CLS[sl.cat] : ''));
         stage.innerHTML = slideHtml(sl) + `<span class="s-count">${revealIdx + 1} / ${slides.length}</span><span class="s-hint">Right arrow or click: next. Left arrow: back. F: full screen. Esc: dashboard.</span>`;
+        $$('.poppers').forEach(x => x.remove());
+        if (sl.type === 'place' || sl.type === 'people') setTimeout(poppers, 350);
         if (sl.type === 'end') confetti(160);
       };
       const next = () => { if (revealIdx < slides.length - 1) { revealIdx++; show(); } };
@@ -2178,6 +2308,10 @@ function render() {
   if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
   if (page !== 'reveal') document.body.classList.remove('projector');
+  const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes'].includes(a);
+  if (page === 'reveal' || printPage) setBgFx(null);
+  else if (page === 'project' && S.data) { const pr = findProject(a); setBgFx(pr ? pr.category : 'cycle'); }
+  else setBgFx('cycle');
   const navPage = page === 'project' ? 'projects' : page;
   $$('.tabs a, .topnav a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
   renderTop(page);
@@ -2213,6 +2347,7 @@ setInterval(async () => {
   }
   if (S.data) { const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {}; }
   render();                       /* show something immediately */
+  syncPill(); processQueue();     /* send anything saved earlier but not yet sent */
   await loadData();
   const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {};
   render();
