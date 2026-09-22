@@ -444,6 +444,88 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .s-hint{position:fixed;bottom:2vh;left:0;right:0;font-size:14px;opacity:.55;text-align:center}
 .s-count{position:fixed;top:2vh;right:2vw;font-size:14px;opacity:.55}
 
+
+/* ===== Redesign: responsive layout, floating STEM icons, journey ===== */
+.floaters{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;--px:0;--py:0}
+.fl{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s) * var(--k,1));height:calc(var(--s) * var(--k,1));color:var(--c,var(--gold));opacity:var(--o,.3);transform:translate(calc(var(--px) * var(--d) * 1px),calc(var(--py) * var(--d) * 1px));transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.fl svg{width:100%;height:100%;display:block;animation:drift var(--t,9s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.fl.w{display:none}
+.fl.white{--c:#fff}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(var(--r,8deg))}}
+.hero-in{position:relative;max-width:640px}
+.phead{position:relative;overflow:hidden;background:var(--maroon-tint);border-radius:22px;padding:20px 110px 22px 20px;isolation:isolate}
+.phead::before,.phead::after{content:"";position:absolute;z-index:-1;background-repeat:no-repeat;background-size:contain;animation:drift 11s ease-in-out infinite}
+.phead::before{right:18px;top:12px;width:78px;height:78px;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%237A1C24' stroke-width='2'%3E%3Cellipse cx='24' cy='24' rx='20' ry='8'/%3E%3Cellipse cx='24' cy='24' rx='20' ry='8' transform='rotate(60 24 24)'/%3E%3Cellipse cx='24' cy='24' rx='20' ry='8' transform='rotate(120 24 24)'/%3E%3Ccircle cx='24' cy='24' r='3' fill='%237A1C24'/%3E%3C/svg%3E")}
+.phead::after{right:74px;bottom:-16px;width:58px;height:58px;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23B77F00' stroke-width='2'%3E%3Ccircle cx='24' cy='24' r='14' stroke-width='6' stroke-dasharray='4.4 3'/%3E%3Ccircle cx='24' cy='24' r='7'/%3E%3C/svg%3E");animation-duration:14s;animation-delay:-4s}
+.topnav{display:none}
+.journey{list-style:none;margin:16px 0 0;padding:0;display:grid}
+.jstep{display:grid;grid-template-columns:48px 1fr;gap:14px;padding:0 0 22px;position:relative}
+.jstep::before{content:"";position:absolute;left:23px;top:50px;bottom:2px;width:2px;background:var(--line)}
+.jstep:last-child{padding-bottom:0}
+.jstep:last-child::before{display:none}
+.jn{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid var(--maroon);color:var(--maroon);display:grid;place-items:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;position:relative;z-index:1}
+.jstep.done .jn{background:var(--maroon);color:#fff}
+.jstep.jlive .jn{background:var(--gold);border-color:var(--gold);color:#3A2600;box-shadow:0 0 0 6px rgba(242,169,0,.2)}
+.jstep h3{font-size:20px}
+.jstep p{font-size:15px;color:var(--muted);margin-top:2px;line-height:1.45}
+.jstep a{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-weight:600;text-decoration:none;font-size:15px}
+.jstep a svg{width:18px;height:18px}
+.duo{display:grid;gap:0}
+.pd-grid{display:block}
+.res-grid{display:grid;gap:22px;margin-top:22px}
+.res-grid .res-cat{margin-top:0}
+.plist,.contacts{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.narrow{max-width:680px}
+
+@media (min-width:720px){
+  :root{--nav-h:0px}
+  .tabs{display:none}
+  body{padding-bottom:28px}
+  .wrap{max-width:980px;padding:0 28px}
+  .brand{margin-right:0}
+  .topnav{display:flex;gap:2px;margin-left:auto;margin-right:10px}
+  .topnav a{color:#fff;text-decoration:none;font-size:15px;font-weight:500;padding:7px 12px;border-radius:999px;opacity:.85;position:relative;transition:background .2s,opacity .2s}
+  .topnav a:hover{background:rgba(255,255,255,.1);opacity:1}
+  .topnav a.on{opacity:1;background:rgba(255,255,255,.14)}
+  .topnav a.on::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:2px;border-radius:2px;background:var(--gold)}
+  .hero{padding:44px 0 92px}
+  .corners-strip{gap:16px}
+  .ctile{min-height:150px;padding:18px}
+  .ctile svg{width:38px;height:38px}
+  .fl.w{display:block}
+  .phead{padding:28px 150px 30px 28px}
+  .phead h1{font-size:38px}
+  .phead::before{width:104px;height:104px;right:30px}
+  .phead::after{width:74px;height:74px;right:110px}
+  .corner-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+  .savebar{bottom:12px}
+  .toast{bottom:22px}
+}
+@media (min-width:900px){
+  .journey{grid-template-columns:repeat(4,1fr);gap:20px}
+  .jstep{grid-template-columns:1fr;padding:0}
+  .jstep::before{left:58px;right:-14px;top:23px;bottom:auto;width:auto;height:2px}
+  .jstep:last-child::before{display:none}
+  .duo{grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  .duo > *{margin-top:30px}
+}
+@media (min-width:1000px){
+  .pd-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start}
+  .pd-grid #votebox{position:sticky;top:78px}
+  .pd-grid #votebox .votebox{margin-top:0}
+}
+@media (min-width:1080px){
+  .wrap{max-width:1160px}
+  .hero{padding:64px 0 110px}
+  .title{font-size:112px}
+  .fl.r{opacity:calc(var(--o) * 1.6);--k:1.5}
+  .res-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (pointer:fine){
+  .pcard:hover{transform:translateY(-2px)}
+}
+.wrap.narrow{max-width:760px}
+
 @media (min-width:720px){
   .stats{grid-template-columns:repeat(4,1fr)}
   .facts div{grid-template-columns:80px 1fr}
@@ -457,6 +539,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .sw,[data-reveal]{opacity:1!important;transform:none!important}
   .sparks{display:none}
+  .fl{transform:none!important}
 }
 @media print{
   @page{size:A4;margin:8mm}
@@ -480,6 +563,9 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#/"><span class="dot"></span>STEM FEST</a>
+    <nav class="topnav" aria-label="Main">
+      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Help</a>
+    </nav>
     <span id="topright" class="by"></span>
   </div>
 </header>
@@ -919,6 +1005,44 @@ function observeReveals() {
   els.forEach(e => observer.observe(e));
 }
 
+/* Floating STEM line art */
+const STEM = {
+  atom: '<ellipse cx="24" cy="24" rx="20" ry="8"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(120 24 24)"/><circle cx="24" cy="24" r="3" fill="currentColor"/>',
+  dna: '<path d="M16 4c0 10 16 10 16 20S16 34 16 44M32 4c0 10-16 10-16 20s16 10 16 20"/><path d="M18.5 9h11M17 17h14M17 31h14M18.5 39h11"/>',
+  gear: '<circle cx="24" cy="24" r="14" stroke-width="6" stroke-dasharray="4.4 3"/><circle cx="24" cy="24" r="7"/>',
+  rocket: '<path d="M24 4c7 6 10 14 10 22l-4 8H18l-4-8c0-8 3-16 10-22z"/><circle cx="24" cy="19" r="4"/><path d="M14 26l-6 9 8-1M34 26l6 9-8-1M20 38l4 6 4-6"/>',
+  bulb: '<path d="M16 29a12 12 0 1 1 16 0c-2 2-3 4-3 7H19c0-3-1-5-3-7z"/><path d="M19 40h10M21 44h6M22 30l2-8 2 8"/>',
+  flask: '<path d="M19 4h10M21 4v14L10 40a3 3 0 0 0 3 4h22a3 3 0 0 0 3-4L27 18V4"/><path d="M14 32h20"/><circle cx="21" cy="37" r="1.6" fill="currentColor"/><circle cx="28" cy="35" r="1.1" fill="currentColor"/>',
+  compass: '<circle cx="24" cy="8" r="3"/><path d="M22.5 11L12 42M25.5 11L36 42M15 32c6 3 12 3 18 0"/>',
+  circuit: '<rect x="16" y="18" width="16" height="12" rx="2"/><path d="M4 24h12M32 24h12M20 18V6M28 18V6M24 30v12"/><circle cx="20" cy="5" r="2"/><circle cx="28" cy="5" r="2"/><circle cx="24" cy="43" r="2"/>',
+  magnet: '<path d="M12 6v18a12 12 0 0 0 24 0V6h-8v18a4 4 0 0 1-8 0V6z"/><path d="M12 12h8M28 12h8"/>',
+  pi: '<path d="M8 14h32M18 14v26M30 14v20a6 6 0 0 0 8 4"/>',
+  microscope: '<path d="M21 5l8 4-7 15-8-4z"/><path d="M17 23l-2 4M27 17a12 12 0 0 1 2 22H11M17 44h22"/>',
+  triangle: '<path d="M6 42h36L6 8z"/><path d="M6 34h8v8"/>'
+};
+const stemSvg = n => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${STEM[n]}</svg>`;
+/* name, x%, y%, size, opacity, depth, seconds, rotate, classes (w = tablet and up, r = right side, white = white line) */
+const FLOATS = [
+  ['atom', 82, 7, 58, .34, 26, 9, -10, 'r'], ['dna', 91, 40, 46, .26, 18, 11, 8, 'r white'], ['gear', 70, 64, 66, .22, 30, 13, 20, 'r'],
+  ['rocket', 86, 79, 50, .32, 22, 10, -8, 'r'], ['bulb', 3, 72, 40, .16, 12, 12, 10, 'white'], ['compass', 94, 17, 34, .24, 14, 8, 12, 'r white'],
+  ['triangle', 7, 93, 34, .14, 10, 14, -6, ''], ['flask', 62, 22, 44, .24, 20, 10, 10, 'w r'], ['circuit', 56, 86, 58, .18, 16, 15, -8, 'w r white'],
+  ['magnet', 64, 44, 40, .22, 24, 9, -14, 'w r'], ['pi', 76, 30, 38, .26, 20, 12, 8, 'w r white'], ['microscope', 50, 6, 42, .16, 12, 13, -6, 'w r']
+];
+function floaters() {
+  return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--d:${d};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
+}
+let scrollHandler = null;
+function bindParallax() {
+  const hero = $('.hero'), fl = $('#floaters'); if (!hero || !fl || REDUCED) return;
+  if (window.matchMedia('(pointer:fine)').matches) {
+    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); fl.style.setProperty('--px', (((e.clientX - r.left) / r.width) - .5) * 2); fl.style.setProperty('--py', (((e.clientY - r.top) / r.height) - .5) * 2); });
+    hero.addEventListener('pointerleave', () => { fl.style.setProperty('--px', 0); fl.style.setProperty('--py', 0); });
+  } else {
+    scrollHandler = () => fl.style.setProperty('--py', Math.min(window.scrollY / 160, 3));
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+  }
+}
+
 /* Logos and partners */
 function logoSrc(v) {
   v = String(v || '').trim();
@@ -992,6 +1116,18 @@ function heroLogos() {
   return `<div class="logo-row">${item('Presented by', yl, 'YOJAK')}${pl.map(p => item(orTbd(s.partner_label, 'Supported by'), p.logo, p.name || 'Partner')).join('')}</div>`;
 }
 
+function journey() {
+  const s = S.data.settings; const pr = ratingProgress(); const open = toBool(s.voting_open); const revealed = !!S.data.results;
+  const n = S.data.projects.length; const code = votingMode() === 'code';
+  const steps = [
+    { t: 'Find your way', d: isTbd(s.venue_name) ? 'The venue map and corners will be shared soon.' : `Head to ${s.venue_name}. The venue page shows where each corner is.`, href: '#/venue', cta: 'Venue and corners', ic: 'pin' },
+    { t: 'Explore the corners', d: `${n} ${n === 1 ? 'model' : 'models'} across Science, Math and Tech. Talk to the students about how they work.`, href: '#/projects', cta: 'Browse models', ic: 'grid' },
+    { t: 'Rate the models you like', d: !open ? 'Rating is closed. Thank you to everyone who took part.' : pr.count ? `You have rated ${pr.count} so far. Rate as many as you like, once each.` : `Scan the QR code at a stall and answer three quick star questions.${code ? ' Keep the voter code from your entry pass handy.' : ''}`, href: '#/projects', cta: pr.count ? 'Rate another model' : 'Start rating', ic: 'star', state: pr.count ? 'done' : (open ? 'jlive' : '') },
+    { t: 'Celebrate the winners', d: revealed ? 'The winners are out. See the podium for every corner.' : "Judges' awards and People's Choice are announced at the prize distribution.", href: '#/results', cta: 'Results', ic: 'trophy', state: revealed ? 'jlive' : '' }
+  ];
+  return `<section class="block" data-reveal><h2>Your day at STEM FEST</h2><ol class="journey">${steps.map((x, i) => `<li class="jstep ${x.state || ''}"><span class="jn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol></section>`;
+}
+
 VIEWS.home = () => {
   const s = S.data.settings; const th = theme();
   const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo);
@@ -1004,7 +1140,7 @@ VIEWS.home = () => {
   const revealed = !!S.data.results;
   return {
     html: `
-    <section class="hero">${sparkDots()}<div class="wrap">
+    <section class="hero">${floaters()}<div class="wrap"><div class="hero-in">
       ${heroLogos()}
       ${fl ? `<div class="festlogo-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.parentNode.nextElementSibling.className='title';this.parentNode.remove()"></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
@@ -1016,28 +1152,30 @@ VIEWS.home = () => {
       </dl>
       ${heroTimer()}
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
-    </div></section>
+    </div></div></section>
     <div class="wrap">
       <section class="corners-strip" aria-label="Corners">
         ${CATS.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}">${icon(CAT_ICON[c])}<span><span class="ctile-name">${c}</span><br><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></span></a>`; }).join('')}
       </section>
-      <a class="results-card ${revealed ? 'out' : ''}" href="#/results" data-reveal>${icon('trophy')}<span>${revealed ? '<b>The winners are out!</b><br><span class="muted">See the results for every corner</span>' : '<b>Results</b><br><span class="muted">Winners will be announced at the prize distribution</span>'}</span></a>
-      ${nowNext()}
-      ${open || ratingProgress().count ? progressCard() : ''}
-      ${s.welcome_note ? `<section class="block" data-reveal><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
-      <section class="theme" data-reveal>
-        <h2>Our theme: <em>${esc(th.name)}</em></h2>
-        <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
-      </section>
-      <section class="block" data-reveal><h2>How to rate a model</h2>
-        ${open ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Rating is closed. Thank you to everyone who took part.</p>'}
-      </section>
+      <div class="duo">
+        ${nowNext() || `<a class="results-card ${revealed ? 'out' : ''}" href="#/results" data-reveal>${icon('trophy')}<span>${revealed ? '<b>The winners are out!</b><br><span class="muted">See the results for every corner</span>' : '<b>Results</b><br><span class="muted">Winners will be announced at the prize distribution</span>'}</span></a>`}
+        ${s.welcome_note ? `<section class="card" style="margin-top:22px" data-reveal><h2 style="font-size:22px;margin-bottom:6px">Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
+      </div>
+      ${journey()}
+      <div class="duo">
+        ${open || ratingProgress().count ? progressCard() : '<span></span>'}
+        <section class="theme" data-reveal>
+          <h2>Our theme: ${esc(th.name)}</h2>
+          <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
+        </section>
+      </div>
       ${partnersBlock()}
       <a class="staff-link" href="#/staff">Judges and organisers sign in</a>
     </div>`,
     mount() {
       $$('.ctile').forEach(t => t.addEventListener('pointerdown', () => { t.classList.remove('bounce'); void t.offsetWidth; t.classList.add('bounce'); }));
       if ($('#cd')) { tickCountdown(); ticker = setInterval(tickCountdown, 1000); }
+      bindParallax();
     }
   };
 };
@@ -1061,7 +1199,7 @@ function nowNext() {
 
 /* ---------- Staff sign in chooser ---------- */
 VIEWS.staff = () => ({
-  html: `<div class="wrap page">
+  html: `<div class="wrap page narrow">
     <div class="phead"><h1>Judges and organisers</h1><p>Choose how you are signing in.</p></div>
     <div style="display:grid;gap:12px;margin-top:20px">
       <a class="btn btn-primary btn-big btn-block" href="#/judge">${icon('gavel')}Judge sign in</a>
@@ -1076,7 +1214,7 @@ VIEWS.schedule = () => {
   const live = d && sameDay(d, today); const m = nowMins();
   const items = S.data.schedule;
   return {
-    html: `<div class="wrap page">
+    html: `<div class="wrap page narrow">
       <div class="phead"><h1>Schedule</h1><p>${esc(fmtDate(S.data.settings.event_date))}</p></div>
       ${items.length ? `<ol class="tl" id="tl"><span class="tl-fill" id="tlfill"></span>${items.map((i, k) => {
         let st = '';
@@ -1152,13 +1290,13 @@ VIEWS.project = (id) => {
   return {
     html: `<div class="wrap page">
       <a class="back" href="#/projects">${icon('back')}All models</a>
-      <article class="c-${CAT_CLS[p.category]}">
+      <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
         <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
         ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
       </article>
-      <div id="votebox"></div>
+      <div id="votebox"></div></div>
     </div>`,
     mount() { renderRateBox(p); }
   };
@@ -1256,7 +1394,7 @@ VIEWS.venue = () => {
       <div class="phead"><h1>Venue and corners</h1><p>${esc(orTbd(s.venue_name, 'Venue to be announced'))}${!isTbd(s.venue_address) ? ', ' + esc(s.venue_address) : ''}</p></div>
       ${s.map_link ? `<p style="margin-top:14px"><a class="btn btn-primary" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a></p>` : ''}
       ${fp ? `<img class="floor" src="${esc(fp)}" alt="Floor plan of the venue" onerror="this.remove()">` : ''}
-      <div style="margin-top:12px">
+      <div class="corner-grid" style="margin-top:12px">
       ${S.data.corners.map(c => {
         const cat = normCat(c.category); const n = cat ? projectsIn(cat).length : 0;
         return `<div class="corner ${cat ? 'c-' + CAT_CLS[cat] : ''}" data-reveal><span class="bar"></span><div>
@@ -1314,7 +1452,7 @@ VIEWS.results = () => {
   return {
     html: `<div class="wrap page">
       <div class="phead"><h1>STEM FEST winners</h1><p>Congratulations to every young maker who took part.</p></div>
-      ${CATS.map(c => {
+      <div class="res-grid">${CATS.map(c => {
         const x = r[c] || { judges: [], people: [] }; const pc = x.people[0];
         return `<section class="res-cat c-${CAT_CLS[c]}" data-reveal>
           <div class="res-head">${icon(CAT_ICON[c])}<h2>${c} corner</h2></div>
@@ -1324,7 +1462,7 @@ VIEWS.results = () => {
             ${pc ? `<div class="pc-win"><span class="hic">${icon('heart')}</span><span><small>People's Choice</small><b>${esc(pc.title)}</b><br><span class="muted" style="font-size:14px">${esc(metaLine(pc))}</span></span></div>` : ''}
           </div>
         </section>`;
-      }).join('')}
+      }).join('')}</div>
       ${partnersBlock()}
     </div>`,
     mount() { if (!store.get('sf_confetti', true)) { store.set('sf_confetti', '1', true); setTimeout(() => confetti(), 400); } }
@@ -1357,7 +1495,7 @@ VIEWS.judge = (pid) => {
 function judgeLogin() {
   const pre = store.get('sf_jpre', true);
   return {
-    html: `<div class="wrap page">
+    html: `<div class="wrap page narrow">
       <div class="phead"><h1>Judge sign in</h1><p>Welcome! Choose your name and enter the PIN on your judge card.</p></div>
       <div class="card" style="margin-top:18px;display:grid;gap:14px">
         <label class="field"><span>Your name</span><select id="jsel"><option value="">Loading names...</option></select></label>
@@ -1433,7 +1571,7 @@ function judgeScore(pid) {
   const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
   const locked = toBool(S.data.settings.judging_locked);
   return {
-    html: `<div class="wrap page">
+    html: `<div class="wrap page narrow">
       <a class="back" href="#/judge">${icon('back')}My list</a>
       <div class="pd-head c-${CAT_CLS[p.category]}">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
       ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
@@ -1503,7 +1641,7 @@ function adminLogin(sub) {
     return { html: `<div class="loading"><div class="spin"></div>Opening dashboard</div>`, async mount() { try { await fetchAdmin(); } catch (e) { S.adminKey = null; store.del('sf_admin', true); } render(); } };
   }
   return {
-    html: `<div class="wrap page">
+    html: `<div class="wrap page narrow">
       <div class="phead"><h1>Organiser dashboard</h1><p>Live results, projector reveal, QR cards and judge cards. For the organising team only.</p></div>
       <div class="card" style="margin-top:18px;display:grid;gap:14px">
         ${pwField('akey', 'Admin key')}
@@ -1778,10 +1916,11 @@ let lastPage = null;
 function render() {
   clearInterval(timer); timer = null; clearInterval(ticker); ticker = null;
   window.onkeydown = null;
+  if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
   if (page !== 'reveal') document.body.classList.remove('projector');
   const navPage = page === 'project' ? 'projects' : page;
-  $$('.tabs a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
+  $$('.tabs a, .topnav a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
   renderTop(page);
   renderNotice();
   const app = $('#app');
