@@ -6,9 +6,11 @@
 <meta name="theme-color" content="#7A1C24">
 <title>STEM FEST by YOJAK</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A1C24'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='%23F2A900' font-family='Arial' font-weight='bold'>S</text></svg>">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <style>
 :root{
@@ -241,6 +243,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .jstatus{margin-left:auto;flex:none;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--muted);display:inline-flex;align-items:center;gap:4px}
 .jstatus.ok{background:var(--ok);color:#fff}
 .jstatus.ok svg{width:15px;height:15px;stroke-width:3}
+.jtoggle .jstatus{font-size:12px;padding:3px 8px}
 .jstatus.fresh{animation:popIn .6s cubic-bezier(.2,1.5,.4,1)}
 .s-icon svg{width:100%;height:100%}
 
@@ -541,6 +544,77 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   .sparks{display:none}
   .fl{transform:none!important}
 }
+
+/* ===== Project ID badges ===== */
+.stall.idb{width:auto;min-width:60px;padding:0 8px}
+.stall.idb.long{font-size:18px}
+.stall.big.idb{min-width:76px}
+/* ===== Judge accordion ===== */
+.jlist{display:grid;gap:10px}
+.jitem{display:grid}
+.jtoggle{width:100%;text-align:left;font:inherit;cursor:pointer}
+.jtoggle .chev{width:22px;height:22px;flex:none;color:var(--muted);transition:transform .25s}
+.jitem.open .jtoggle{border-color:var(--maroon);border-radius:16px 16px 0 0;box-shadow:0 8px 20px -16px rgba(60,10,15,.6)}
+.jitem.open .chev{transform:rotate(90deg)}
+.jpanel{border:1.5px solid var(--maroon);border-top:0;border-radius:0 0 16px 16px;background:#fff;padding:6px 14px 14px;animation:panelIn .3s ease-out}
+@keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.jpanel .savebar{position:static;margin-top:14px;box-shadow:none}
+.pcard.scored.justdone{animation:greenPop .7s cubic-bezier(.2,1.4,.4,1)}
+@keyframes greenPop{0%{transform:scale(.96);background:#fff}60%{transform:scale(1.02)}100%{transform:none}}
+/* ===== Launch shell ===== */
+.sk{background:linear-gradient(90deg,var(--line),#F6EEEF,var(--line));background-size:200% 100%;animation:sk 1.2s linear infinite;border-radius:12px}
+@keyframes sk{to{background-position:-200% 0}}
+/* ===== Judge cards 95 x 60 mm ===== */
+.jc-grid{display:grid;grid-template-columns:repeat(auto-fill,95mm);gap:4mm;justify-content:center}
+.jc{width:95mm;height:60mm;display:grid;grid-template-columns:34mm 1fr;background:#fff;border-radius:3mm;overflow:hidden;outline:.3mm dashed #BBB;outline-offset:1.5mm;break-inside:avoid;page-break-inside:avoid;position:relative}
+.jc-l{background:var(--maroon);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5mm;padding:2mm;position:relative;overflow:hidden}
+.jc-l::before{content:"";position:absolute;inset:0;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60' fill='none' stroke='%23F2A900' stroke-width='1'%3E%3Cpath d='M0 15h15l8 8h14l8-8h15M0 45h12l8-8h12l8 8h20'/%3E%3Ccircle cx='23' cy='23' r='1.5'/%3E%3Ccircle cx='37' cy='23' r='1.5'/%3E%3C/svg%3E")}
+.jc-qr{width:27mm;height:27mm;background:#fff;border-radius:1.5mm;padding:1.2mm;position:relative}
+.jc-qr img,.jc-qr canvas{width:100%!important;height:100%!important}
+.jc-l small{font-size:2.3mm;position:relative;text-align:center;line-height:1.2}
+.jc-r{padding:3mm 3.5mm 2.5mm;display:flex;flex-direction:column;min-width:0;border-top:1.2mm solid var(--gold)}
+.jc-top{display:flex;align-items:center;justify-content:space-between;gap:2mm}
+.jc-top img{height:8mm;width:auto;max-width:30mm;object-fit:contain}
+.jc-top .qh{font-size:4.2mm}
+.jc-tag{font-size:2.3mm;font-weight:700;letter-spacing:.08em;color:var(--maroon);border:.3mm solid var(--maroon);border-radius:1mm;padding:.3mm 1.2mm}
+.jc-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:5.2mm;line-height:1.05;margin-top:2mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jc-cats{font-size:2.6mm;color:var(--muted)}
+.jc-pin{margin-top:auto;display:flex;align-items:baseline;gap:2mm}
+.jc-pin small{font-size:2.3mm;color:var(--muted);font-weight:600}
+.jc-pin b{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:7mm;letter-spacing:.18em;color:var(--maroon);line-height:1}
+.jc-logos{display:flex;gap:2mm;align-items:center;margin-top:1.2mm}
+.jc-logos img{height:5mm;width:auto;max-width:22mm;object-fit:contain}
+/* ===== Envelopes ===== */
+.env-page{display:flex;flex-direction:column;align-items:center;gap:4mm;margin-bottom:10mm}
+.env-page > svg{width:181mm;height:190mm;max-width:100%;height:auto;background:#fff}
+.env-steps{max-width:181mm;font-size:13px;color:var(--ink)}
+.env-steps ol{margin:4px 0 0;padding-left:18px}
+/* ===== Projector themes ===== */
+.stage .slide{position:relative;z-index:1}
+.stage.th{background:radial-gradient(ellipse at 50% 115%,var(--c) 0%,var(--maroon-deep) 62%)}
+.fx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx-spin{position:absolute;animation:spin linear infinite;opacity:.3;color:#fff}
+.fx-spin svg{width:100%;height:100%}
+.bub{position:absolute;bottom:-10vh;border-radius:50%;border:.3vh solid rgba(255,255,255,.55);background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.45),rgba(255,255,255,.04) 60%);animation:bubRise linear infinite}
+@keyframes bubRise{0%{transform:translate(0,0);opacity:0}8%{opacity:1}50%{transform:translate(2.5vw,-60vh)}100%{transform:translate(-2vw,-120vh);opacity:0}}
+.msym{position:absolute;bottom:-12vh;font-family:'Baloo 2',Georgia,serif;font-weight:800;color:rgba(242,169,0,.6);animation:symRise linear infinite}
+@keyframes symRise{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(-125vh) rotate(var(--r,200deg));opacity:0}}
+.fx svg.geo{position:absolute;inset:0;width:100%;height:100%}
+.geo .d{stroke-dasharray:400;stroke-dashoffset:400;animation:drawGeo 3.2s ease-out forwards}
+.geo .rot{transform-box:fill-box;transform-origin:center;animation:spin 30s linear infinite}
+@keyframes drawGeo{to{stroke-dashoffset:0}}
+.bits{position:absolute;top:-80vh;font-family:ui-monospace,Menlo,Consolas,monospace;color:rgba(200,190,255,.55);font-size:2.2vh;line-height:1.15;white-space:pre;text-align:center;animation:bitFall linear infinite}
+@keyframes bitFall{to{transform:translateY(190vh)}}
+.fx svg.trace{position:absolute;inset:0;width:100%;height:100%}
+.trace .d{stroke-dasharray:300;stroke-dashoffset:300;animation:drawGeo 2.4s ease-out forwards}
+.trace .node{opacity:0;animation:nodeOn .4s forwards}
+@keyframes nodeOn{to{opacity:1}}
+.burst i{position:absolute;left:50%;top:48%;font-style:normal;animation:burst 1.6s cubic-bezier(.1,.8,.3,1) forwards}
+@keyframes burst{from{transform:translate(-50%,-50%) scale(.2);opacity:1}to{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1) rotate(var(--r,0deg));opacity:0}}
+.s-id{display:inline-block;margin-top:2vh;background:#fff;color:var(--maroon-deep);border-radius:1.2vh;padding:.6vh 2vh;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:4.2vh;letter-spacing:.06em}
+.floatheart{position:absolute;bottom:-10vh;color:rgba(255,120,130,.55);animation:symRise linear infinite}
+.floatheart svg{width:100%;height:100%;fill:currentColor}
+
 @media print{
   @page{size:A4;margin:8mm}
   body{padding:0;font-size:14px}
@@ -556,6 +630,12 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   .qr-foot img{height:13mm}
   .code-grid{grid-template-columns:repeat(4,1fr);gap:0}
   .code-card{border-radius:0;break-inside:avoid}
+  .jc-grid{grid-template-columns:repeat(2,95mm);gap:3mm}
+  .jc{outline:.2mm dashed #999;outline-offset:0}
+  .env-page{page-break-after:always;break-after:page;margin:0}
+  .env-page > svg{width:181mm!important;height:190mm!important}
+  .phead{display:none}
+  body,.jc,.jc-l,.env-page > svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -789,7 +869,7 @@ const Demo = {
     await sleep(200);
     if (p.action === 'data') {
       const s = this.settings();
-      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, contacts: SAMPLE.contacts, projects: SAMPLE.projects, results: toBool(s.results_revealed) ? this.publicResults() : null };
+      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, contacts: SAMPLE.contacts, projects: SAMPLE.projects, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })), results: toBool(s.results_revealed) ? this.publicResults() : null };
     }
     if (p.action === 'myratings') { const out = {}; this.ratings().filter(v => v.voter_id === p.voter_id).forEach(v => out[v.project_id] = v.scores); return { ok: true, ratings: out }; }
     if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })) };
@@ -897,13 +977,15 @@ function markRated(id, scores) {
 async function syncRatings(force) {
   const vid = voterId();
   S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {};
-  if (!vid) return;
+  if (!vid) return false;
   const last = +store.get('sf_sync:' + vid) || 0;
-  if (!force && Date.now() - last < SYNC_MS) return;
+  if (!force && Date.now() - last < SYNC_MS) return false;
+  const before = Object.keys(S.rated).length;
   try {
     const r = await apiGet({ action: 'myratings', voter_id: vid });
     if (r.ok) {
       Object.assign(S.rated, r.ratings || {});
+      if (Object.keys(S.rated).length !== before) { store.set('sf_rated:' + vid, JSON.stringify(S.rated)); store.set('sf_sync:' + vid, String(Date.now())); return true; }
       store.set('sf_rated:' + vid, JSON.stringify(S.rated));
       store.set('sf_sync:' + vid, String(Date.now()));
     }
@@ -931,7 +1013,7 @@ async function loadData() {
 const projectsIn = c => S.data.projects.filter(p => p.category === c);
 const byStall = (a, b) => String(a.stall).localeCompare(String(b.stall), undefined, { numeric: true });
 const findProject = id => S.data.projects.find(p => p.project_id === id);
-const metaLine = w => [isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', ');
+const metaLine = w => [w.project_id ? 'ID ' + w.project_id : '', isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', ');
 const criteria = () => {
   const list = splitList(S.data.settings.criteria).filter(Boolean);
   const def = ['Concept and Understanding', 'Innovation and Creativity', 'Working of the Model', 'Presentation by Students', 'Real Life Relevance'];
@@ -962,8 +1044,10 @@ function emptyState(title, text, href, label) {
   return `<div class="wrap"><div class="empty"><h1>${esc(title)}</h1><p>${esc(text)}</p>${href ? `<a class="btn btn-primary" href="${href}">${esc(label)}</a>` : ''}</div></div>`;
 }
 function stallBadge(p, big) {
-  return `<span class="stall ${big ? 'big' : ''}"><small>Stall</small>${esc(p.stall || '?')}</span>`;
+  const id = String(p.project_id || p.stall || '?');
+  return `<span class="stall idb ${big ? 'big' : ''} ${id.length > 4 ? 'long' : ''}"><small>ID</small>${esc(id)}</span>`;
 }
+const stallLine = p => p.stall ? `Stall ${p.stall}` : '';
 function pwField(id, label, attrs = '') {
   return `<label class="field"><span>${label}</span><span class="pw"><input id="${id}" type="password" autocomplete="off" ${attrs}><button type="button" class="eye" data-eye="${id}" aria-label="Show ${label}">${icon('eye')}</button></span></label>`;
 }
@@ -1277,7 +1361,7 @@ VIEWS.projects = (cat) => {
 function projectCard(p, i = 0) {
   return `<a class="pcard c-${CAT_CLS[p.category]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}">
     ${stallBadge(p)}
-    <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc(orTbd(p.centre, ''))}</span><span class="ptag">${p.category}</span></span>
+    <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span><span class="ptag">${p.category}</span></span>
     ${S.rated[p.project_id] ? `<span class="voted-mark">${icon('check')}Rated</span>` : ''}
   </a>`;
 }
@@ -1291,7 +1375,7 @@ VIEWS.project = (id) => {
     html: `<div class="wrap page">
       <a class="back" href="#/projects">${icon('back')}All models</a>
       <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
-        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
+        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
         ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
@@ -1489,7 +1573,7 @@ VIEWS.judge = (pid) => {
       }
     };
   }
-  return pid ? judgeScore(pid) : judgeList();
+  return judgeList(pid);
 };
 
 function judgeLogin() {
@@ -1509,6 +1593,7 @@ function judgeLogin() {
       bindEyes(document);
       const sel = $('#jsel');
       try {
+        if (!S.judgesList) S.judgesList = (S.data.judges && S.data.judges.length) ? S.data.judges : null;
         if (!S.judgesList) { const r = await apiGet({ action: 'judges' }); S.judgesList = r.ok ? r.judges : []; }
         sel.innerHTML = '<option value="">Select your name</option>' + S.judgesList.map(j => `<option value="${esc(j.judge_id)}" ${pre === j.judge_id ? 'selected' : ''}>${esc(j.name)}</option>`).join('');
         if (pre) $('#jpin').focus();
@@ -1536,88 +1621,107 @@ function judgeProjects() {
   return S.data.projects.filter(p => cats.includes(p.category)).sort(byStall);
 }
 
-function judgeList() {
-  const list = judgeProjects(); const done = list.filter(p => S.judgeScores[p.project_id]).length;
-  const pct = list.length ? Math.round(done / list.length * 100) : 0;
+function judgeHeader(p, fresh) {
+  const sc = S.judgeScores[p.project_id]; const max = maxMark() * 5;
+  return `<button class="pcard jtoggle c-${CAT_CLS[p.category]} ${sc ? 'scored' : ''} ${fresh ? 'justdone' : ''}" data-pid="${esc(p.project_id)}" aria-expanded="false">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span></span><span class="jstatus ${sc ? 'ok' : ''} ${fresh ? 'fresh' : ''}">${sc ? `${icon('check')}${sc.total} of ${max}` : 'Not scored'}</span><span class="chev">${icon('back').replace('<svg', '<svg style="transform:rotate(180deg)"')}</span></button>`;
+}
+
+function judgeList(openPid) {
+  const list = judgeProjects();
   const cats = CATS.filter(c => list.some(p => p.category === c));
-  const max = maxMark() * 5;
-  const fresh = store.get('sf_justsaved', true); store.del('sf_justsaved', true);
   return {
-    html: `<div class="wrap page">
+    html: `<div class="wrap page narrow">
       <div class="jhead"><div><p class="muted">Signed in as</p><h1>${esc(S.judge.name)}</h1></div><button class="btn btn-ghost btn-sm" id="jout">Sign out</button></div>
       ${toBool(S.data.settings.judging_locked) ? '<p class="banner">Judging is locked. Scores can no longer be changed.</p>' : ''}
-      <div class="progress"><div class="bar-o"><span id="jbar" style="width:0%"></span></div><p>${done} of ${list.length} models scored${done === list.length && list.length ? '. All done, thank you!' : ''}</p></div>
-      ${cats.map(c => `<section class="block"><h2>${c} corner</h2><div class="plist">
-        ${list.filter(p => p.category === c).map((p, i) => {
-          const sc = S.judgeScores[p.project_id];
-          return `<a class="pcard c-${CAT_CLS[c]} ${sc ? 'scored' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/judge/${encodeURIComponent(p.project_id)}">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc(orTbd(p.centre, ''))}</span></span><span class="jstatus ${sc ? 'ok' : ''} ${fresh === p.project_id ? 'fresh' : ''}">${sc ? `${icon('check')}${sc.total} of ${max}` : 'Not scored'}</span></a>`;
-        }).join('')}
+      <div class="progress"><div class="bar-o"><span id="jbar" style="width:0%"></span></div><p id="jprog"></p></div>
+      <p class="muted" style="font-size:14px;margin-top:10px">Tap a model to open its marking panel. It closes and turns green when you save.</p>
+      ${cats.map(c => `<section class="block"><h2>${c} corner</h2><div class="jlist">
+        ${list.filter(p => p.category === c).map(p => `<div class="jitem" id="ji-${esc(p.project_id)}">${judgeHeader(p)}</div>`).join('')}
       </div></section>`).join('')}
       ${!list.length ? '<p class="count">No models have been assigned to you yet.</p>' : ''}
     </div>`,
     mount() {
-      setTimeout(() => { const b = $('#jbar'); if (b) b.style.width = pct + '%'; }, 60);
+      updateJudgeProgress();
       $('#jout').addEventListener('click', () => { S.judge = null; S.judgeScores = null; store.del('sf_judge', true); render(); });
-      if (done === list.length && list.length && fresh) confetti(60);
+      $$('.jitem').forEach(bindJudgeItem);
+      if (openPid) { const it = document.getElementById('ji-' + openPid); if (it) toggleJudgeItem(it, true); }
     }
   };
 }
-
-function judgeScore(pid) {
-  const p = findProject(pid);
-  if (!p || !judgeProjects().includes(p)) return { html: emptyState('This model is not on your list', 'Go back to your list of models to score.', '#/judge', 'Back to my list') };
+function updateJudgeProgress() {
+  const list = judgeProjects(); const done = list.filter(p => S.judgeScores[p.project_id]).length;
+  const pct = list.length ? Math.round(done / list.length * 100) : 0;
+  const bar = $('#jbar'), txt = $('#jprog');
+  if (txt) txt.textContent = `${done} of ${list.length} models scored${done === list.length && list.length ? '. All done, thank you!' : ''}`;
+  if (bar) setTimeout(() => { bar.style.width = pct + '%'; }, 60);
+  return { done, total: list.length };
+}
+function bindJudgeItem(it) {
+  const btn = $('.jtoggle', it); if (btn) btn.addEventListener('click', () => toggleJudgeItem(it));
+}
+function closeJudgeItem(it) {
+  it.classList.remove('open'); const pn = $('.jpanel', it); if (pn) pn.remove();
+  const b = $('.jtoggle', it); if (b) b.setAttribute('aria-expanded', 'false');
+}
+function toggleJudgeItem(it, forceOpen) {
+  const isOpen = it.classList.contains('open');
+  $$('.jitem.open').forEach(x => { if (x !== it) closeJudgeItem(x); });
+  if (isOpen && !forceOpen) { closeJudgeItem(it); return; }
+  if (isOpen) return;
+  const p = findProject(it.id.slice(3)); if (!p) return;
+  it.classList.add('open'); $('.jtoggle', it).setAttribute('aria-expanded', 'true');
+  it.insertAdjacentHTML('beforeend', scorePanel(p));
+  bindScorePanel(it, p);
+  setTimeout(() => it.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }), 50);
+}
+function scorePanel(p) {
   const crit = criteria(); const max = maxMark();
   const prev = S.judgeScores[p.project_id];
-  const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
   const locked = toBool(S.data.settings.judging_locked);
-  return {
-    html: `<div class="wrap page narrow">
-      <a class="back" href="#/judge">${icon('back')}My list</a>
-      <div class="pd-head c-${CAT_CLS[p.category]}">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
-      ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
-      ${prev ? '<p class="banner" style="background:var(--ok-t);color:var(--ok)">You already scored this model. Change any mark and save again to update it.</p>' : ''}
-      <div style="margin-top:8px">
-        ${crit.map((c, i) => `<div class="crit">
-          <div class="crit-head"><span>${esc(c)}</span><strong id="cv${i}"></strong></div>
-          <div class="nums" role="group" aria-label="${esc(c)}">${Array.from({ length: max + 1 }, (_, v) => `<button class="num" data-i="${i}" data-v="${v}" aria-pressed="false" ${locked ? 'disabled' : ''}>${v}</button>`).join('')}</div>
-        </div>`).join('')}
-      </div>
-      <label class="field" style="margin-top:16px"><span>Remarks (optional)</span><textarea id="remarks" maxlength="500" ${locked ? 'disabled' : ''}>${esc(prev?.remarks || '')}</textarea></label>
-      <p class="err" id="serr" role="alert" style="margin-top:10px"></p>
-      <div class="savebar"><span class="tot">Total <b id="tot">0</b> of ${max * 5}</span>${locked ? '' : '<button class="btn btn-primary" id="save">Save score</button>'}</div>
-    </div>`,
-    mount() {
-      const paint = () => {
-        vals.forEach((v, i) => {
-          const el = $('#cv' + i);
-          el.textContent = v == null ? 'Not marked' : `${v} of ${max}`;
-          el.className = v == null ? 'unset' : '';
-        });
-        $$('.num').forEach(b => b.setAttribute('aria-pressed', String(vals[+b.dataset.i] === +b.dataset.v)));
-        $('#tot').textContent = vals.reduce((a, v) => a + (v || 0), 0);
-      };
-      $$('.num').forEach(b => b.addEventListener('click', () => { vals[+b.dataset.i] = +b.dataset.v; paint(); const e = $('#serr'); if (vals.every(v => v != null)) e.textContent = ''; }));
-      paint();
-      const save = $('#save');
-      if (save) save.addEventListener('click', async () => {
-        const err = $('#serr');
-        if (vals.some(v => v == null)) { err.textContent = 'Give a mark for every criterion before saving.'; return; }
-        err.textContent = ''; save.disabled = true; save.innerHTML = '<span class="spin"></span>Saving...';
-        try {
-          const r = await apiPost({ action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals, remarks: $('#remarks').value });
-          if (r.ok) {
-            S.judgeScores[p.project_id] = { scores: vals.slice(), total: r.total, remarks: $('#remarks').value };
-            toast(`Score saved for ${p.title}`);
-            store.set('sf_justsaved', p.project_id, true);
-            location.hash = '#/judge';
-          } else {
-            if (r.code === 'locked') S.data.settings.judging_locked = 'TRUE';
-            err.textContent = r.error || 'The score was not saved. Try again.'; save.disabled = false; save.textContent = 'Save score';
-          }
-        } catch (e) { err.textContent = 'The score was not saved because the connection dropped. Tap Save again.'; save.disabled = false; save.textContent = 'Save score'; }
-      });
-    }
+  return `<div class="jpanel">
+    ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
+    ${prev ? '<p class="banner" style="background:var(--ok-t);color:var(--ok)">Already scored. Change any mark and save again to update it.</p>' : ''}
+    ${crit.map((c, i) => `<div class="crit">
+      <div class="crit-head"><span>${esc(c)}</span><strong data-cv="${i}"></strong></div>
+      <div class="nums" role="group" aria-label="${esc(c)}">${Array.from({ length: max + 1 }, (_, v) => `<button class="num" data-i="${i}" data-v="${v}" aria-pressed="false" ${locked ? 'disabled' : ''}>${v}</button>`).join('')}</div>
+    </div>`).join('')}
+    <label class="field" style="margin-top:14px"><span>Remarks (optional)</span><textarea class="jrem" maxlength="500" ${locked ? 'disabled' : ''}>${esc(prev?.remarks || '')}</textarea></label>
+    <p class="err jerr2" role="alert" style="margin-top:8px"></p>
+    <div class="savebar"><span class="tot">Total <b class="jtot">0</b> of ${max * 5}</span>${locked ? '' : '<button class="btn btn-primary jsave">Save score</button>'}</div>
+  </div>`;
+}
+function bindScorePanel(it, p) {
+  const panel = $('.jpanel', it); const max = maxMark();
+  const prev = S.judgeScores[p.project_id];
+  const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
+  const err = $('.jerr2', panel);
+  const paint = () => {
+    vals.forEach((v, i) => { const el = $(`[data-cv="${i}"]`, panel); el.textContent = v == null ? 'Not marked' : `${v} of ${max}`; el.className = v == null ? 'unset' : ''; });
+    $$('.num', panel).forEach(b => b.setAttribute('aria-pressed', String(vals[+b.dataset.i] === +b.dataset.v)));
+    $('.jtot', panel).textContent = vals.reduce((a, v) => a + (v || 0), 0);
   };
+  $$('.num', panel).forEach(b => b.addEventListener('click', () => { vals[+b.dataset.i] = +b.dataset.v; paint(); if (vals.every(v => v != null)) err.textContent = ''; }));
+  paint();
+  const save = $('.jsave', panel);
+  if (save) save.addEventListener('click', async () => {
+    if (vals.some(v => v == null)) { err.textContent = 'Give a mark for every criterion before saving.'; return; }
+    err.textContent = ''; save.disabled = true; save.innerHTML = '<span class="spin"></span>Saving...';
+    const remarks = $('.jrem', panel).value;
+    try {
+      const r = await apiPost({ action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals, remarks });
+      if (r.ok) {
+        S.judgeScores[p.project_id] = { scores: vals.slice(), total: r.total, remarks };
+        closeJudgeItem(it);
+        it.innerHTML = judgeHeader(p, true); bindJudgeItem(it);
+        const pr = updateJudgeProgress();
+        toast(`Score saved for ${p.project_id}`);
+        if (pr.done === pr.total && pr.total) confetti(70);
+      } else {
+        if (r.code === 'locked') S.data.settings.judging_locked = 'TRUE';
+        err.textContent = r.error || 'The score was not saved. Try again.'; save.disabled = false; save.textContent = 'Save score';
+      }
+    } catch (e) { err.textContent = 'The score was not saved because the connection dropped. Tap Save again.'; save.disabled = false; save.textContent = 'Save score'; }
+  });
 }
 
 /* ---------- Admin ---------- */
@@ -1626,11 +1730,12 @@ VIEWS.admin = (sub) => {
   if (sub === 'qr') return qrSheet();
   if (sub === 'codes') return codesSheet();
   if (sub === 'judgecards') return judgeCards();
+  if (sub === 'envelopes') return judgeEnvelopes();
   return adminDash();
 };
 
-async function fetchAdmin() {
-  const r = await apiPost({ action: 'admin', key: S.adminKey });
+async function fetchAdmin(fresh) {
+  const r = await apiPost({ action: 'admin', key: S.adminKey, fresh: !!fresh });
   if (r.ok) { S.admin = r; return true; }
   if (r.code === 'badkey') { S.adminKey = null; store.del('sf_admin', true); }
   throw new Error(r.error || 'Could not load');
@@ -1690,6 +1795,7 @@ function adminDash() {
         <a class="btn btn-gold btn-sm" href="#/reveal">${icon('screen')}Projector reveal</a>
         <a class="btn btn-ghost btn-sm" href="#/admin/qr">Print QR cards</a>
         <a class="btn btn-ghost btn-sm" href="#/admin/judgecards">Print judge cards</a>
+        <a class="btn btn-ghost btn-sm" href="#/admin/envelopes">Print judge envelopes</a>
         ${a.codes.length ? `<a class="btn btn-ghost btn-sm" href="#/admin/codes">Print voter codes (${a.codes.length})</a>` : ''}
         <button class="btn btn-ghost btn-sm" id="acsv">Download results (CSV)</button>
       </div>
@@ -1722,12 +1828,12 @@ function adminDash() {
         const r = a.results[c];
         return `<section class="adm-cat c-${CAT_CLS[c]}"><h2>${c}</h2>
           <h3>Judges' ranking, by average score (top 3 win)</h3>
-          ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
-            ${r.judges.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
+          ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>ID</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
+            ${r.judges.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td><b>${esc(x.project_id)}</b></td><td>${esc(x.title)}<br><span class="muted">${esc([x.centre, x.stall ? 'stall ' + x.stall : ''].filter(Boolean).join(', '))}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
           </tbody></table></div>` : '<p class="muted">No scores yet.</p>'}
           <h3>People's Choice, by total visitor points (1 winner)</h3>
-          ${r.people.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Stall</th><th>Model</th><th>Points</th><th>Ratings</th><th>Average</th></tr></thead><tbody>
-            ${r.people.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td>${esc(x.stall)}</td><td>${esc(x.title)}<br><span class="muted">${esc(x.centre)}</span></td><td class="num-c"><b>${x.points}</b></td><td class="num-c">${x.raters}</td><td class="num-c">${x.pavg} of 15</td></tr>`).join('')}
+          ${r.people.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>ID</th><th>Model</th><th>Points</th><th>Ratings</th><th>Average</th></tr></thead><tbody>
+            ${r.people.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td><b>${esc(x.project_id)}</b></td><td>${esc(x.title)}<br><span class="muted">${esc([x.centre, x.stall ? 'stall ' + x.stall : ''].filter(Boolean).join(', '))}</span></td><td class="num-c"><b>${x.points}</b></td><td class="num-c">${x.raters}</td><td class="num-c">${x.pavg} of 15</td></tr>`).join('')}
           </tbody></table></div>` : '<p class="muted">No ratings yet.</p>'}
         </section>`;
       }).join('')}
@@ -1735,7 +1841,7 @@ function adminDash() {
     </div>`,
     mount() {
       const refresh = async (manual) => {
-        try { await fetchAdmin(); const r = route(); if (r[0] === 'admin' && !r[1]) render(); if (manual) toast('Dashboard updated'); }
+        try { await fetchAdmin(manual); const r = route(); if (r[0] === 'admin' && !r[1]) render(); if (manual) toast('Dashboard updated'); }
         catch (e) { if (manual) toast('Could not refresh. Check the connection.'); if (!S.adminKey) render(); }
       };
       $('#arefresh').addEventListener('click', () => refresh(true));
@@ -1760,11 +1866,11 @@ function adminDash() {
 const votingModeLabel = m => String(m || '').trim().toLowerCase() === 'code' ? 'Printed voter codes' : 'One rating per phone';
 
 function downloadCsv() {
-  const rows = [['Category', 'List', 'Rank', 'Stall', 'Model', 'Centre', 'Judges average (of 50)', 'Judges who scored', 'Visitor points', 'Visitor ratings', 'Visitor average (of 15)', 'Exact tie']];
+  const rows = [['Category', 'List', 'Rank', 'Project ID', 'Stall', 'Model', 'Centre', 'Judges average (of 50)', 'Judges who scored', 'Visitor points', 'Visitor ratings', 'Visitor average (of 15)', 'Exact tie']];
   CATS.forEach(c => {
     const r = S.admin.results[c];
-    r.judges.forEach((x, i) => rows.push([c, 'Judges', i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg, x.tie ? 'Yes' : '']));
-    r.people.forEach((x, i) => rows.push([c, "People's Choice", i + 1, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg, x.tie ? 'Yes' : '']));
+    r.judges.forEach((x, i) => rows.push([c, 'Judges', i + 1, x.project_id, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg, x.tie ? 'Yes' : '']));
+    r.people.forEach((x, i) => rows.push([c, "People's Choice", i + 1, x.project_id, x.stall, x.title, x.centre, x.avg, x.n, x.points, x.raters, x.pavg, x.tie ? 'Yes' : '']));
   });
   const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
   const a = document.createElement('a');
@@ -1811,18 +1917,107 @@ function qrSheet() {
 
 function judgeCards() {
   const base = siteBase(); const judges = S.admin.stats.judges || [];
-  const { head, foot } = cardBits();
+  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo); const pl = partnerList().filter(p => p.logo);
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
-        <div class="phead"><h1>Judge cards</h1><p>One personal card per judge. Scanning it opens sign in with the judge's name already selected. Hand each card to its judge privately.</p></div>
-        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+        <div class="phead"><h1>Judge cards</h1><p>95 x 60 mm, a little bigger than a visiting card. 8 cards per A4 sheet. Print at 100% scale (not "fit to page"), then cut along the dashed lines.</p></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><a class="btn btn-ghost" href="#/admin/envelopes">Envelopes for these cards</a></div>
       </div>
-      <div class="qr-grid">
-        ${judges.map(j => `<div class="qr-card">${head}<span class="qcat">Judge card</span><span class="qtitle" style="font-size:22px">${esc(j.name)}</span><span class="muted" style="font-size:14px">Corners: ${esc(j.categories)}</span><div class="qr-box" data-url="${esc(base + '#/judgein/' + encodeURIComponent(j.judge_id))}"></div><span class="qhint">Scan, then enter your PIN</span><span class="qpin">${esc(j.pin || '')}</span>${foot}</div>`).join('')}
+      <div class="jc-grid">
+        ${judges.map(j => `<div class="jc">
+          <div class="jc-l"><div class="qr-box jc-qr" data-url="${esc(base + '#/judgein/' + encodeURIComponent(j.judge_id))}"></div><small>Scan to sign in</small></div>
+          <div class="jc-r">
+            <div class="jc-top">${fl ? `<img src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>'}<span class="jc-tag">JUDGE</span></div>
+            <span class="jc-name">${esc(j.name)}</span>
+            <span class="jc-cats">Corners: ${esc(j.categories)}</span>
+            <div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
+            <div class="jc-logos">${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}${pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`).join('')}</div>
+          </div>
+        </div>`).join('')}
       </div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
+  };
+}
+
+function envelopeSvg(j) {
+  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo); const pl = partnerList().filter(p => p.logo);
+  const th = theme();
+  const icons = ['atom', 'gear', 'pi', 'flask', 'circuit', 'bulb', 'dna', 'rocket'];
+  const pattern = [[48, 62], [124, 82], [131, 100], [96, 72], [110, 108], [88, 62]].map(([x, y], i) => `<svg x="${x}" y="${y}" width="9" height="9" viewBox="0 0 48 48" fill="none" stroke="#F2A900" stroke-width="2" opacity=".35">${STEM[icons[i % icons.length]]}</svg>`).join('');
+  const flapPattern = (pts) => pts.map(([x, y], i) => `<svg x="${x}" y="${y}" width="8" height="8" viewBox="0 0 48 48" fill="none" stroke="#7A1C24" stroke-width="2" opacity=".25">${STEM[icons[(i + 3) % icons.length]]}</svg>`).join('');
+  const logoRow = [yl, ...pl.map(p => p.logo)].filter(Boolean).slice(0, 3);
+  return `<svg viewBox="0 0 181 190" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
+    <!-- flaps (fill) -->
+    <path d="M40 56 L60 22 Q90.5 8 121 22 L141 56 Z" fill="#F8EDEE"/>
+    <path d="M40 122 L141 122 L130 170 Q90.5 178 51 170 Z" fill="#F8EDEE"/>
+    <path d="M40 60 L14 66 Q10 89 14 112 L40 118 Z" fill="#FBF4F4"/>
+    <path d="M141 60 L167 66 Q171 89 167 112 L141 118 Z" fill="#FBF4F4"/>
+    ${flapPattern([[58, 36], [112, 36], [62, 140], [108, 144], [86, 156], [20, 84], [152, 84]])}
+    <!-- glue areas -->
+    <defs><pattern id="hatch" width="2.5" height="2.5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="2.5" stroke="#B77F00" stroke-width=".6"/></pattern></defs>
+    <path d="M40 96 L15.5 100 Q14.5 106 14 112 L40 118 Z" fill="url(#hatch)" opacity=".8"/>
+    <path d="M141 96 L165.5 100 Q166.5 106 167 112 L141 118 Z" fill="url(#hatch)" opacity=".8"/>
+    <text x="27" y="110" font-size="3" fill="#B77F00" text-anchor="middle" font-weight="700">GLUE</text>
+    <text x="154" y="110" font-size="3" fill="#B77F00" text-anchor="middle" font-weight="700">GLUE</text>
+    <!-- seal on top flap -->
+    <circle cx="90.5" cy="30" r="8" fill="#F2A900"/><svg x="84.5" y="24" width="12" height="12" viewBox="0 0 48 48" fill="none" stroke="#7A1C24" stroke-width="2.6">${STEM.atom}</svg>
+    <!-- front panel -->
+    <rect x="40" y="56" width="101" height="66" fill="#7A1C24"/>
+    ${pattern}
+    <rect x="46" y="61" width="${fl ? 38 : 40}" height="14" rx="2.5" fill="#fff"/>
+    ${fl ? `<image href="${esc(fl)}" x="47.5" y="62" width="35" height="12" preserveAspectRatio="xMidYMid meet"/>` : `<text x="66" y="70.5" font-size="6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
+    <text x="135" y="68" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
+    <text x="47" y="86" font-size="3.4" fill="#F2A900">For our honoured judge</text>
+    <text x="47" y="95.5" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
+    <text x="47" y="101.5" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}, theme ${esc(th.name)}</text>
+    ${logoRow.map((src, i) => `<rect x="${47 + i * 24}" y="106" width="22" height="11" rx="2" fill="#fff"/><image href="${esc(src)}" x="${48 + i * 24}" y="107" width="20" height="9" preserveAspectRatio="xMidYMid meet"/>`).join('')}
+    <text x="135" y="116" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
+    <!-- cut lines (solid) -->
+    <g fill="none" stroke="#2B1517" stroke-width=".35">
+      <path d="M40 56 L60 22 Q90.5 8 121 22 L141 56"/>
+      <path d="M40 122 L51 170 Q90.5 178 130 170 L141 122"/>
+      <path d="M40 60 L14 66 Q10 89 14 112 L40 118"/>
+      <path d="M141 60 L167 66 Q171 89 167 112 L141 118"/>
+      <path d="M40 56 V60 M40 118 V122 M141 56 V60 M141 118 V122"/>
+    </g>
+    <!-- fold lines (dashed) -->
+    <g fill="none" stroke="#7A1C24" stroke-width=".35" stroke-dasharray="2 1.5">
+      <path d="M40 56 H141 M40 122 H141 M40 60 V118 M141 60 V118"/>
+    </g>
+    <g font-size="2.6" fill="#7A1C24" font-weight="700">
+      <text x="90.5" y="54.5" text-anchor="middle">FOLD 4 (top flap, last)</text>
+      <text x="90.5" y="126" text-anchor="middle">FOLD 3</text>
+      <text x="37.5" y="89" text-anchor="middle" transform="rotate(-90 37.5 89)">FOLD 1</text>
+      <text x="143.5" y="89" text-anchor="middle" transform="rotate(90 143.5 89)">FOLD 2</text>
+    </g>
+    <g font-size="2.8" fill="#6F5A5C">
+      <text x="4" y="186">Cut along the solid lines. Fold along the dashed lines. Envelope fits a 95 x 60 mm judge card.</text>
+    </g>
+    <svg x="4" y="8" width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#2B1517" stroke-width="1.6"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg>
+  </svg>`;
+}
+
+function judgeEnvelopes() {
+  const judges = S.admin.stats.judges || [];
+  return {
+    html: `<div class="wrap page">
+      <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
+        <div class="phead"><h1>Judge envelopes</h1><p>One envelope per judge, each on its own A4 page with the judge's name on the front. Print at 100% scale (not "fit to page"). The template has cut, fold and glue markings.</p></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><a class="btn btn-ghost" href="#/admin/judgecards">Judge cards</a></div>
+      </div>
+      ${judges.map(j => `<div class="env-page">${envelopeSvg(j)}
+        <div class="env-steps"><b>How to make it:</b><ol>
+          <li>Cut along the solid outer lines.</li>
+          <li>Turn the sheet printed side down.</li>
+          <li>Fold the two side flaps in along FOLD 1 and FOLD 2.</li>
+          <li>Put glue on the hatched GLUE areas, fold the bottom flap up along FOLD 3 and press it onto them.</li>
+          <li>Turn it over: the maroon front with the judge's name faces you. Slide the judge card in and close the top flap along FOLD 4. It can be tucked in or sealed with a small sticker.</li>
+        </ol></div>
+      </div>`).join('')}
+    </div>`,
+    mount() { $('#doprint').addEventListener('click', () => window.print()); }
   };
 }
 
@@ -1843,24 +2038,75 @@ function codesSheet() {
 /* ---------- Projector reveal (organisers only) ---------- */
 let revealIdx = 0;
 function revealSlides() {
-  const s = S.data.settings; const out = [];
-  out.push({ type: 'intro' });
+  const out = [{ type: 'intro' }];
   CATS.forEach(c => {
-    const r = S.admin.results[c]; const j = r.judges;
+    const j = S.admin.results[c].judges;
     out.push({ type: 'cat', cat: c });
     [2, 1, 0].forEach(k => { if (j[k]) out.push({ type: 'place', cat: c, place: k + 1, w: j[k] }); });
-    if (r.people[0]) out.push({ type: 'people', cat: c, w: r.people[0] });
   });
+  if (CATS.some(c => S.admin.results[c].people[0])) {
+    out.push({ type: 'pchead' });
+    CATS.forEach(c => { const w = S.admin.results[c].people[0]; if (w) out.push({ type: 'people', cat: c, w }); });
+  }
   out.push({ type: 'end' });
   return out;
+}
+
+/* Corner themed animations for the projector */
+const rnd = (a, b) => a + Math.random() * (b - a);
+function themeFx(cat, level) {
+  if (REDUCED) return '';
+  let h = '';
+  const burst = (n, makeItem) => { let b = ''; for (let i = 0; i < n; i++) { const ang = Math.random() * Math.PI * 2, dist = rnd(20, 48); b += `<i style="--tx:${(Math.cos(ang) * dist).toFixed(1)}vw;--ty:${(Math.sin(ang) * dist).toFixed(1)}vh;--r:${rnd(-240, 240).toFixed(0)}deg;animation-delay:${rnd(0, .25).toFixed(2)}s">${makeItem(i)}</i>`; } return `<div class="burst">${b}</div>`; };
+  if (cat === 'Science') {
+    const n = [10, 20, 34][level];
+    for (let i = 0; i < n; i++) { const sz = rnd(1.5, 6); h += `<i class="bub" style="left:${rnd(0, 100).toFixed(1)}%;width:${sz.toFixed(1)}vh;height:${sz.toFixed(1)}vh;animation-duration:${rnd(6, 12).toFixed(1)}s;animation-delay:-${rnd(0, 10).toFixed(1)}s"></i>`; }
+    h += `<span class="fx-spin" style="left:4vw;top:8vh;width:22vh;height:22vh;animation-duration:14s">${stemSvg('atom')}</span>`;
+    h += `<span class="fx-spin" style="right:5vw;bottom:10vh;width:28vh;height:28vh;animation-duration:20s;animation-direction:reverse">${stemSvg('atom')}</span>`;
+    if (level) h += `<span class="fx-spin" style="right:8vw;top:10vh;width:14vh;height:14vh;animation-duration:9s;opacity:.22">${stemSvg('dna')}</span><span class="fx-spin" style="left:8vw;bottom:12vh;width:14vh;height:14vh;animation-duration:26s;opacity:.22">${stemSvg('flask')}</span>`;
+    if (level === 2) h += burst(26, () => `<span style="display:block;width:${rnd(1.5, 4).toFixed(1)}vh;height:${rnd(1.5, 4).toFixed(1)}vh;border-radius:50%;border:.3vh solid #fff;background:rgba(255,255,255,.25)"></span>`);
+  } else if (cat === 'Math') {
+    const syms = ['π', '√', '∑', '∞', '÷', '×', '+', '=', '∫', 'Δ', 'θ', '%', 'x²', 'φ', '≈'];
+    const n = [10, 18, 30][level];
+    for (let i = 0; i < n; i++) h += `<span class="msym" style="left:${rnd(0, 100).toFixed(1)}%;font-size:${rnd(3, 8).toFixed(1)}vh;--r:${rnd(-360, 360).toFixed(0)}deg;animation-duration:${rnd(7, 14).toFixed(1)}s;animation-delay:-${rnd(0, 12).toFixed(1)}s">${syms[i % syms.length]}</span>`;
+    h += `<svg class="geo" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#F2A900" stroke-width=".35" opacity=".45">
+      <g class="rot"><path class="d" d="M18 70 L38 34 L58 70 Z"/></g>
+      <g class="rot" style="animation-direction:reverse"><circle class="d" cx="136" cy="24" r="12"/><path class="d" d="M124 24 H148 M136 12 V36"/></g>
+      <path class="d" d="M112 80 L148 80 L112 56 Z"/><path class="d" d="M112 74 H118 V80"/>
+      <path class="d" d="M8 14 Q20 2 32 14 T56 14"/>
+      ${level ? '<g class="rot"><rect class="d" x="130" y="52" width="14" height="14"/></g><path class="d" d="M60 86 A26 26 0 0 1 100 86"/>' : ''}
+    </svg>`;
+    if (level === 2) h += burst(24, i => `<span style="font-family:'Baloo 2',serif;font-weight:800;font-size:${rnd(3, 6).toFixed(1)}vh;color:#F2A900">${syms[i % syms.length]}</span>`);
+  } else {
+    const cols = [8, 14, 22][level];
+    for (let i = 0; i < cols; i++) { let t = ''; for (let k = 0; k < 18; k++) t += (Math.random() < .5 ? '0' : '1') + '\n'; h += `<span class="bits" style="left:${(i / cols * 100 + rnd(0, 3)).toFixed(1)}%;animation-duration:${rnd(5, 10).toFixed(1)}s;animation-delay:-${rnd(0, 8).toFixed(1)}s">${t}</span>`; }
+    h += `<svg class="trace" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#C9C1FF" stroke-width=".4" opacity=".6">
+      <path class="d" d="M0 20 H30 L38 28 H60"/><circle class="node" cx="60" cy="28" r="1.2" fill="#F2A900" style="animation-delay:2.2s"/>
+      <path class="d" d="M160 70 H128 L120 62 H96" style="animation-delay:.3s"/><circle class="node" cx="96" cy="62" r="1.2" fill="#F2A900" style="animation-delay:2.5s"/>
+      <path class="d" d="M20 90 V72 L28 64 H44" style="animation-delay:.6s"/><circle class="node" cx="44" cy="64" r="1.2" fill="#F2A900" style="animation-delay:2.8s"/>
+      <path class="d" d="M140 0 V16 L132 24 H112" style="animation-delay:.9s"/><circle class="node" cx="112" cy="24" r="1.2" fill="#F2A900" style="animation-delay:3.1s"/>
+    </svg>`;
+    h += `<span class="fx-spin" style="left:3vw;bottom:6vh;width:24vh;height:24vh;animation-duration:12s">${stemSvg('gear')}</span><span class="fx-spin" style="left:calc(3vw + 19vh);bottom:22vh;width:14vh;height:14vh;animation-duration:8s;animation-direction:reverse">${stemSvg('gear')}</span>`;
+    if (level) h += `<span class="fx-spin" style="right:5vw;top:8vh;width:18vh;height:18vh;animation-duration:16s;opacity:.22">${stemSvg('chip' in STEM ? 'chip' : 'circuit')}</span>`;
+    if (level === 2) h += burst(26, () => `<span style="font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:${rnd(2.5, 5).toFixed(1)}vh;color:${Math.random() < .5 ? '#F2A900' : '#C9C1FF'}">${Math.random() < .5 ? '0' : '1'}</span>`);
+  }
+  return `<div class="fx" aria-hidden="true">${h}</div>`;
+}
+function heartFx() {
+  if (REDUCED) return '';
+  let h = '';
+  for (let i = 0; i < 16; i++) { const sz = rnd(2.5, 7); h += `<span class="floatheart" style="left:${rnd(0, 100).toFixed(1)}%;width:${sz.toFixed(1)}vh;height:${sz.toFixed(1)}vh;--r:${rnd(-40, 40).toFixed(0)}deg;animation-duration:${rnd(7, 12).toFixed(1)}s;animation-delay:-${rnd(0, 10).toFixed(1)}s"><svg viewBox="0 0 24 24">${ICONS.heart}</svg></span>`; }
+  return `<div class="fx" aria-hidden="true">${h}</div>`;
 }
 function slideHtml(sl) {
   const s = S.data.settings; const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo); const pl = partnerList().filter(p => p.logo);
   const logos = [yl && `<img src="${esc(yl)}" alt="YOJAK">`, fl && `<img src="${esc(fl)}" alt="STEM FEST">`, ...pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`)].filter(Boolean).join('');
   if (sl.type === 'intro') return `<div class="slide">${logos ? `<div class="s-logos">${logos}</div>` : ''}<p class="s-kicker">Prize distribution</p><p class="s-big">${esc(s.event_name || 'STEM FEST')}</p><div class="s-spark">${sparkWords()}</div><p class="s-sub" style="margin-top:4vh">Press the right arrow or click to begin</p></div>`;
-  if (sl.type === 'cat') return `<div class="slide"><div class="s-icon" style="width:14vh;height:14vh;margin:0 auto 3vh;color:#fff">${icon(CAT_ICON[sl.cat])}</div><p class="s-kicker" style="color:#fff;opacity:.85">Awards for the</p><p class="s-big">${sl.cat} corner</p></div>`;
-  if (sl.type === 'place') return `<div class="slide"><p class="s-kicker">${sl.cat} corner, Judges' award</p><div class="s-place ${sl.place === 1 ? 'first' : ''}" style="margin-top:3vh">${['', '1st', '2nd', '3rd'][sl.place]}</div><p class="s-mid">${esc(sl.w.title)}</p><p class="s-sub">${esc(metaLine(sl.w))}</p></div>`;
-  if (sl.type === 'people') return `<div class="slide"><p class="s-kicker">${sl.cat} corner</p><div class="s-place first" style="margin-top:3vh"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-kicker" style="font-size:4.4vh">People's Choice</p><p class="s-mid">${esc(sl.w.title)}</p><p class="s-sub">${esc(metaLine(sl.w))}</p></div>`;
+  const sub = w => esc([isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', '));
+  if (sl.type === 'cat') return themeFx(sl.cat, 0) + `<div class="slide"><div class="s-icon" style="width:14vh;height:14vh;margin:0 auto 3vh;color:#fff">${icon(CAT_ICON[sl.cat])}</div><p class="s-kicker" style="color:#fff;opacity:.85">Judges' awards for the</p><p class="s-big">${sl.cat} corner</p></div>`;
+  if (sl.type === 'place') return themeFx(sl.cat, sl.place === 1 ? 2 : 1) + `<div class="slide"><p class="s-kicker">${sl.cat} corner, Judges' award</p><div class="s-place ${sl.place === 1 ? 'first' : ''}" style="margin-top:3vh">${['', '1st', '2nd', '3rd'][sl.place]}</div><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
+  if (sl.type === 'pchead') return heartFx() + `<div class="slide"><div class="s-place first"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-big">People's Choice awards</p><p class="s-sub">Chosen by our visitors, one winner from each corner</p></div>`;
+  if (sl.type === 'people') return themeFx(sl.cat, 2) + `<div class="slide"><p class="s-kicker">${sl.cat} corner</p><div class="s-place first" style="margin-top:3vh"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-kicker" style="font-size:4.4vh">People's Choice</p><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
   return `<div class="slide"><p class="s-big">Congratulations!</p><p class="s-sub">To every young maker at ${esc(s.event_name || 'STEM FEST')}. Keep sparking.</p>${logos ? `<div class="s-logos" style="margin-top:5vh">${logos}</div>` : ''}${pl.length ? `<p class="s-sub" style="font-size:2.6vh">${esc(orTbd(s.partner_label, 'Supported by'))} ${esc(pl.map(p => p.name).filter(Boolean).join(', '))}</p>` : ''}</div>`;
 }
 VIEWS.reveal = () => {
@@ -1875,9 +2121,9 @@ VIEWS.reveal = () => {
       const stage = $('#stage');
       const show = () => {
         const sl = slides[revealIdx];
-        stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : '');
+        stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : (sl.cat ? ' th c-' + CAT_CLS[sl.cat] : ''));
         stage.innerHTML = slideHtml(sl) + `<span class="s-count">${revealIdx + 1} / ${slides.length}</span><span class="s-hint">Right arrow or click: next. Left arrow: back. F: full screen. Esc: dashboard.</span>`;
-        if ((sl.type === 'place' && sl.place === 1) || sl.type === 'people' || sl.type === 'end') confetti(sl.type === 'end' ? 160 : 120);
+        if (sl.type === 'end') confetti(160);
       };
       const next = () => { if (revealIdx < slides.length - 1) { revealIdx++; show(); } };
       const prev = () => { if (revealIdx > 0) { revealIdx--; show(); } };
@@ -1912,6 +2158,19 @@ function renderTop(page) {
   el.innerHTML = `<a class="judge-btn" href="#/judge">${icon('gavel')}<span>Judges</span></a>`;
 }
 
+function shellHtml(page) {
+  if (page && page !== 'home') return '<div class="loading"><div class="spin"></div>Loading STEM FEST</div>';
+  const words = ['Seek', 'Probe', 'Analyze', 'Rethink', 'Kreate'];
+  return `<section class="hero">${floaters()}<div class="wrap"><div class="hero-in">
+      <p class="presents">YOJAK presents</p>
+      <h1 class="title">STEM FEST</h1>
+      <div class="spark-row"><span class="spark-label">Theme: SPARK</span>${words.map((w, i) => `<span class="sw" style="animation-delay:${0.2 + i * 0.25}s"><b>${w[0]}</b><span>${w.slice(1)}</span></span>`).join('')}</div>
+      <p class="cd-label">Loading today's details...</p>
+    </div></div></section>
+    <div class="wrap"><div class="corners-strip">${CATS.map(c => `<span class="ctile c-${CAT_CLS[c]}">${icon(CAT_ICON[c])}<span class="ctile-name">${c}</span></span>`).join('')}</div>
+    <div class="sk" style="height:84px;margin-top:22px"></div><div class="sk" style="height:160px;margin-top:14px"></div></div>`;
+}
+
 let lastPage = null;
 function render() {
   clearInterval(timer); timer = null; clearInterval(ticker); ticker = null;
@@ -1925,7 +2184,7 @@ function render() {
   renderNotice();
   const app = $('#app');
   if (!S.data) {
-    app.innerHTML = S.error ? emptyState('Could not load', S.error, '', '') : '<div class="loading"><div class="spin"></div>Loading STEM FEST</div>';
+    app.innerHTML = S.error ? emptyState('Could not load', S.error, '', '') : shellHtml(page);
     return;
   }
   const v = (VIEWS[page] || VIEWS.home)(a);
@@ -1950,11 +2209,15 @@ setInterval(async () => {
 (async function start() {
   if (!DEMO) {
     const cached = jparse(store.get('sf_cache'), null);
-    if (cached) { S.data = prepData(cached); await syncRatings(false); render(); }
+    if (cached) S.data = prepData(cached);
   }
+  if (S.data) { const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {}; }
+  render();                       /* show something immediately */
   await loadData();
-  await syncRatings(false);
+  const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {};
   render();
+  const changed = await syncRatings(false);   /* in the background */
+  if (changed && ['home', 'projects', ''].includes(route()[0] || '')) render();
 })();
 </script>
 </body>
