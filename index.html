@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A1C24'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='%23F2A900' font-family='Arial' font-weight='bold'>S</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <style>
 :root{
@@ -444,88 +444,6 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .s-hint{position:fixed;bottom:2vh;left:0;right:0;font-size:14px;opacity:.55;text-align:center}
 .s-count{position:fixed;top:2vh;right:2vw;font-size:14px;opacity:.55}
 
-
-/* ===== Redesign: responsive layout, floating STEM icons, journey ===== */
-.floaters{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;--px:0;--py:0}
-.fl{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s) * var(--k,1));height:calc(var(--s) * var(--k,1));color:var(--c,var(--gold));opacity:var(--o,.3);transform:translate(calc(var(--px) * var(--d) * 1px),calc(var(--py) * var(--d) * 1px));transition:transform .7s cubic-bezier(.2,.8,.2,1)}
-.fl svg{width:100%;height:100%;display:block;animation:drift var(--t,9s) ease-in-out infinite;animation-delay:var(--dl,0s)}
-.fl.w{display:none}
-.fl.white{--c:#fff}
-@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(var(--r,8deg))}}
-.hero-in{position:relative;max-width:640px}
-.phead{position:relative;overflow:hidden;background:var(--maroon-tint);border-radius:22px;padding:20px 110px 22px 20px;isolation:isolate}
-.phead::before,.phead::after{content:"";position:absolute;z-index:-1;background-repeat:no-repeat;background-size:contain;animation:drift 11s ease-in-out infinite}
-.phead::before{right:18px;top:12px;width:78px;height:78px;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%237A1C24' stroke-width='2'%3E%3Cellipse cx='24' cy='24' rx='20' ry='8'/%3E%3Cellipse cx='24' cy='24' rx='20' ry='8' transform='rotate(60 24 24)'/%3E%3Cellipse cx='24' cy='24' rx='20' ry='8' transform='rotate(120 24 24)'/%3E%3Ccircle cx='24' cy='24' r='3' fill='%237A1C24'/%3E%3C/svg%3E")}
-.phead::after{right:74px;bottom:-16px;width:58px;height:58px;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23B77F00' stroke-width='2'%3E%3Ccircle cx='24' cy='24' r='14' stroke-width='6' stroke-dasharray='4.4 3'/%3E%3Ccircle cx='24' cy='24' r='7'/%3E%3C/svg%3E");animation-duration:14s;animation-delay:-4s}
-.topnav{display:none}
-.journey{list-style:none;margin:16px 0 0;padding:0;display:grid}
-.jstep{display:grid;grid-template-columns:48px 1fr;gap:14px;padding:0 0 22px;position:relative}
-.jstep::before{content:"";position:absolute;left:23px;top:50px;bottom:2px;width:2px;background:var(--line)}
-.jstep:last-child{padding-bottom:0}
-.jstep:last-child::before{display:none}
-.jn{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid var(--maroon);color:var(--maroon);display:grid;place-items:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;position:relative;z-index:1}
-.jstep.done .jn{background:var(--maroon);color:#fff}
-.jstep.jlive .jn{background:var(--gold);border-color:var(--gold);color:#3A2600;box-shadow:0 0 0 6px rgba(242,169,0,.2)}
-.jstep h3{font-size:20px}
-.jstep p{font-size:15px;color:var(--muted);margin-top:2px;line-height:1.45}
-.jstep a{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-weight:600;text-decoration:none;font-size:15px}
-.jstep a svg{width:18px;height:18px}
-.duo{display:grid;gap:0}
-.pd-grid{display:block}
-.res-grid{display:grid;gap:22px;margin-top:22px}
-.res-grid .res-cat{margin-top:0}
-.plist,.contacts{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
-.narrow{max-width:680px}
-
-@media (min-width:720px){
-  :root{--nav-h:0px}
-  .tabs{display:none}
-  body{padding-bottom:28px}
-  .wrap{max-width:980px;padding:0 28px}
-  .brand{margin-right:0}
-  .topnav{display:flex;gap:2px;margin-left:auto;margin-right:10px}
-  .topnav a{color:#fff;text-decoration:none;font-size:15px;font-weight:500;padding:7px 12px;border-radius:999px;opacity:.85;position:relative;transition:background .2s,opacity .2s}
-  .topnav a:hover{background:rgba(255,255,255,.1);opacity:1}
-  .topnav a.on{opacity:1;background:rgba(255,255,255,.14)}
-  .topnav a.on::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:2px;border-radius:2px;background:var(--gold)}
-  .hero{padding:44px 0 92px}
-  .corners-strip{gap:16px}
-  .ctile{min-height:150px;padding:18px}
-  .ctile svg{width:38px;height:38px}
-  .fl.w{display:block}
-  .phead{padding:28px 150px 30px 28px}
-  .phead h1{font-size:38px}
-  .phead::before{width:104px;height:104px;right:30px}
-  .phead::after{width:74px;height:74px;right:110px}
-  .corner-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
-  .savebar{bottom:12px}
-  .toast{bottom:22px}
-}
-@media (min-width:900px){
-  .journey{grid-template-columns:repeat(4,1fr);gap:20px}
-  .jstep{grid-template-columns:1fr;padding:0}
-  .jstep::before{left:58px;right:-14px;top:23px;bottom:auto;width:auto;height:2px}
-  .jstep:last-child::before{display:none}
-  .duo{grid-template-columns:1fr 1fr;gap:22px;align-items:start}
-  .duo > *{margin-top:30px}
-}
-@media (min-width:1000px){
-  .pd-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start}
-  .pd-grid #votebox{position:sticky;top:78px}
-  .pd-grid #votebox .votebox{margin-top:0}
-}
-@media (min-width:1080px){
-  .wrap{max-width:1160px}
-  .hero{padding:64px 0 110px}
-  .title{font-size:112px}
-  .fl.r{opacity:calc(var(--o) * 1.6);--k:1.5}
-  .res-grid{grid-template-columns:repeat(3,1fr)}
-}
-@media (pointer:fine){
-  .pcard:hover{transform:translateY(-2px)}
-}
-.wrap.narrow{max-width:760px}
-
 @media (min-width:720px){
   .stats{grid-template-columns:repeat(4,1fr)}
   .facts div{grid-template-columns:80px 1fr}
@@ -539,200 +457,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .sw,[data-reveal]{opacity:1!important;transform:none!important}
   .sparks{display:none}
-  .fl{transform:none!important}
 }
-
-/* =====================================================================
-   EXHIBITION HALL THEME (overrides everything above)
-   ===================================================================== */
-:root{--floor:#F2F3F0;--sign:#7A1C24;--board:#2A0E10;--sci:#2E7D4F;--math:#C0680F;--tech:#4B3F9E;--sci-t:#E4F2E9;--math-t:#FCEEDD;--tech-t:#ECE9F8}
-body{background:var(--floor)}
-h1,h2,h3,.brand,.title,.ctile-name,.s-big,.s-mid,.stat b,.cd b,.stall,.qid b,.qpin,.medal,.pod .blk{font-family:'Archivo','Hind',system-ui,sans-serif;font-stretch:78%;letter-spacing:-.005em}
-h1,h2{font-weight:850}
-h3{font-weight:750}
-.btn{border-radius:12px}
-.chip{border-radius:10px}
-.brand .dot{width:22px;height:22px;border-radius:6px;background:var(--gold);box-shadow:none;display:grid;place-items:center;color:var(--sign);font-size:15px;font-weight:900;font-stretch:90%}
-.brand .dot::before{content:"S"}
-.brand{font-size:22px;font-weight:850}
-.top{box-shadow:0 2px 0 rgba(0,0,0,.08)}
-.card{border-radius:14px;border-color:#E3E1DD}
-.phead{background:#fff;border:1px solid #E3E1DD;border-left:8px solid var(--sign);border-radius:14px}
-.phead h1{font-size:34px}
-.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:34px 0 12px}
-.sec-head h2{font-size:26px}
-.sec-head p{font-size:15px;color:var(--muted)}
-
-/* Welcome board */
-.home-top{display:grid;gap:16px;padding-top:16px}
-.wb{position:relative;isolation:isolate;overflow:hidden;background:var(--sign);color:#fff;border-radius:20px;padding:20px 20px 22px;box-shadow:0 14px 30px -18px rgba(60,10,15,.6)}
-.wb::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:28px 28px}
-.wb .floaters{z-index:-1}
-.wb .title{font-size:clamp(46px,14vw,78px);margin:10px 0 6px;font-weight:900;font-stretch:72%}
-.wb .festlogo-plate{margin:14px 0 10px;animation:none}
-.wb .festlogo-plate img{max-height:120px}
-.wb .tagline{font-size:17px}
-.spark-tiles{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 4px}
-.st{display:flex;align-items:baseline;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 10px 5px;opacity:0;animation:swIn .5s ease-out forwards}
-.st b{font-family:'Archivo',sans-serif;font-stretch:75%;font-weight:900;font-size:24px;color:var(--gold);line-height:1}
-.st small{font-size:15px;font-weight:600}
-.spark-cap{font-size:13px;opacity:.8;margin-top:14px}
-.plates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
-.plate{background:#fff;color:var(--ink);border-radius:12px;padding:9px 12px}
-.plate.full{grid-column:1/-1}
-.plate small{display:block;font-size:12px;color:var(--muted);font-weight:600}
-.plate b{font-family:'Archivo',sans-serif;font-stretch:82%;font-weight:800;font-size:17px;line-height:1.2}
-.plate span{display:block;font-size:13px;color:var(--muted)}
-.wb .countdown{margin-top:14px}
-.wb .cd-label{margin-top:16px}
-.wb .hero-actions{margin-top:16px}
-.wb .lr-item img{height:46px}
-
-/* Hall map */
-.mapcard{background:#fff;border:1px solid #E3E1DD;border-radius:20px;padding:14px 14px 10px}
-.mapcard h2{font-size:22px}
-.mapcard .mh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 4px 8px}
-.mapcard .mh span{font-size:13px;color:var(--muted)}
-.hallmap{width:100%;height:auto;display:block}
-.hallmap text{font-family:'Archivo','Hind',sans-serif;font-stretch:82%}
-.mz rect{transition:filter .2s,transform .25s;transform-box:fill-box;transform-origin:center;animation:zoneIn .6s cubic-bezier(.2,1.2,.4,1) both}
-.mz:nth-of-type(2) rect{animation-delay:.12s}
-.mz:nth-of-type(3) rect{animation-delay:.24s}
-.mz:hover rect{filter:brightness(1.08)}
-.mz:active rect{transform:scale(.97)}
-.mz:focus-visible{outline:none}
-.mz:focus-visible rect{stroke:var(--gold);stroke-width:4}
-@keyframes zoneIn{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
-.mz-code{font-size:30px;font-weight:900;fill:#fff}
-.mz-label{font-size:10px;font-weight:600;fill:rgba(255,255,255,.85)}
-.mz-name{font-size:16px;font-weight:800;fill:#fff}
-.mz-count{font-size:11px;fill:rgba(255,255,255,.9)}
-.bob{animation:bob 4.5s ease-in-out infinite;transform-box:fill-box}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.fac-label{font-size:11px;font-weight:700;fill:var(--ink)}
-.you{animation:pulseR 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes pulseR{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2.4);opacity:0}}
-.walk{stroke-dasharray:5 5;animation:walk 1.2s linear infinite}
-@keyframes walk{to{stroke-dashoffset:-20}}
-.map-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 4px 2px;font-size:13px;color:var(--muted)}
-.map-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-
-/* Departure board */
-.dboard{background:var(--board);color:#fff;border-radius:16px;overflow:hidden;box-shadow:0 12px 26px -18px rgba(0,0,0,.6)}
-.db-head,.db-row{display:grid;grid-template-columns:86px 1fr;gap:12px;padding:12px 16px}
-.db-head{font-size:12px;font-weight:600;color:rgba(255,255,255,.55);border-bottom:1px solid rgba(255,255,255,.1);padding-top:10px;padding-bottom:8px}
-.db-head .w{display:none}
-.db-row{border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
-.db-row:last-child{border-bottom:0}
-.db-t{font-family:'Archivo',sans-serif;font-stretch:80%;font-weight:800;font-size:18px;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.15}
-.db-t small{display:block;font-family:'Hind',sans-serif;font-weight:400;font-size:12px;color:rgba(255,255,255,.55)}
-.db-e b{font-family:'Archivo',sans-serif;font-stretch:84%;font-weight:750;font-size:18px;line-height:1.2;display:block}
-.db-e small{display:block;font-size:14px;color:rgba(255,255,255,.65);margin-top:2px}
-.db-w{font-size:14px;color:rgba(255,255,255,.75)}
-.db-e .db-w{display:block;margin-top:3px;color:#F6C75A}
-.db-row > .db-w{display:none}
-.db-row.now{background:var(--gold);color:#2A1A00}
-.db-row.now .db-t,.db-row.now .db-e small,.db-row.now .db-t small,.db-row.now .db-e .db-w{color:#2A1A00}
-.db-row.done{opacity:.4}
-.db-flag{display:inline-block;font-family:'Hind',sans-serif;font-size:12px;font-weight:700;padding:1px 8px;border-radius:6px;background:#2A1A00;color:var(--gold);margin-left:8px;vertical-align:3px;animation:blink 1.4s steps(2) infinite}
-@keyframes blink{50%{opacity:.35}}
-.db-cap{font-size:13px;color:var(--muted);margin-top:8px}
-
-/* Route */
-.route{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.rstep{display:grid;grid-template-columns:52px 1fr;gap:12px;background:#fff;border:1px solid #E3E1DD;border-radius:14px;padding:14px;position:relative}
-.rn{width:52px;height:52px;border-radius:12px;background:var(--floor);border:2px solid var(--sign);color:var(--sign);display:grid;place-items:center;font-family:'Archivo',sans-serif;font-stretch:78%;font-weight:900;font-size:26px}
-.rstep.done .rn{background:var(--sign);color:#fff}
-.rstep.jlive{border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,169,0,.25)}
-.rstep.jlive .rn{background:var(--gold);border-color:var(--gold);color:#2A1A00}
-.rstep h3{font-size:19px}
-.rstep p{font-size:15px;color:var(--muted);margin-top:2px;line-height:1.45}
-.rstep a{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-weight:700;text-decoration:none;font-size:15px}
-.rstep a svg{width:18px;height:18px}
-.rstep:not(:last-child)::after{content:"";position:absolute;left:38px;bottom:-12px;width:14px;height:14px;background:var(--gold);clip-path:polygon(0 0,100% 0,50% 100%);z-index:1}
-
-/* Directory */
-.dir{display:grid;gap:8px}
-.drow{display:grid;grid-template-columns:48px 1fr 22px;gap:12px;align-items:center;background:#fff;border:1px solid #E3E1DD;border-radius:14px;padding:10px 14px 10px 10px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .15s}
-.drow:active{transform:scale(.98)}
-.drow:hover{border-color:var(--sign)}
-.dic{width:48px;height:48px;border-radius:12px;background:var(--c,var(--sign));color:#fff;display:grid;place-items:center}
-.dic svg{width:26px;height:26px}
-.drow b{font-family:'Archivo',sans-serif;font-stretch:84%;font-weight:800;font-size:18px;display:block;line-height:1.2}
-.drow small{font-size:14px;color:var(--muted)}
-.drow > svg{width:22px;height:22px;color:var(--gold-dk)}
-.dcode{font-family:'Archivo',sans-serif;font-stretch:78%;font-weight:900;font-size:22px}
-
-/* Models grid */
-.mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.mcard{display:flex;flex-direction:column;background:#fff;border:1px solid #E3E1DD;border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink);animation:cardIn .4s ease-out both;transition:transform .15s,box-shadow .2s}
-.mcard:active{transform:scale(.97)}
-.mimg{position:relative;aspect-ratio:4/3;background:var(--c);display:block;overflow:hidden}
-.mimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.mph{position:absolute;inset:0;display:grid;place-items:center;color:#fff;opacity:.55}
-.mph svg{width:46%;height:46%}
-.mimg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 10px,transparent 10px 20px)}
-.mstall{position:absolute;left:8px;top:8px;z-index:2;background:#fff;color:var(--ink);border-radius:8px;padding:2px 8px;font-family:'Archivo',sans-serif;font-stretch:80%;font-weight:800;font-size:14px}
-.mrated{position:absolute;right:8px;top:8px;z-index:2;background:var(--ok);color:#fff;border-radius:8px;padding:2px 8px 2px 5px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:3px}
-.mrated svg{width:14px;height:14px;stroke-width:3}
-.mbody{padding:9px 11px 12px;display:grid;gap:2px}
-.mzone{font-size:12px;font-weight:700;color:var(--c)}
-.mtitle{font-family:'Archivo',sans-serif;font-stretch:86%;font-weight:750;font-size:16px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.mctr{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.zchip b{font-family:'Archivo',sans-serif;font-stretch:80%;font-weight:900;margin-right:4px}
-
-/* Model detail */
-.pd-banner{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:var(--c)}
-.pd-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.pd-banner .mph svg{width:34%;height:34%}
-.pd-banner::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 12px,transparent 12px 24px)}
-.signrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.zplate{display:inline-flex;align-items:center;gap:8px;background:var(--c);color:#fff;border-radius:10px;padding:5px 12px 5px 6px;font-weight:700;font-size:15px}
-.zplate b{width:28px;height:28px;border-radius:7px;background:#fff;color:var(--c);display:grid;place-items:center;font-family:'Archivo',sans-serif;font-stretch:78%;font-weight:900;font-size:18px}
-.splate{display:inline-flex;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:4px 12px;font-family:'Archivo',sans-serif;font-stretch:82%;font-weight:800;font-size:16px}
-.pd-title{font-size:32px;margin-top:10px;line-height:1.08}
-
-/* Help desk signs */
-.contact{padding:0;overflow:hidden}
-.contact .role{background:var(--sign);color:#fff;padding:10px 16px;font-family:'Archivo',sans-serif;font-stretch:84%;font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px}
-.contact .role svg{width:20px;height:20px;color:var(--gold)}
-.contact .resp{padding:10px 16px 0;margin:0}
-.contact .person{margin:0 16px;padding:12px 0 14px}
-.contact .person:first-of-type{margin-top:4px}
-
-/* Results */
-.res-head{border-radius:0}
-.res-head .rz{width:34px;height:34px;border-radius:8px;background:#fff;color:var(--c);display:grid;place-items:center;font-family:'Archivo',sans-serif;font-stretch:78%;font-weight:900;font-size:20px}
-
-@media (min-width:720px){
-  .mgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-  .dir{grid-template-columns:1fr 1fr}
-  .db-head,.db-row{grid-template-columns:110px 1fr 200px}
-  .db-head .w{display:block}
-  .db-e .db-w{display:none}
-  .db-row > .db-w{display:block}
-  .wb{padding:26px}
-  .phead h1{font-size:40px}
-}
-@media (min-width:1000px){
-  .home-top{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:stretch;padding-top:24px}
-  .mapcard{display:flex;flex-direction:column;justify-content:center}
-  .route{grid-template-columns:repeat(4,1fr);gap:14px}
-  .rstep{grid-template-columns:1fr;align-content:start}
-  .rstep:not(:last-child)::after{left:auto;right:-13px;top:32px;bottom:auto;clip-path:polygon(0 0,100% 50%,0 100%)}
-  .dir{grid-template-columns:repeat(5,1fr)}
-  .drow{grid-template-columns:1fr;justify-items:start;padding:14px}
-  .drow > svg{display:none}
-  .pd-title{font-size:40px}
-}
-@media (min-width:1080px){
-  .mgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
-}
-@media (pointer:fine){
-  .mcard:hover{transform:translateY(-3px);box-shadow:0 12px 24px -16px rgba(60,10,15,.45)}
-}
-@media (prefers-reduced-motion:reduce){ .st{opacity:1!important} }
-
 @media print{
   @page{size:A4;margin:8mm}
   body{padding:0;font-size:14px}
@@ -755,9 +480,6 @@ h3{font-weight:750}
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#/"><span class="dot"></span>STEM FEST</a>
-    <nav class="topnav" aria-label="Main">
-      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/venue" data-p="venue">Venue and map</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Help</a>
-    </nav>
     <span id="topright" class="by"></span>
   </div>
 </header>
@@ -782,6 +504,7 @@ h3{font-weight:750}
    ================================================================ */
 const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbymyJExjZvy0qmrWzY8PJPn4wS3_d2oF9nnX3KnsQahvSHbuAL6YboMB2kT1kqqdLlC/exec',
+  SITE_URL: 'https://yojak-stemfest2026.github.io/stemfest2026/'
   SITE_URL: 'https://yojak-org.github.io/stemfest2026/'
 };
 
@@ -837,19 +560,11 @@ const ICONS = {
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   eyeoff: '<path d="M2 12s3.5-7 10-7c2 0 3.8.7 5.2 1.6M22 12s-3.5 7-10 7c-2 0-3.8-.7-5.2-1.6"/><path d="M3 3l18 18"/>',
   crown: '<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
-  screen: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
-  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
-  wc: '<circle cx="8" cy="4.5" r="2"/><circle cx="16" cy="4.5" r="2"/><path d="M6 8.5h4v6H9v6.5H7v-6.5H6zM16 8l-3 8h6zM15 16v5M17 16v5"/>',
-  drop: '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',
-  clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM8 12h8M8 16h5"/>',
-  cup: '<path d="M5 9h12v5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5zM17 10h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3"/>',
-  plus: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/>',
-  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
-  map: '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>'
+  screen: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
-[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['map', 'Map'], ['trophy', 'Results'], ['info', 'Help']].forEach(([i, t], k) => {
+[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['pin', 'Venue'], ['trophy', 'Results'], ['phone', 'Help']].forEach(([i, t], k) => {
   $$('.tabs a')[k].innerHTML = icon(i) + `<span>${t}</span>`;
 });
 
@@ -1205,44 +920,6 @@ function observeReveals() {
   els.forEach(e => observer.observe(e));
 }
 
-/* Floating STEM line art */
-const STEM = {
-  atom: '<ellipse cx="24" cy="24" rx="20" ry="8"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(120 24 24)"/><circle cx="24" cy="24" r="3" fill="currentColor"/>',
-  dna: '<path d="M16 4c0 10 16 10 16 20S16 34 16 44M32 4c0 10-16 10-16 20s16 10 16 20"/><path d="M18.5 9h11M17 17h14M17 31h14M18.5 39h11"/>',
-  gear: '<circle cx="24" cy="24" r="14" stroke-width="6" stroke-dasharray="4.4 3"/><circle cx="24" cy="24" r="7"/>',
-  rocket: '<path d="M24 4c7 6 10 14 10 22l-4 8H18l-4-8c0-8 3-16 10-22z"/><circle cx="24" cy="19" r="4"/><path d="M14 26l-6 9 8-1M34 26l6 9-8-1M20 38l4 6 4-6"/>',
-  bulb: '<path d="M16 29a12 12 0 1 1 16 0c-2 2-3 4-3 7H19c0-3-1-5-3-7z"/><path d="M19 40h10M21 44h6M22 30l2-8 2 8"/>',
-  flask: '<path d="M19 4h10M21 4v14L10 40a3 3 0 0 0 3 4h22a3 3 0 0 0 3-4L27 18V4"/><path d="M14 32h20"/><circle cx="21" cy="37" r="1.6" fill="currentColor"/><circle cx="28" cy="35" r="1.1" fill="currentColor"/>',
-  compass: '<circle cx="24" cy="8" r="3"/><path d="M22.5 11L12 42M25.5 11L36 42M15 32c6 3 12 3 18 0"/>',
-  circuit: '<rect x="16" y="18" width="16" height="12" rx="2"/><path d="M4 24h12M32 24h12M20 18V6M28 18V6M24 30v12"/><circle cx="20" cy="5" r="2"/><circle cx="28" cy="5" r="2"/><circle cx="24" cy="43" r="2"/>',
-  magnet: '<path d="M12 6v18a12 12 0 0 0 24 0V6h-8v18a4 4 0 0 1-8 0V6z"/><path d="M12 12h8M28 12h8"/>',
-  pi: '<path d="M8 14h32M18 14v26M30 14v20a6 6 0 0 0 8 4"/>',
-  microscope: '<path d="M21 5l8 4-7 15-8-4z"/><path d="M17 23l-2 4M27 17a12 12 0 0 1 2 22H11M17 44h22"/>',
-  triangle: '<path d="M6 42h36L6 8z"/><path d="M6 34h8v8"/>'
-};
-const stemSvg = n => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${STEM[n]}</svg>`;
-/* name, x%, y%, size, opacity, depth, seconds, rotate, classes (w = tablet and up, r = right side, white = white line) */
-const FLOATS = [
-  ['atom', 82, 7, 58, .34, 26, 9, -10, 'r'], ['dna', 91, 40, 46, .26, 18, 11, 8, 'r white'], ['gear', 70, 64, 66, .22, 30, 13, 20, 'r'],
-  ['rocket', 86, 79, 50, .32, 22, 10, -8, 'r'], ['bulb', 3, 72, 40, .16, 12, 12, 10, 'white'], ['compass', 94, 17, 34, .24, 14, 8, 12, 'r white'],
-  ['triangle', 7, 93, 34, .14, 10, 14, -6, ''], ['flask', 62, 22, 44, .24, 20, 10, 10, 'w r'], ['circuit', 56, 86, 58, .18, 16, 15, -8, 'w r white'],
-  ['magnet', 64, 44, 40, .22, 24, 9, -14, 'w r'], ['pi', 76, 30, 38, .26, 20, 12, 8, 'w r white'], ['microscope', 50, 6, 42, .16, 12, 13, -6, 'w r']
-];
-function floaters() {
-  return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--d:${d};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
-}
-let scrollHandler = null;
-function bindParallax() {
-  const hero = $('.wb'), fl = $('#floaters'); if (!hero || !fl || REDUCED) return;
-  if (window.matchMedia('(pointer:fine)').matches) {
-    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); fl.style.setProperty('--px', (((e.clientX - r.left) / r.width) - .5) * 2); fl.style.setProperty('--py', (((e.clientY - r.top) / r.height) - .5) * 2); });
-    hero.addEventListener('pointerleave', () => { fl.style.setProperty('--px', 0); fl.style.setProperty('--py', 0); });
-  } else {
-    scrollHandler = () => fl.style.setProperty('--py', Math.min(window.scrollY / 160, 3));
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-  }
-}
-
 /* Logos and partners */
 function logoSrc(v) {
   v = String(v || '').trim();
@@ -1282,105 +959,6 @@ function progressCard() {
   </section>`;
 }
 
-/* ---------------- Exhibition hall helpers ---------------- */
-const ZONE = { Science: 1, Math: 2, Tech: 3 };
-const ZONE_ART = { Science: 'atom', Math: 'pi', Tech: 'circuit' };
-const ZONE_FILL = { Science: '#2E7D4F', Math: '#C0680F', Tech: '#4B3F9E' };
-function facilities() { return S.data.corners.filter(c => !normCat(c.category) && c.name).map(c => c.name); }
-function facIcon(name) {
-  const n = String(name).toLowerCase();
-  if (/stage|auditor/.test(n)) return 'megaphone';
-  if (/help|info|desk/.test(n)) return 'info';
-  if (/wash|toilet|rest ?room/.test(n)) return 'wc';
-  if (/water|drink/.test(n)) return 'drop';
-  if (/regis|entry|gate|reception/.test(n)) return 'clipboard';
-  if (/food|lunch|cafe|canteen/.test(n)) return 'cup';
-  if (/aid|medic/.test(n)) return 'plus';
-  return 'pin';
-}
-function facText(label, x, y, room) {
-  let t = String(label); let fs = Math.min(12, room / (t.length * 0.56));
-  if (fs < 8.5) { fs = 8.5; const max = Math.floor(room / (fs * 0.56)); t = t.slice(0, Math.max(1, max - 1)) + '…'; }
-  return `<text x="${x}" y="${y}" class="fac-label" style="font-size:${fs.toFixed(1)}px">${esc(t)}</text>`;
-}
-function hallMap() {
-  const fac = facilities();
-  const stage = fac.find(n => /stage/i.test(n)) || fac[0] || 'Main Stage';
-  const rest = fac.filter(n => n !== stage).slice(0, 3);
-  const zx = [20, 130, 240];
-  const nested = (name, x, y, sz, color) => `<svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ''}</svg>`;
-  const block = (label, x, y, w, h, fill) => `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${fill || '#fff'}" stroke="#D9D6D0"/>${nested(facIcon(label), x + 8, y + (h - 18) / 2, 18, '#7A1C24')}${facText(label, x + 32, y + h / 2 + 4, w - 40)}</g>`;
-  const top = rest.length === 3 ? block(stage, 20, 18, 210, 44, '#F8EDEE') + block(rest[2], 240, 18, 100, 44) : block(stage, 20, 18, 320, 44, '#F8EDEE');
-  const bottom = (rest[0] ? block(rest[0], 20, 220, 128, 40) : '') + (rest[1] ? block(rest[1], 212, 220, 128, 40) : '');
-  const zones = CATS.map((c, i) => {
-    const n = projectsIn(c).length;
-    return `<a href="#/projects/${c}" class="mz" aria-label="Zone ${i + 1}, ${c}, ${n} models"><rect x="${zx[i]}" y="76" width="100" height="130" rx="10" fill="${ZONE_FILL[c]}"/>
-      <text x="${zx[i] + 10}" y="92" class="mz-label">ZONE</text><text x="${zx[i] + 10}" y="120" class="mz-code">${i + 1}</text>
-      <g class="bob" style="animation-delay:-${i * 1.4}s"><svg x="${zx[i] + 50}" y="86" width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".85">${STEM[ZONE_ART[c]]}</svg></g>
-      <text x="${zx[i] + 10}" y="182" class="mz-name">${c}</text><text x="${zx[i] + 10}" y="196" class="mz-count">${n} ${n === 1 ? 'model' : 'models'}</text></a>`;
-  }).join('');
-  return `<svg class="hallmap" viewBox="0 0 360 300" role="group" aria-label="Map of the fest">
-    <rect x="8" y="6" width="344" height="268" rx="14" fill="#FAFAF8" stroke="#2B1517" stroke-width="2"/>
-    <rect x="156" y="270" width="48" height="8" fill="#fff"/>
-    ${top}${zones}${bottom}
-    <path d="M180 266 V214" stroke="#F2A900" stroke-width="3" fill="none" class="walk"/>
-    <path d="M173 222 L180 212 L187 222" stroke="#F2A900" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="180" cy="284" r="7" fill="#F2A900" class="you"/><circle cx="180" cy="284" r="6" fill="#F2A900" stroke="#fff" stroke-width="2"/>
-    <text x="194" y="289" class="fac-label">You are here, entrance</text>
-  </svg>`;
-}
-function mapCard(title) {
-  return `<section class="mapcard"><div class="mh"><h2>${esc(title)}</h2><span>Tap a zone to see its models</span></div>${hallMap()}
-    <div class="map-legend">${CATS.map(c => `<span><i style="background:${ZONE_FILL[c]}"></i>Zone ${ZONE[c]}: ${c}</span>`).join('')}</div></section>`;
-}
-function boardRows(items, opts = {}) {
-  const d = parseDate(S.data.settings.event_date); const today = new Date();
-  const live = d && sameDay(d, today); const m = nowMins();
-  return items.map(i => {
-    let st = '';
-    if (live && i.s != null) { const end = i.e != null && i.e > i.s ? i.e : i.s + 1; st = m >= end ? 'done' : (m >= i.s ? 'now' : ''); }
-    else if (d && today > d) st = 'done';
-    const where = !isTbd(i.location) ? esc(i.location) : '';
-    return `<div class="db-row ${st}"><span class="db-t">${i.s != null ? esc(fmtTime(i.s)) : esc(i.start || '')}${i.e != null && i.e !== i.s ? `<small>to ${esc(fmtTime(i.e))}</small>` : ''}</span><span class="db-e"><b>${esc(i.title)}${st === 'now' ? '<span class="db-flag">NOW</span>' : ''}</b>${!opts.short && !isTbd(i.description) ? `<small>${esc(i.description)}</small>` : ''}${where ? `<span class="db-w">${where}</span>` : ''}</span><span class="db-w w">${where}</span></div>`;
-  }).join('');
-}
-function boardHead() { return `<div class="db-head"><span>Time</span><span>Event</span><span class="w">Where</span></div>`; }
-function nowBoard() {
-  const items = S.data.schedule.filter(i => i.s != null); if (!items.length) return '';
-  const d = parseDate(S.data.settings.event_date); const today = new Date();
-  let pick, cap;
-  if (d && sameDay(d, today)) {
-    const m = nowMins();
-    const now = items.filter(i => m >= i.s && m < (i.e != null && i.e > i.s ? i.e : i.s + 1));
-    const next = items.filter(i => i.s > m).slice(0, 2);
-    pick = [...now, ...next]; cap = 'Updates automatically through the day.';
-    if (!pick.length) return '';
-  } else if (d && today > d) return '';
-  else { pick = items.slice(0, 3); cap = 'First sessions of the day.'; }
-  return `<div class="sec-head"><h2>Now and next</h2><a href="#/schedule" style="font-weight:700;text-decoration:none">Full schedule</a></div><div class="dboard">${boardHead()}${boardRows(pick, { short: true })}</div><p class="db-cap">${cap}</p>`;
-}
-function routeSteps() {
-  const s = S.data.settings; const pr = ratingProgress(); const open = toBool(s.voting_open); const revealed = !!S.data.results;
-  const n = S.data.projects.length; const code = votingMode() === 'code';
-  const steps = [
-    { t: 'Find your way', d: isTbd(s.venue_name) ? 'Use the fest map to find the zones, stage and help desk.' : `Head to ${s.venue_name} and use the fest map to find each zone.`, href: '#/venue', cta: 'Venue and map', ic: 'map' },
-    { t: 'Explore the zones', d: `${n} ${n === 1 ? 'model' : 'models'} across Science, Math and Tech. Ask the students how they work.`, href: '#/projects', cta: 'Browse models', ic: 'grid' },
-    { t: 'Rate what you like', d: !open ? 'Rating is closed. Thank you for taking part.' : pr.count ? `You have rated ${pr.count} so far. Rate as many as you like, once each.` : `Scan the QR code at a stall and answer three quick star questions.${code ? ' Keep your voter code handy.' : ''}`, href: '#/projects', cta: pr.count ? 'Rate another model' : 'Start rating', ic: 'star', state: pr.count ? 'done' : (open ? 'jlive' : '') },
-    { t: 'Celebrate the winners', d: revealed ? 'The winners are out. See the podium for every zone.' : "Judges' awards and People's Choice are announced at the prize distribution.", href: '#/results', cta: 'Results', ic: 'trophy', state: revealed ? 'jlive' : '' }
-  ];
-  return `<div class="sec-head"><h2>Your route through the fest</h2></div><ol class="route">${steps.map((x, i) => `<li class="rstep ${x.state || ''}"><span class="rn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol>`;
-}
-function directory() {
-  const items = [
-    ['#/schedule', 'clock', 'Schedule', 'Timings for the whole day', 'var(--sign)'],
-    ['#/projects', 'grid', 'Models', `${S.data.projects.length} models on display`, 'var(--sci)'],
-    ['#/venue', 'map', 'Venue and map', 'Zones, stage and facilities', 'var(--math)'],
-    ['#/results', 'trophy', 'Results', S.data.results ? 'The winners are out' : 'After the prize distribution', 'var(--tech)'],
-    ['#/help', 'info', 'Help desk', 'Who to call for what', '#2B1517']
-  ];
-  return `<div class="sec-head"><h2>Directory</h2></div><div class="dir">${items.map(([h, ic, t, d, c]) => `<a class="drow" href="${h}"><span class="dic" style="--c:${c}">${icon(ic)}</span><span><b>${esc(t)}</b><small>${esc(d)}</small></span>${icon('arrow')}</a>`).join('')}</div>`;
-}
-
 /* ================================================================
    VIEWS
    ================================================================ */
@@ -1415,56 +993,52 @@ function heroLogos() {
   return `<div class="logo-row">${item('Presented by', yl, 'YOJAK')}${pl.map(p => item(orTbd(s.partner_label, 'Supported by'), p.logo, p.name || 'Partner')).join('')}</div>`;
 }
 
-function journey() {
-  const s = S.data.settings; const pr = ratingProgress(); const open = toBool(s.voting_open); const revealed = !!S.data.results;
-  const n = S.data.projects.length; const code = votingMode() === 'code';
-  const steps = [
-    { t: 'Find your way', d: isTbd(s.venue_name) ? 'The venue map and corners will be shared soon.' : `Head to ${s.venue_name}. The venue page shows where each corner is.`, href: '#/venue', cta: 'Venue and corners', ic: 'pin' },
-    { t: 'Explore the corners', d: `${n} ${n === 1 ? 'model' : 'models'} across Science, Math and Tech. Talk to the students about how they work.`, href: '#/projects', cta: 'Browse models', ic: 'grid' },
-    { t: 'Rate the models you like', d: !open ? 'Rating is closed. Thank you to everyone who took part.' : pr.count ? `You have rated ${pr.count} so far. Rate as many as you like, once each.` : `Scan the QR code at a stall and answer three quick star questions.${code ? ' Keep the voter code from your entry pass handy.' : ''}`, href: '#/projects', cta: pr.count ? 'Rate another model' : 'Start rating', ic: 'star', state: pr.count ? 'done' : (open ? 'jlive' : '') },
-    { t: 'Celebrate the winners', d: revealed ? 'The winners are out. See the podium for every corner.' : "Judges' awards and People's Choice are announced at the prize distribution.", href: '#/results', cta: 'Results', ic: 'trophy', state: revealed ? 'jlive' : '' }
-  ];
-  return `<section class="block" data-reveal><h2>Your day at STEM FEST</h2><ol class="journey">${steps.map((x, i) => `<li class="jstep ${x.state || ''}"><span class="jn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol></section>`;
-}
-
 VIEWS.home = () => {
   const s = S.data.settings; const th = theme();
-  const fl = logoSrc(s.fest_logo);
+  const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo);
+  const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
   const map = s.map_link ? `<a class="btn btn-gold" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const open = toBool(s.voting_open);
+  const steps = votingMode() === 'code'
+    ? ['Scan the QR code at any stall, or pick a model from the Models tab.', 'The first time, type the voter code printed on your entry pass.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.']
+    : ['Scan the QR code at any stall, or pick a model from the Models tab.', 'Talk to the students about how their model works.', 'Answer three quick questions with 1 to 5 stars and tap Submit rating. Rate as many models as you like.'];
+  const revealed = !!S.data.results;
   return {
     html: `
+    <section class="hero">${sparkDots()}<div class="wrap">
+      ${heroLogos()}
+      ${fl ? `<div class="festlogo-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.parentNode.nextElementSibling.className='title';this.parentNode.remove()"></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
+      ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
+      <div class="spark-row" aria-label="Theme ${esc(th.name)}: ${esc(th.words.join(', '))}"><span class="spark-label">Theme: ${esc(th.name)}</span>${sparkWords()}</div>
+      <dl class="facts">
+        <div><dt>Date</dt><dd>${esc(fmtDate(s.event_date))}</dd></div>
+        <div><dt>Time</dt><dd>${esc(orTbd(s.event_hours, 'To be announced'))}</dd></div>
+        <div><dt>Venue</dt><dd>${esc(orTbd(s.venue_name, 'To be announced'))}${addr}</dd></div>
+      </dl>
+      ${heroTimer()}
+      <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
+    </div></section>
     <div class="wrap">
-      <div class="home-top">
-        <section class="wb">${floaters()}
-          ${heroLogos()}
-          ${fl ? `<div class="festlogo-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.parentNode.nextElementSibling.className='title';this.parentNode.remove()"></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
-          ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
-          <p class="spark-cap">Theme: ${esc(th.name)}</p>
-          <div class="spark-tiles" aria-label="${esc(th.words.join(', '))}">${th.words.map((w, i) => `<span class="st" style="animation-delay:${0.2 + i * 0.18}s"><b>${esc(w.charAt(0))}</b><small>${esc(w.slice(1))}</small></span>`).join('')}</div>
-          <div class="plates">
-            <div class="plate"><small>Date</small><b>${esc(fmtDate(s.event_date))}</b></div>
-            <div class="plate"><small>Time</small><b>${esc(orTbd(s.event_hours, 'To be announced'))}</b></div>
-            <div class="plate full"><small>Venue</small><b>${esc(orTbd(s.venue_name, 'To be announced'))}</b>${!isTbd(s.venue_address) ? `<span>${esc(s.venue_address)}</span>` : ''}</div>
-          </div>
-          ${heroTimer()}
-          <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">${icon('clock')}Schedule</a></div>
-        </section>
-        ${mapCard('Fest map')}
-      </div>
-      ${nowBoard()}
-      ${s.welcome_note ? `<div class="sec-head"><h2>Welcome</h2></div><p class="card">${esc(s.welcome_note)}</p>` : ''}
-      ${routeSteps()}
+      <section class="corners-strip" aria-label="Corners">
+        ${CATS.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}">${icon(CAT_ICON[c])}<span><span class="ctile-name">${c}</span><br><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></span></a>`; }).join('')}
+      </section>
+      <a class="results-card ${revealed ? 'out' : ''}" href="#/results" data-reveal>${icon('trophy')}<span>${revealed ? '<b>The winners are out!</b><br><span class="muted">See the results for every corner</span>' : '<b>Results</b><br><span class="muted">Winners will be announced at the prize distribution</span>'}</span></a>
+      ${nowNext()}
       ${open || ratingProgress().count ? progressCard() : ''}
-      ${th.descs.some(Boolean) ? `<section class="theme"><h2>Our theme: ${esc(th.name)}</h2><ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul></section>` : ''}
-      ${directory()}
+      ${s.welcome_note ? `<section class="block" data-reveal><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
+      <section class="theme" data-reveal>
+        <h2>Our theme: <em>${esc(th.name)}</em></h2>
+        <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
+      </section>
+      <section class="block" data-reveal><h2>How to rate a model</h2>
+        ${open ? `<ol class="steps">${steps.map(t => `<li><span>${esc(t)}</span></li>`).join('')}</ol>` : '<p>Rating is closed. Thank you to everyone who took part.</p>'}
+      </section>
       ${partnersBlock()}
       <a class="staff-link" href="#/staff">Judges and organisers sign in</a>
     </div>`,
     mount() {
+      $$('.ctile').forEach(t => t.addEventListener('pointerdown', () => { t.classList.remove('bounce'); void t.offsetWidth; t.classList.add('bounce'); }));
       if ($('#cd')) { tickCountdown(); ticker = setInterval(tickCountdown, 1000); }
-      bindParallax();
-      $$('.progress-card, .partners').forEach(x => x.classList.add('in'));
     }
   };
 };
@@ -1488,7 +1062,7 @@ function nowNext() {
 
 /* ---------- Staff sign in chooser ---------- */
 VIEWS.staff = () => ({
-  html: `<div class="wrap page narrow">
+  html: `<div class="wrap page">
     <div class="phead"><h1>Judges and organisers</h1><p>Choose how you are signing in.</p></div>
     <div style="display:grid;gap:12px;margin-top:20px">
       <a class="btn btn-primary btn-big btn-block" href="#/judge">${icon('gavel')}Judge sign in</a>
@@ -1497,14 +1071,30 @@ VIEWS.staff = () => ({
   </div>`
 });
 
-/* ---------- Schedule: departure board ---------- */
+/* ---------- Schedule ---------- */
 VIEWS.schedule = () => {
+  const d = parseDate(S.data.settings.event_date); const today = new Date();
+  const live = d && sameDay(d, today); const m = nowMins();
   const items = S.data.schedule;
   return {
-    html: `<div class="wrap page narrow">
+    html: `<div class="wrap page">
       <div class="phead"><h1>Schedule</h1><p>${esc(fmtDate(S.data.settings.event_date))}</p></div>
-      <div style="margin-top:18px">${items.length ? `<div class="dboard">${boardHead()}${boardRows(items)}</div><p class="db-cap">On the day, the current session is highlighted in gold.</p>` : '<p class="count">The schedule will be shared soon.</p>'}</div>
-    </div>`
+      ${items.length ? `<ol class="tl" id="tl"><span class="tl-fill" id="tlfill"></span>${items.map((i, k) => {
+        let st = '';
+        if (live && i.s != null) {
+          const end = i.e != null && i.e > i.s ? i.e : i.s + 1;
+          st = m >= end ? 'done' : (m >= i.s ? 'now' : '');
+        } else if (d && today > d) st = 'done';
+        const time = i.s != null ? `${esc(fmtTime(i.s))}${i.e != null && i.e !== i.s ? `<small>to ${esc(fmtTime(i.e))}</small>` : ''}` : esc(i.start || '');
+        return `<li class="${st}" data-reveal style="transition-delay:${Math.min(k, 8) * 0.05}s"><div class="t">${time}</div><div><h3>${esc(i.title)}${st === 'now' ? '<span class="pill">Now</span>' : ''}</h3>${!isTbd(i.location) ? `<p class="loc">${esc(i.location)}</p>` : ''}${!isTbd(i.description) ? `<p class="desc">${esc(i.description)}</p>` : ''}</div></li>`;
+      }).join('')}</ol>` : '<p class="count">The schedule will be shared soon.</p>'}
+    </div>`,
+    mount() {
+      const tl = $('#tl'), fill = $('#tlfill'); if (!tl || !fill) return;
+      const marks = $$('li.done, li.now', tl); if (!marks.length) return;
+      const lastEl = marks[marks.length - 1];
+      setTimeout(() => { fill.style.height = (lastEl.offsetTop + 18) + 'px'; }, 150);
+    }
   };
 };
 
@@ -1517,11 +1107,11 @@ VIEWS.projects = (cat) => {
       <div class="phead"><h1>Models on display</h1><p>Tap a model to read about it and rate it.</p></div>
       <label class="search"><span class="sr">Search models</span>${icon('search')}<input id="q" type="search" placeholder="Search by name, stall or centre" value="${esc(S.filter.q)}" autocomplete="off"></label>
       <div class="chips" role="group" aria-label="Filter by corner">
-        ${['All', ...CATS].map(c => `<button class="chip zchip ${c !== 'All' ? 'c-' + CAT_CLS[c] : ''}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c !== 'All' ? `<b>${ZONE[c]}</b>` : ''}${c}</button>`).join('')}
+        ${['All', ...CATS].map(c => `<button class="chip ${c !== 'All' ? 'c-' + CAT_CLS[c] : ''}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c}</button>`).join('')}
       </div>
       ${centres.length > 1 ? `<select class="select" id="centre" aria-label="Filter by centre"><option value="">All centres</option>${centres.map(c => `<option ${S.filter.centre === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>` : ''}
       <p class="count" id="count"></p>
-      <div class="mgrid" id="plist"></div>
+      <div class="plist" id="plist"></div>
     </div>`,
     mount() {
       const draw = () => {
@@ -1533,7 +1123,7 @@ VIEWS.projects = (cat) => {
         ).sort(byStall);
         const n = Object.keys(S.rated).filter(id => list.some(p => p.project_id === id)).length;
         $('#count').textContent = `${list.length} ${list.length === 1 ? 'model' : 'models'}${n ? `, you rated ${n}` : ''}`;
-        $('#plist').innerHTML = list.length ? list.map((p, i) => modelCard(p, i)).join('') : `<div class="empty" style="grid-column:1/-1"><p>No models match your search. Try a different word or pick All.</p></div>`;
+        $('#plist').innerHTML = list.length ? list.map((p, i) => projectCard(p, i)).join('') : `<div class="empty"><p>No models match your search. Try a different word or pick All.</p></div>`;
       };
       $('#q').addEventListener('input', e => { S.filter.q = e.target.value; draw(); });
       $$('.chip').forEach(b => b.addEventListener('click', () => {
@@ -1547,13 +1137,6 @@ VIEWS.projects = (cat) => {
     }
   };
 };
-function modelCard(p, i = 0) {
-  const ph = imgUrl(p.photo_url);
-  return `<a class="mcard c-${CAT_CLS[p.category]}" style="animation-delay:${Math.min(i, 12) * 0.035}s" href="#/project/${encodeURIComponent(p.project_id)}">
-    <span class="mimg"><span class="mph">${stemSvg(ZONE_ART[p.category])}</span>${ph ? `<img src="${esc(ph)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<span class="mstall">Stall ${esc(p.stall || '?')}</span>${S.rated[p.project_id] ? `<span class="mrated">${icon('check')}Rated</span>` : ''}</span>
-    <span class="mbody"><span class="mzone">Zone ${ZONE[p.category]}, ${p.category}</span><span class="mtitle">${esc(p.title)}</span><span class="mctr">${esc(orTbd(p.centre, ''))}</span></span>
-  </a>`;
-}
 function projectCard(p, i = 0) {
   return `<a class="pcard c-${CAT_CLS[p.category]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}">
     ${stallBadge(p)}
@@ -1569,16 +1152,14 @@ VIEWS.project = (id) => {
   const photo = imgUrl(p.photo_url);
   return {
     html: `<div class="wrap page">
-      <a class="back" href="#/projects/${p.category}">${icon('back')}Zone ${ZONE[p.category]} models</a>
-      <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
-        <div class="pd-banner"><span class="mph">${stemSvg(ZONE_ART[p.category])}</span>${photo ? `<img src="${esc(photo)}" alt="Photo of ${esc(p.title)}" onerror="this.remove()">` : ''}</div>
-        <div class="signrow"><span class="zplate"><b>${ZONE[p.category]}</b>${p.category} zone</span><span class="splate">Stall ${esc(p.stall || '?')}</span></div>
-        <h1 class="pd-title">${esc(p.title)}</h1>
-        ${!isTbd(p.centre) ? `<p class="pmeta" style="margin-top:4px">${esc(p.centre)}</p>` : ''}
+      <a class="back" href="#/projects">${icon('back')}All models</a>
+      <article class="c-${CAT_CLS[p.category]}">
+        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
+        ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
         ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
       </article>
-      <div id="votebox"></div></div>
+      <div id="votebox"></div>
     </div>`,
     mount() { renderRateBox(p); }
   };
@@ -1673,16 +1254,18 @@ VIEWS.venue = () => {
   const s = S.data.settings; const fp = imgUrl(s.floor_plan_url);
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Venue and map</h1><p>${esc(orTbd(s.venue_name, 'Venue to be announced'))}${!isTbd(s.venue_address) ? ', ' + esc(s.venue_address) : ''}</p></div>
-      ${s.map_link ? `<p style="margin-top:14px"><a class="btn btn-primary" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Directions in Google Maps</a></p>` : ''}
-      <div style="margin-top:16px">${mapCard('Fest map')}</div>
-      ${fp ? `<div class="sec-head"><h2>Floor plan</h2></div><img class="floor" src="${esc(fp)}" alt="Floor plan of the venue" onerror="this.remove()">` : ''}
-      <div class="sec-head"><h2>Places at the fest</h2></div>
-      <div class="dir">
+      <div class="phead"><h1>Venue and corners</h1><p>${esc(orTbd(s.venue_name, 'Venue to be announced'))}${!isTbd(s.venue_address) ? ', ' + esc(s.venue_address) : ''}</p></div>
+      ${s.map_link ? `<p style="margin-top:14px"><a class="btn btn-primary" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a></p>` : ''}
+      ${fp ? `<img class="floor" src="${esc(fp)}" alt="Floor plan of the venue" onerror="this.remove()">` : ''}
+      <div style="margin-top:12px">
       ${S.data.corners.map(c => {
         const cat = normCat(c.category); const n = cat ? projectsIn(cat).length : 0;
-        const inner = `<span class="dic" style="--c:${cat ? ZONE_FILL[cat] : '#2B1517'}">${cat ? `<span class="dcode">${ZONE[cat]}</span>` : icon(facIcon(c.name))}</span><span><b>${esc(c.name)}</b><small>${[!isTbd(c.where) ? c.where : '', !isTbd(c.description) ? c.description : '', cat ? `${n} ${n === 1 ? 'model' : 'models'}` : ''].filter(Boolean).map(esc).join('. ')}</small></span>`;
-        return cat ? `<a class="drow" href="#/projects/${cat}">${inner}${icon('arrow')}</a>` : `<div class="drow">${inner}<span></span></div>`;
+        return `<div class="corner ${cat ? 'c-' + CAT_CLS[cat] : ''}" data-reveal><span class="bar"></span><div>
+          <h3>${esc(c.name)}</h3>
+          ${!isTbd(c.where) ? `<p class="where">${esc(c.where)}</p>` : ''}
+          ${!isTbd(c.description) ? `<p>${esc(c.description)}</p>` : ''}
+          ${cat ? `<a href="#/projects/${cat}">See the ${n} ${n === 1 ? 'model' : 'models'}</a>` : ''}
+        </div></div>`;
       }).join('')}
       </div>
     </div>`
@@ -1706,10 +1289,10 @@ VIEWS.help = () => {
   });
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Help desk</h1><p>Call or message the right person for your question.</p></div>
+      <div class="phead"><h1>Help and contacts</h1><p>Call or message the right person for your question.</p></div>
       <div class="contacts">
         ${groups.map(g => `<div class="card contact" data-reveal>
-          <p class="role">${icon(facIcon(g.role) === 'pin' ? 'info' : facIcon(g.role))}${esc(g.role)}</p>
+          <p class="role">${esc(g.role)}</p>
           ${g.resp.length ? `<p class="resp">${esc(g.resp.join('. '))}</p>` : ''}
           ${g.people.map(c => {
             const d = phoneDigits(c.phone);
@@ -1732,17 +1315,17 @@ VIEWS.results = () => {
   return {
     html: `<div class="wrap page">
       <div class="phead"><h1>STEM FEST winners</h1><p>Congratulations to every young maker who took part.</p></div>
-      <div class="res-grid">${CATS.map(c => {
+      ${CATS.map(c => {
         const x = r[c] || { judges: [], people: [] }; const pc = x.people[0];
         return `<section class="res-cat c-${CAT_CLS[c]}" data-reveal>
-          <div class="res-head"><span class="rz">${ZONE[c]}</span><h2>${c} zone</h2></div>
+          <div class="res-head">${icon(CAT_ICON[c])}<h2>${c} corner</h2></div>
           <div class="res-body">
             <h3>Judges' awards</h3>
             ${x.judges.length ? podium(x.judges) : '<p class="muted">No awards in this corner.</p>'}
             ${pc ? `<div class="pc-win"><span class="hic">${icon('heart')}</span><span><small>People's Choice</small><b>${esc(pc.title)}</b><br><span class="muted" style="font-size:14px">${esc(metaLine(pc))}</span></span></div>` : ''}
           </div>
         </section>`;
-      }).join('')}</div>
+      }).join('')}
       ${partnersBlock()}
     </div>`,
     mount() { if (!store.get('sf_confetti', true)) { store.set('sf_confetti', '1', true); setTimeout(() => confetti(), 400); } }
@@ -1775,7 +1358,7 @@ VIEWS.judge = (pid) => {
 function judgeLogin() {
   const pre = store.get('sf_jpre', true);
   return {
-    html: `<div class="wrap page narrow">
+    html: `<div class="wrap page">
       <div class="phead"><h1>Judge sign in</h1><p>Welcome! Choose your name and enter the PIN on your judge card.</p></div>
       <div class="card" style="margin-top:18px;display:grid;gap:14px">
         <label class="field"><span>Your name</span><select id="jsel"><option value="">Loading names...</option></select></label>
@@ -1851,7 +1434,7 @@ function judgeScore(pid) {
   const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
   const locked = toBool(S.data.settings.judging_locked);
   return {
-    html: `<div class="wrap page narrow">
+    html: `<div class="wrap page">
       <a class="back" href="#/judge">${icon('back')}My list</a>
       <div class="pd-head c-${CAT_CLS[p.category]}">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner</span><h1>${esc(p.title)}</h1>${!isTbd(p.centre) ? `<p class="pmeta">${esc(p.centre)}</p>` : ''}</div></div>
       ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
@@ -1921,7 +1504,7 @@ function adminLogin(sub) {
     return { html: `<div class="loading"><div class="spin"></div>Opening dashboard</div>`, async mount() { try { await fetchAdmin(); } catch (e) { S.adminKey = null; store.del('sf_admin', true); } render(); } };
   }
   return {
-    html: `<div class="wrap page narrow">
+    html: `<div class="wrap page">
       <div class="phead"><h1>Organiser dashboard</h1><p>Live results, projector reveal, QR cards and judge cards. For the organising team only.</p></div>
       <div class="card" style="margin-top:18px;display:grid;gap:14px">
         ${pwField('akey', 'Admin key')}
@@ -2196,11 +1779,10 @@ let lastPage = null;
 function render() {
   clearInterval(timer); timer = null; clearInterval(ticker); ticker = null;
   window.onkeydown = null;
-  if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
   if (page !== 'reveal') document.body.classList.remove('projector');
   const navPage = page === 'project' ? 'projects' : page;
-  $$('.tabs a, .topnav a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
+  $$('.tabs a').forEach(x => x.classList.toggle('on', x.dataset.p === navPage));
   renderTop(page);
   renderNotice();
   const app = $('#app');
