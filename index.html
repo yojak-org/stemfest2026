@@ -629,6 +629,12 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .floatheart svg{width:100%;height:100%;fill:currentColor}
 
 
+/* ===== Page wide floating STEM icons (behind every page) ===== */
+#pagefx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;color:var(--maroon)}
+#pagefx .fl{opacity:var(--o,.14)}
+#pagefx .fl.near{opacity:calc(var(--o) * 2.4)}
+body.projector #pagefx{display:none}
+
 /* ===== Background theme animation layer ===== */
 #bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;transition:opacity .7s ease}
 #bgfx.fade{opacity:0}
@@ -758,7 +764,7 @@ body.projector #bgfx{display:none}
   .qr-card .qhint{font-size:11px}
   .qr-card .qr-foot{margin-top:auto;width:100%}
   .qr-card .qr-foot small{font-size:9px}
-  #bgfx,#syncpill{display:none!important}
+  #bgfx,#syncpill,#pagefx{display:none!important}
   .page{padding-top:0}
   .env-sheet{page-break-after:always;break-after:page;margin:0;gap:4mm}
   .env-sheet > svg{width:170mm!important;height:136mm!important}
@@ -789,6 +795,7 @@ body.projector #bgfx{display:none}
   </div>
 </header>
 <div id="notice"></div>
+<div id="pagefx" aria-hidden="true"></div>
 <div id="bgfx" aria-hidden="true"></div>
 <div id="syncpill" role="status" aria-live="polite"></div>
 <main id="app"><div class="loading"><div class="spin"></div>Loading STEM FEST</div></main>
@@ -1334,30 +1341,45 @@ const STEM = {
 const stemSvg = n => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${STEM[n]}</svg>`;
 /* name, x%, y%, size, opacity, depth, seconds, rotate, classes (w = tablet and up, r = right side, white = white line) */
 const FLOATS = [
-  ['atom', 82, 7, 58, .34, 26, 9, -10, 'r'], ['dna', 91, 40, 46, .26, 18, 11, 8, 'r white'], ['gear', 70, 64, 66, .22, 30, 13, 20, 'r'],
-  ['rocket', 86, 79, 50, .32, 22, 10, -8, 'r'], ['bulb', 3, 72, 40, .16, 12, 12, 10, 'white'], ['compass', 94, 17, 34, .24, 14, 8, 12, 'r white'],
-  ['triangle', 7, 93, 34, .14, 10, 14, -6, ''], ['flask', 62, 22, 44, .24, 20, 10, 10, 'w r'], ['circuit', 56, 86, 58, .18, 16, 15, -8, 'w r white'],
-  ['magnet', 64, 44, 40, .22, 24, 9, -14, 'w r'], ['pi', 76, 30, 38, .26, 20, 12, 8, 'w r white'], ['microscope', 50, 6, 42, .16, 12, 13, -6, 'w r']
+  ['atom', 84, 8, 58, .34, 26, 9, -10, 'r'], ['dna', 92, 44, 46, .26, 18, 11, 8, 'r white'], ['gear', 74, 66, 60, .22, 30, 13, 20, 'r'],
+  ['rocket', 88, 80, 50, .32, 22, 10, -8, 'r'], ['bulb', 4, 26, 42, .26, 16, 12, 10, 'white'], ['compass', 95, 20, 34, .24, 14, 8, 12, 'r white'],
+  ['triangle', 6, 88, 38, .22, 12, 14, -6, ''], ['flask', 3, 58, 44, .24, 20, 10, 10, 'white'], ['circuit', 14, 92, 52, .2, 16, 15, -8, 'w white'],
+  ['magnet', 12, 8, 40, .22, 24, 9, -14, 'w'], ['pi', 20, 40, 38, .24, 20, 12, 8, 'w white'], ['microscope', 50, 4, 42, .18, 12, 13, -6, 'w r'],
+  ['dna', 34, 90, 40, .16, 18, 12, 10, 'w'], ['gear', 44, 30, 34, .14, 22, 16, 18, 'w r']
 ];
 function floaters() {
   return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" data-depth="${d}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
 }
+/* Icons spread over the whole screen, behind every page */
+const PAGE_FLOATS = [
+  ['atom', 6, 12, 64, .15, 26, 11, -10], ['pi', 88, 9, 50, .15, 20, 9, 10], ['gear', 92, 46, 70, .12, 30, 15, 20],
+  ['flask', 4, 48, 54, .14, 18, 12, 8], ['circuit', 16, 80, 62, .11, 16, 16, -8], ['rocket', 84, 78, 52, .14, 22, 10, -8],
+  ['dna', 50, 18, 46, .1, 18, 13, 10], ['bulb', 30, 40, 44, .12, 14, 12, 12], ['microscope', 68, 28, 48, .11, 20, 14, -6],
+  ['triangle', 40, 88, 44, .1, 12, 15, 8], ['magnet', 72, 62, 46, .12, 24, 11, -14], ['compass', 26, 62, 40, .12, 16, 10, 12],
+  ['gear', 56, 52, 36, .1, 22, 18, 16], ['atom', 62, 92, 42, .12, 20, 12, -12]
+];
+function buildPageFx() {
+  const el = $('#pagefx'); if (!el || REDUCED) return;
+  el.innerHTML = PAGE_FLOATS.map(([n, x, y, sz, o, d, t, r], i) =>
+    `<span class="fl" data-depth="${d}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.3).toFixed(1)}s">${stemSvg(n)}</span>`).join('');
+  reactToPointer($$('.fl', el), true);
+}
+
 let scrollHandler = null;
 /* Each icon reacts on its own: only the ones near the pointer move away and grow */
-function bindParallax() {
-  const hero = $('.hero'), fl = $('#floaters'); if (!hero || !fl || REDUCED) return;
-  const els = $$('.fl', fl); if (!els.length) return;
+function reactToPointer(els, fixedLayer) {
+  if (!els.length || REDUCED) return;
   const rest = e => { e.style.setProperty('--mx', '0px'); e.style.setProperty('--my', '0px'); e.style.setProperty('--sc', '1'); e.classList.remove('near'); };
   if (window.matchMedia('(pointer:fine)').matches) {
     const RADIUS = 190;
-    hero.addEventListener('pointermove', ev => {
-      const hr = hero.getBoundingClientRect();
-      const px = ev.clientX - hr.left, py = ev.clientY - hr.top;
+    let queued = false, lx = 0, ly = 0;
+    const move = () => {
+      queued = false;
       els.forEach(e => {
-        const cx = e.offsetLeft + e.offsetWidth / 2, cy = e.offsetTop + e.offsetHeight / 2;
-        const dx = px - cx, dy = py - cy, dist = Math.hypot(dx, dy) || 1;
+        const r = e.getBoundingClientRect();
+        const dx = lx - (r.left + r.width / 2), dy = ly - (r.top + r.height / 2), dist = Math.hypot(dx, dy) || 1;
         if (dist < RADIUS) {
-          const f = 1 - dist / RADIUS;                  /* 0 far away, 1 right on it */
+          const f = 1 - dist / RADIUS;                 /* 0 far away, 1 right on it */
           const k = (+e.dataset.depth || 16) * f * 1.1;
           e.style.setProperty('--mx', (-dx / dist * k).toFixed(1) + 'px');
           e.style.setProperty('--my', (-dy / dist * k).toFixed(1) + 'px');
@@ -1365,15 +1387,23 @@ function bindParallax() {
           e.classList.add('near');
         } else if (e.classList.contains('near')) rest(e);
       });
-    });
-    hero.addEventListener('pointerleave', () => els.forEach(rest));
-  } else {
+    };
+    window.addEventListener('pointermove', ev => {
+      lx = ev.clientX; ly = ev.clientY;
+      if (!queued) { queued = true; requestAnimationFrame(move); }
+    }, { passive: true });
+    window.addEventListener('pointerleave', () => els.forEach(rest));
+  } else if (!fixedLayer) {
     scrollHandler = () => {
       const y = Math.min(window.scrollY / 150, 3);
       els.forEach(e => e.style.setProperty('--my', (y * (+e.dataset.depth || 16) * 0.35).toFixed(1) + 'px'));
     };
     window.addEventListener('scroll', scrollHandler, { passive: true });
   }
+}
+function bindParallax() {
+  const fl = $('#floaters'); if (!fl) return;
+  reactToPointer($$('.fl', fl), false);
 }
 
 /* Logos and partners */
@@ -2567,6 +2597,7 @@ setInterval(async () => {
     if (cached) S.data = prepData(cached);
   }
   if (S.data) { const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {}; }
+  buildPageFx();
   render();                       /* show something immediately */
   syncPill(); processQueue();     /* send anything saved earlier but not yet sent */
   await loadData();
