@@ -672,6 +672,28 @@ body.projector #bgfx{display:none}
 .env-sheet{display:flex;flex-direction:column;align-items:center;gap:6mm;margin-bottom:10mm}
 .env-sheet > svg{width:170mm;height:136mm;max-width:100%;height:auto;background:#fff}
 
+
+/* ===== Judging form sections ===== */
+.jsec{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.jsec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--maroon-tint);padding:10px 14px}
+.jsec-head b{font-family:'Baloo 2',sans-serif;font-size:17px;color:var(--maroon)}
+.jsec-head span{font-size:14px;font-weight:600;color:var(--maroon);white-space:nowrap}
+.jsec-body{padding:2px 14px 12px}
+.crit-head span small{display:block;font-weight:400;font-size:14px;color:var(--muted);line-height:1.35;margin-top:2px}
+.jsec .crit:last-of-type{border-bottom:0}
+/* ===== Bilingual rating ===== */
+.rq .mr{display:block;font-weight:600;font-size:16px;color:var(--maroon);margin-top:2px}
+.votebox p .mr{display:block;font-weight:600;color:var(--maroon);margin-top:3px}
+.slabel .mr{display:block;font-size:13px}
+/* ===== Links on the home page ===== */
+.linkgrid{display:grid;gap:10px;margin-top:12px}
+.linkrow{display:grid;grid-template-columns:44px 1fr 22px;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.linkrow .lic{width:44px;height:44px;border-radius:12px;background:var(--maroon);color:#fff;display:grid;place-items:center}
+.linkrow .lic svg{width:24px;height:24px}
+.linkrow b{font-size:17px;line-height:1.25;display:block}
+.linkrow small{font-size:14px;color:var(--muted)}
+.linkrow > svg{width:22px;height:22px;color:var(--gold-dk)}
+@media (min-width:720px){.linkgrid{grid-template-columns:1fr 1fr}}
 @media print{
   @page{size:A4;margin:8mm}
   body{padding:0;font-size:14px}
@@ -786,6 +808,8 @@ const ICONS = {
   trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M10 17h4v3h-4z"/>',
   search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
   megaphone: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>',
+  link: '<path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   flask: '<path d="M9 3h6M10 3v6L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9V3"/><path d="M7.5 15h9"/>',
   pi: '<path d="M4 7h16M9 7v11M15 7v8.5a2.5 2.5 0 0 0 4 2"/>',
@@ -854,8 +878,17 @@ const SAMPLE = {
     theme_name: 'SPARK', theme_words: 'Seek; Probe; Analyze; Rethink; Kreate', theme_descriptions: '',
     voting_open: 'TRUE', voting_mode: 'device', judging_locked: 'FALSE', results_revealed: 'FALSE',
     min_judges: '2', max_per_criterion: '10',
-    criteria: 'Concept and Understanding; Innovation and Creativity; Working of the Model; Presentation by Students; Real Life Relevance',
-    visitor_questions: 'How well did the students explain it?; How creative or interesting is it?; How useful is it in real life?'
+    visitor_questions: 'Is the idea creative and original?; Can it be used in real life?; Did the students explain it clearly?',
+    visitor_questions_mr: 'कल्पना किती सर्जनशील आणि नावीन्यपूर्ण आहे?; प्रत्यक्ष जीवनात हा प्रकल्प किती उपयुक्त आहे?; विद्यार्थ्यांनी त्यांचा प्रकल्प किती स्पष्टपणे समजावून सांगितला?',
+    star_labels: 'Needs improvement; Okay; Good; Very good; Excellent',
+    star_labels_mr: 'सुधारणा हवी; ठीक; चांगला; खूप चांगला; उत्कृष्ट',
+    criteria_sets: {
+      common: ['Problem Identification: How clearly is the problem or question identified?', 'Conceptual Understanding: How well do students understand the concept behind the project?', 'Originality and Creativity: How creative and original is the idea or approach?', 'Practical Application: How effectively can the project be connected to real life situations?', 'Innovation: Does the project show a new, improved or interesting approach?', 'Student Involvement: How actively have students taken part in developing the project?', 'Use of Resources: How appropriately and effectively are materials and resources used?', 'Learning and Impact: Does the project show meaningful learning or potential impact?'],
+      Science: ['Scientific Principle: Is the scientific concept or principle correct?', 'Research Question or Hypothesis: Is the question or hypothesis clearly defined?', 'Experimentation or Investigation: How effectively was the investigation carried out?', 'Observation and Evidence: Are observations, data and evidence collected and interpreted well?', 'Scientific Application: How effectively can the concept be applied to a real life problem?'],
+      Math: ['Mathematical Concept: Is the mathematical concept correct and clearly demonstrated?', 'Accuracy: Are calculations, measurements and results accurate?', 'Mathematical Reasoning: Do students show logical reasoning and problem solving?', 'Application of Mathematics: Is mathematics meaningfully applied to a real life problem?', 'Mathematical Representation: Are graphs, models, patterns or formulas used effectively?'],
+      Tech: ['Technical Concept: Is the underlying technical or computational concept understood correctly?', 'Functionality: Does the prototype, model or system work as intended?', 'Problem Solving: How effectively does the technology address the identified problem?', 'Innovation and Design: How thoughtfully is the technological solution designed?', 'Usability and Scalability: Could the solution be practically used, improved or scaled?'],
+      presentation: ['Communication and Explanation: How clearly do students explain their project, process and outcomes?', "Response to Questions: How confidently and accurately do students answer the judges' questions?"]
+    }
   },
   schedule: [
     { start: '09:00', end: '09:45', title: 'Registration and stall setup', location: 'Registration Desk', description: 'Centres check in and set up their models' },
@@ -898,7 +931,8 @@ const SAMPLE = {
     { judge_id: 'J02', name: 'Judge 2', pin: '7390', categories: 'Science, Math' },
     { judge_id: 'J03', name: 'Judge 3', pin: '1564', categories: 'Tech' }
   ],
-  codes: ['K7M2QX', 'P4TR9B', 'Z8HN3W', 'C6VD2L']
+  codes: ['K7M2QX', 'P4TR9B', 'Z8HN3W', 'C6VD2L'],
+  links: [{ label: 'Presentation', url: 'https://example.com/deck', note: 'Shown on the main screen' }, { label: 'Programme dashboard', url: 'https://example.com/dashboard', note: '' }]
 };
 
 function markTies(list, places, same) {
@@ -939,7 +973,7 @@ const Demo = {
     await sleep(200);
     if (p.action === 'data') {
       const s = this.settings();
-      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, contacts: SAMPLE.contacts, projects: SAMPLE.projects, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })), results: toBool(s.results_revealed) ? this.publicResults() : null };
+      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, links: SAMPLE.links, contacts: SAMPLE.contacts, projects: SAMPLE.projects, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })), results: toBool(s.results_revealed) ? this.publicResults() : null };
     }
     if (p.action === 'myratings') { const out = {}; this.ratings().filter(v => v.voter_id === p.voter_id).forEach(v => out[v.project_id] = v.scores); return { ok: true, ratings: out }; }
     if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })) };
@@ -966,8 +1000,8 @@ const Demo = {
     if (b.action === 'score') {
       const j = this.judge(b.judge_id, b.pin); if (!j) { await sleep(2000); return { ok: false, error: 'Name or PIN is not correct. Please try again.' }; }
       if (toBool(s.judging_locked)) return { ok: false, code: 'locked', error: 'Judging is locked. Scores can no longer be changed.' };
-      const all = this.scores(); const total = b.scores.reduce((a, x) => a + x, 0);
-      all[j.judge_id + '|' + b.project_id] = { judge_id: j.judge_id, project_id: b.project_id, scores: b.scores, total, remarks: b.remarks || '' };
+      const all = this.scores(); const flat = [...b.scores.a, ...b.scores.b, ...b.scores.c]; const total = flat.reduce((a, x) => a + x, 0);
+      all[j.judge_id + '|' + b.project_id] = { judge_id: j.judge_id, project_id: b.project_id, ...b.scores, total, comments: b.comments || {} };
       store.set('sfd_scores', JSON.stringify(all));
       return { ok: true, total };
     }
@@ -1132,7 +1166,7 @@ async function syncRatings(force) {
 function prepData(d) {
   d.projects = (d.projects || []).map(p => ({ ...p, category: normCat(p.category) })).filter(p => p.category && p.title);
   d.schedule = (d.schedule || []).map(i => ({ ...i, s: parseTime(i.start), e: parseTime(i.end) })).sort((a, b) => (a.s ?? 9999) - (b.s ?? 9999));
-  d.corners = d.corners || []; d.contacts = d.contacts || []; d.settings = d.settings || {};
+  d.corners = d.corners || []; d.contacts = d.contacts || []; d.settings = d.settings || {}; d.links = d.links || [];
   return d;
 }
 async function loadData() {
@@ -1151,18 +1185,23 @@ const projectsIn = c => S.data.projects.filter(p => p.category === c);
 const byStall = (a, b) => String(a.stall).localeCompare(String(b.stall), undefined, { numeric: true });
 const findProject = id => S.data.projects.find(p => p.project_id === id);
 const metaLine = w => [w.project_id ? 'ID ' + w.project_id : '', isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', ');
-const criteria = () => {
-  const list = splitList(S.data.settings.criteria).filter(Boolean);
-  const def = ['Concept and Understanding', 'Innovation and Creativity', 'Working of the Model', 'Presentation by Students', 'Real Life Relevance'];
-  return def.map((d, i) => list[i] || d);
-};
+const critSets = () => S.data.settings.criteria_sets || {};
+const critFor = cat => { const cs = critSets(); return { a: cs.common || [], b: cs[cat] || [], c: cs.presentation || [] }; };
+const splitCrit = t => { const i = String(t).indexOf(':'); return i > 0 ? { name: t.slice(0, i).trim(), q: t.slice(i + 1).trim() } : { name: t, q: '' }; };
 const visitorQs = () => {
-  const list = splitList(S.data.settings.visitor_questions).filter(Boolean);
-  const def = ['How well did the students explain it?', 'How creative or interesting is it?', 'How useful is it in real life?'];
-  return def.map((d, i) => list[i] || d);
+  const en = splitList(S.data.settings.visitor_questions).filter(Boolean);
+  const mr = splitList(S.data.settings.visitor_questions_mr).filter(Boolean);
+  const def = ['Is the idea creative and original?', 'Can it be used in real life?', 'Did the students explain it clearly?'];
+  return def.map((d, i) => ({ en: en[i] || d, mr: mr[i] || '' }));
 };
-const STAR_WORDS = ['', 'Not good', 'Okay', 'Good', 'Very good', 'Excellent'];
+const starWords = () => {
+  const en = splitList(S.data.settings.star_labels).filter(Boolean);
+  const mr = splitList(S.data.settings.star_labels_mr).filter(Boolean);
+  const def = ['Needs improvement', 'Okay', 'Good', 'Very good', 'Excellent'];
+  return def.map((d, i) => ({ en: en[i] || d, mr: mr[i] || '' }));
+};
 const maxMark = () => parseInt(S.data.settings.max_per_criterion, 10) || 10;
+const maxTotal = () => maxMark() * 15;
 function theme() {
   const s = S.data.settings;
   const words = splitList(s.theme_words || 'Seek; Probe; Analyze; Rethink; Kreate').filter(Boolean);
@@ -1349,6 +1388,12 @@ function journey() {
   return `<section class="block" data-reveal><h2>Your day at STEM FEST</h2><ol class="journey">${steps.map((x, i) => `<li class="jstep ${x.state || ''}"><span class="jn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol></section>`;
 }
 
+function linksBlock() {
+  const links = (S.data.links || []).filter(l => l.label && l.url);
+  if (!links.length) return '';
+  return `<section class="block"><h2>Links</h2><div class="linkgrid">${links.map(l => `<a class="linkrow" href="${esc(l.url)}" target="_blank" rel="noopener"><span class="lic">${icon('link')}</span><span><b>${esc(l.label)}</b>${!isTbd(l.note) ? `<small>${esc(l.note)}</small>` : ''}</span>${icon('arrow')}</a>`).join('')}</div></section>`;
+}
+
 function scheduleStrip() {
   const items = S.data.schedule.filter(i => i.s != null); if (!items.length) return '';
   const d = parseDate(S.data.settings.event_date); const today = new Date();
@@ -1388,6 +1433,7 @@ VIEWS.home = () => {
     </div></div></section>
     <div class="wrap">
       ${s.welcome_note ? `<section class="card welcome-card"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
+      ${linksBlock()}
       <section class="theme hl">
         <span class="theme-kicker">THE THEME OF ${esc(String(s.event_name || 'STEM FEST').toUpperCase())}</span>
         <h2>${esc(th.name)}</h2>
@@ -1535,7 +1581,7 @@ VIEWS.project = (id) => {
 function renderRateBox(p, st = {}) {
   const box = $('#votebox'); if (!box) return;
   const s = S.data.settings; const mode = votingMode(); const open = toBool(s.voting_open);
-  const mine = S.rated[p.project_id]; const qs = visitorQs();
+  const mine = S.rated[p.project_id]; const qs = visitorQs(); const SW = starWords();
   const sum = a => a.reduce((x, y) => x + y, 0);
   let html;
   if (mine && !st.edit) {
@@ -1554,10 +1600,10 @@ function renderRateBox(p, st = {}) {
       <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
   } else {
     const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
-    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${p.category} corner.</p>
-      ${qs.map((q, i) => `<div class="rq"><p>${esc(q)}</p><div class="stars" role="radiogroup" aria-label="${esc(q)}">
-        ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${STAR_WORDS[n]}">${icon('star')}</button>`).join('')}
-        <span class="slabel" id="sl${i}">${vals[i] ? STAR_WORDS[vals[i]] : 'Tap a star'}</span></div></div>`).join('')}
+    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${p.category} corner.<span class="mr" style="font-weight:500">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल.</span></p>
+      ${qs.map((q, i) => `<div class="rq"><p>${esc(q.en)}${q.mr ? `<span class="mr">${esc(q.mr)}</span>` : ''}</p><div class="stars" role="radiogroup" aria-label="${esc(q.en)}">
+        ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${esc(SW[n - 1].en)}">${icon('star')}</button>`).join('')}
+        <span class="slabel" id="sl${i}">${vals[i] ? `${esc(SW[vals[i] - 1].en)}${SW[vals[i] - 1].mr ? `<span class="mr">${esc(SW[vals[i] - 1].mr)}</span>` : ''}` : 'Tap a star / तारांकित करा'}</span></div></div>`).join('')}
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
       <button class="btn btn-primary btn-block btn-big" id="ratebtn">${mine ? 'Save changes' : 'Submit rating'}</button>
       ${mine ? '<button class="btn btn-ghost btn-block" id="canceledit">Keep my old rating</button>' : ''}</div>`;
@@ -1568,7 +1614,7 @@ function renderRateBox(p, st = {}) {
         const k = +x.dataset.n; x.classList.toggle('on', k <= n); x.setAttribute('aria-checked', String(k === n));
         x.classList.remove('pop'); if (k <= n) { void x.offsetWidth; x.style.animationDelay = (k * 0.04) + 's'; x.classList.add('pop'); }
       });
-      $('#sl' + q).textContent = STAR_WORDS[n];
+      $('#sl' + q).innerHTML = `${esc(SW[n - 1].en)}${SW[n - 1].mr ? `<span class="mr">${esc(SW[n - 1].mr)}</span>` : ''}`;
       const e = $('.err', box); if (e && vals.every(Boolean)) e.remove();
     }));
     const ce = $('#canceledit'); if (ce) ce.addEventListener('click', () => renderRateBox(p));
@@ -1769,7 +1815,7 @@ function judgeProjects() {
 }
 
 function judgeHeader(p, fresh) {
-  const sc = S.judgeScores[p.project_id]; const max = maxMark() * 5;
+  const sc = S.judgeScores[p.project_id]; const max = maxTotal();
   const wait = sc && Queue.pending('score', p.project_id);
   return `<button class="pcard jtoggle c-${CAT_CLS[p.category]} ${sc ? 'scored' : ''} ${fresh ? 'justdone' : ''}" data-pid="${esc(p.project_id)}" aria-expanded="false">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span></span><span class="jstatus ${sc ? (wait ? 'wait' : 'ok') : ''} ${fresh ? 'fresh' : ''}" title="${wait ? 'Sending' : ''}">${sc ? `${icon(wait ? 'clock' : 'check')}${sc.total} of ${max}` : 'Not scored'}</span><span class="chev">${icon('back').replace('<svg', '<svg style="transform:rotate(180deg)"')}</span></button>`;
 }
@@ -1829,42 +1875,66 @@ function toggleJudgeItem(it, forceOpen) {
   setTimeout(() => it.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }), 50);
 }
 function scorePanel(p) {
-  const crit = criteria(); const max = maxMark();
+  const cs = critFor(p.category); const max = maxMark();
   const prev = S.judgeScores[p.project_id];
   const locked = toBool(S.data.settings.judging_locked);
+  const sec = (key, title, marks, list) => `<div class="jsec" data-sec="${key}">
+    <div class="jsec-head"><b>${title}</b><span data-sectot="${key}">0 of ${marks}</span></div>
+    <div class="jsec-body">
+      ${list.map((t, i) => { const c = splitCrit(t); return `<div class="crit">
+        <div class="crit-head"><span>${esc(c.name)}${c.q ? `<small>${esc(c.q)}</small>` : ''}</span><strong data-cv="${key}${i}"></strong></div>
+        <div class="nums" role="group" aria-label="${esc(c.name)}">${Array.from({ length: max }, (_, k) => k + 1).map(v => `<button class="num" data-s="${key}" data-i="${i}" data-v="${v}" aria-pressed="false" ${locked ? 'disabled' : ''}>${v}</button>`).join('')}</div>
+      </div>`; }).join('')}
+      <label class="field" style="margin-top:12px"><span>Comments for this section (optional)</span><textarea class="jrem" data-cm="${key}" maxlength="500" ${locked ? 'disabled' : ''}>${esc((prev && prev.comments && prev.comments[key]) || '')}</textarea></label>
+    </div>
+  </div>`;
   return `<div class="jpanel">
     ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
     ${prev ? '<p class="banner" style="background:var(--ok-t);color:var(--ok)">Already scored. Change any mark and save again to update it.</p>' : ''}
-    ${crit.map((c, i) => `<div class="crit">
-      <div class="crit-head"><span>${esc(c)}</span><strong data-cv="${i}"></strong></div>
-      <div class="nums" role="group" aria-label="${esc(c)}">${Array.from({ length: max + 1 }, (_, v) => `<button class="num" data-i="${i}" data-v="${v}" aria-pressed="false" ${locked ? 'disabled' : ''}>${v}</button>`).join('')}</div>
-    </div>`).join('')}
-    <label class="field" style="margin-top:14px"><span>Remarks (optional)</span><textarea class="jrem" maxlength="500" ${locked ? 'disabled' : ''}>${esc(prev?.remarks || '')}</textarea></label>
+    ${sec('a', 'Section A: Common criteria', 8 * max, cs.a)}
+    ${sec('b', `Section B: ${p.category === 'Math' ? 'Mathematics' : p.category === 'Tech' ? 'Technology' : 'Science'} project`, 5 * max, cs.b)}
+    ${sec('c', 'Section C: Presentation and viva', 2 * max, cs.c)}
     <p class="err jerr2" role="alert" style="margin-top:8px"></p>
-    <div class="savebar"><span class="tot">Total <b class="jtot">0</b> of ${max * 5}</span>${locked ? '' : '<button class="btn btn-primary jsave">Save score</button>'}</div>
+    <div class="savebar"><span class="tot">Total <b class="jtot">0</b> of ${15 * max}</span>${locked ? '' : '<button class="btn btn-primary jsave">Save score</button>'}</div>
   </div>`;
 }
 function bindScorePanel(it, p) {
   const panel = $('.jpanel', it); const max = maxMark();
   const prev = S.judgeScores[p.project_id];
-  const vals = prev ? prev.scores.slice() : [null, null, null, null, null];
-  const err = $('.jerr2', panel);
-  const paint = () => {
-    vals.forEach((v, i) => { const el = $(`[data-cv="${i}"]`, panel); el.textContent = v == null ? 'Not marked' : `${v} of ${max}`; el.className = v == null ? 'unset' : ''; });
-    $$('.num', panel).forEach(b => b.setAttribute('aria-pressed', String(vals[+b.dataset.i] === +b.dataset.v)));
-    $('.jtot', panel).textContent = vals.reduce((a, v) => a + (v || 0), 0);
+  const vals = {
+    a: prev && prev.a ? prev.a.slice() : new Array(8).fill(null),
+    b: prev && prev.b ? prev.b.slice() : new Array(5).fill(null),
+    c: prev && prev.c ? prev.c.slice() : new Array(2).fill(null)
   };
-  $$('.num', panel).forEach(b => b.addEventListener('click', () => { vals[+b.dataset.i] = +b.dataset.v; paint(); if (vals.every(v => v != null)) err.textContent = ''; }));
+  const err = $('.jerr2', panel);
+  const marks = { a: 8 * max, b: 5 * max, c: 2 * max };
+  const paint = () => {
+    ['a', 'b', 'c'].forEach(k => {
+      vals[k].forEach((v, i) => { const el = $(`[data-cv="${k}${i}"]`, panel); el.textContent = v == null ? 'Not marked' : `${v} of ${max}`; el.className = v == null ? 'unset' : ''; });
+      $(`[data-sectot="${k}"]`, panel).textContent = `${vals[k].reduce((x, v) => x + (v || 0), 0)} of ${marks[k]}`;
+    });
+    $$('.num', panel).forEach(b => b.setAttribute('aria-pressed', String(vals[b.dataset.s][+b.dataset.i] === +b.dataset.v)));
+    $('.jtot', panel).textContent = ['a', 'b', 'c'].reduce((t, k) => t + vals[k].reduce((x, v) => x + (v || 0), 0), 0);
+  };
+  $$('.num', panel).forEach(b => b.addEventListener('click', () => {
+    vals[b.dataset.s][+b.dataset.i] = +b.dataset.v; paint();
+    if (['a', 'b', 'c'].every(k => vals[k].every(v => v != null))) err.textContent = '';
+  }));
   paint();
   const save = $('.jsave', panel);
   if (save) save.addEventListener('click', async () => {
-    if (vals.some(v => v == null)) { err.textContent = 'Give a mark for every criterion before saving.'; return; }
+    const missing = ['a', 'b', 'c'].filter(k => vals[k].some(v => v == null));
+    if (missing.length) {
+      err.textContent = `Give a mark for every criterion in Section ${missing.map(k => k.toUpperCase()).join(', ')} before saving.`;
+      const first = $(`.jsec[data-sec="${missing[0]}"]`, panel); if (first) first.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+      return;
+    }
     err.textContent = '';
-    const remarks = $('.jrem', panel).value;
-    const total = vals.reduce((a, v) => a + v, 0);
-    S.judgeScores[p.project_id] = { scores: vals.slice(), total, remarks };
+    const comments = {}; $$('.jrem', panel).forEach(t => { comments[t.dataset.cm] = t.value; });
+    const total = ['a', 'b', 'c'].reduce((t, k) => t + vals[k].reduce((x, v) => x + v, 0), 0);
+    S.judgeScores[p.project_id] = { a: vals.a.slice(), b: vals.b.slice(), c: vals.c.slice(), total, comments };
     saveJudgeScores();
-    Queue.add({ id: Date.now() + '-' + randStr(4), key: 'score|' + p.project_id, type: 'score', pid: p.project_id, body: { action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: vals.slice(), remarks } });
+    Queue.add({ id: Date.now() + '-' + randStr(4), key: 'score|' + p.project_id, type: 'score', pid: p.project_id, body: { action: 'score', judge_id: S.judge.judge_id, pin: S.judge.pin, project_id: p.project_id, scores: { a: vals.a.slice(), b: vals.b.slice(), c: vals.c.slice() }, comments } });
     closeJudgeItem(it);
     it.innerHTML = judgeHeader(p, true); bindJudgeItem(it);
     setBgFx('cycle');
@@ -2004,7 +2074,7 @@ function adminDash() {
       }));
       const df = $('#dfill'); if (df) df.addEventListener('click', () => {
         const sc = {}, rt = {};
-        SAMPLE.judges.forEach(j => SAMPLE.projects.filter(p => Demo.cats(j.categories).includes(p.category)).forEach(p => { const arr = [0, 0, 0, 0, 0].map(() => 5 + Math.floor(Math.random() * 6)); sc[j.judge_id + '|' + p.project_id] = { judge_id: j.judge_id, project_id: p.project_id, scores: arr, total: arr.reduce((a, x) => a + x, 0) }; }));
+        SAMPLE.judges.forEach(j => SAMPLE.projects.filter(p => Demo.cats(j.categories).includes(p.category)).forEach(p => { const mk = n => Array.from({ length: n }, () => 5 + Math.floor(Math.random() * 6)); const aa = mk(8), bb = mk(5), cc = mk(2); sc[j.judge_id + '|' + p.project_id] = { judge_id: j.judge_id, project_id: p.project_id, a: aa, b: bb, c: cc, total: [...aa, ...bb, ...cc].reduce((x, y) => x + y, 0) }; }));
         for (let v = 0; v < 25; v++) SAMPLE.projects.forEach(p => { if (Math.random() < 0.5) { const arr = [0, 0, 0].map(() => 2 + Math.floor(Math.random() * 4)); rt['D:sample' + v + '|' + p.project_id] = { voter_id: 'D:sample' + v, project_id: p.project_id, scores: arr, total: arr.reduce((a, x) => a + x, 0) }; } });
         store.set('sfd_scores', JSON.stringify(sc)); store.set('sfd_ratings', JSON.stringify(rt)); refresh(true);
       });
