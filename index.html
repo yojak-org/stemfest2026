@@ -7,9 +7,9 @@
 <title>STEM FEST 2026 by YOJAK</title>
 <!-- ===== Link preview (what people see when the link is shared on WhatsApp) =====
      Edit the three lines below whenever the date or venue changes, then upload again. -->
-<meta name="description" content="STEM FEST 2026 by YOJAK. Student models in Science, Math and Tech. Tap for the schedule, venue map, live results and rating.">
-<meta property="og:title" content="STEM FEST 2026 by YOJAK">
-<meta property="og:description" content="Student models in Science, Math and Tech. Tap for the schedule, venue map, live results and rating.">
+<meta name="description" content="STEM FEST 2026 by YOJAK. Wednesday 7 October 2026. Venue is yet to be announced. Student models in Science, Math and Tech.">
+<meta property="og:title" content="STEM FEST 2026 by YOJAK, 7 October">
+<meta property="og:description" content="Wednesday 7 October 2026. Venue is yet to be announced. Student models in Science, Math and Tech. Tap for the schedule, venue map and live results.">
 <meta property="og:image" content="https://yojak-org.github.io/stemfest2026/preview.png">
 <meta property="og:url" content="https://yojak-org.github.io/stemfest2026/">
 <meta property="og:type" content="website">
@@ -460,7 +460,9 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 
 /* ===== Redesign: responsive layout, floating STEM icons, journey ===== */
 .floaters{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;--px:0;--py:0}
-.fl{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s) * var(--k,1));height:calc(var(--s) * var(--k,1));color:var(--c,var(--gold));opacity:var(--o,.3);transform:translate(calc(var(--px) * var(--d) * 1px),calc(var(--py) * var(--d) * 1px));transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.fl{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s) * var(--k,1));height:calc(var(--s) * var(--k,1));color:var(--c,var(--gold));opacity:var(--o,.3);transform:translate(var(--mx,0px),var(--my,0px)) scale(var(--sc,1));transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s}
+.fl.near{opacity:calc(var(--o) * 2)}
+.fl.near svg{animation-duration:2.6s}
 .fl svg{width:100%;height:100%;display:block;animation:drift var(--t,9s) ease-in-out infinite;animation-delay:var(--dl,0s)}
 .fl.w{display:none}
 .fl.white{--c:#fff}
@@ -553,6 +555,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   .sw,[data-reveal]{opacity:1!important;transform:none!important}
   .sparks{display:none}
   .fl{transform:none!important}
+  .fest-plate,.fest-plate::after{animation:none!important}
 }
 
 /* ===== Project ID badges ===== */
@@ -682,6 +685,29 @@ body.projector #bgfx{display:none}
 .env-sheet{display:flex;flex-direction:column;align-items:center;gap:6mm;margin-bottom:10mm}
 .env-sheet > svg{width:170mm;height:136mm;max-width:100%;height:auto;background:#fff}
 
+
+/* ===== Hero: brand bar and the big SPARK logo ===== */
+.brandbar{position:absolute;top:14px;right:16px;z-index:2;display:flex;gap:8px;align-items:center}
+.brandbar .bl{height:46px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:5px 10px}
+.brandbar .bl img{height:36px;width:auto;max-width:104px;object-fit:contain;display:block}
+.brandbar .bl span{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:17px;color:var(--maroon);line-height:1}
+.hero.v2{text-align:center;padding-top:74px}
+.hero.v2 .hero-in{max-width:760px;margin:0 auto}
+.hero.v2 .presents{opacity:.9}
+.hero.v2 .facts{display:inline-grid;text-align:left;justify-self:center}
+.hero.v2 .hero-actions,.hero.v2 .invite-acts{justify-content:center}
+.hero.v2 .tagline{max-width:34ch;margin:0 auto}
+.hero.v2 .invite{max-width:560px;margin-left:auto;margin-right:auto}
+.hero.v2 .title{margin:10px auto 8px}
+.fest-hero{position:relative;display:grid;place-items:center;margin:14px 0 16px}
+.fest-hero::before{content:"";position:absolute;width:min(78vw,520px);height:min(42vw,260px);border-radius:50%;background:radial-gradient(circle,rgba(242,169,0,.5),rgba(242,169,0,0) 65%);animation:glowPulse 4.5s ease-in-out infinite;z-index:0}
+.fest-plate{position:relative;z-index:1;background:#fff;border-radius:26px;padding:16px 24px;overflow:hidden;box-shadow:0 18px 40px -22px rgba(0,0,0,.6);animation:floaty 6s ease-in-out infinite}
+.fest-plate img{max-height:min(34vw,180px);max-width:min(80vw,440px);width:auto;display:block}
+.fest-plate::after{content:"";position:absolute;top:-60%;left:-70%;width:45%;height:220%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:rotate(14deg);animation:shine 6s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{transform:scale(.92);opacity:.75}50%{transform:scale(1.06);opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shine{0%{left:-70%}55%{left:130%}100%{left:130%}}
+@media (max-width:420px){ .brandbar .bl{height:38px;padding:4px 8px} .brandbar .bl img{height:29px;max-width:84px} .hero.v2{padding-top:64px} }
 
 /* ===== Invitation countdown ===== */
 .invite{margin-top:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:16px 16px 18px}
@@ -1314,16 +1340,38 @@ const FLOATS = [
   ['magnet', 64, 44, 40, .22, 24, 9, -14, 'w r'], ['pi', 76, 30, 38, .26, 20, 12, 8, 'w r white'], ['microscope', 50, 6, 42, .16, 12, 13, -6, 'w r']
 ];
 function floaters() {
-  return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--d:${d};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
+  return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" data-depth="${d}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
 }
 let scrollHandler = null;
+/* Each icon reacts on its own: only the ones near the pointer move away and grow */
 function bindParallax() {
   const hero = $('.hero'), fl = $('#floaters'); if (!hero || !fl || REDUCED) return;
+  const els = $$('.fl', fl); if (!els.length) return;
+  const rest = e => { e.style.setProperty('--mx', '0px'); e.style.setProperty('--my', '0px'); e.style.setProperty('--sc', '1'); e.classList.remove('near'); };
   if (window.matchMedia('(pointer:fine)').matches) {
-    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); fl.style.setProperty('--px', (((e.clientX - r.left) / r.width) - .5) * 2); fl.style.setProperty('--py', (((e.clientY - r.top) / r.height) - .5) * 2); });
-    hero.addEventListener('pointerleave', () => { fl.style.setProperty('--px', 0); fl.style.setProperty('--py', 0); });
+    const RADIUS = 190;
+    hero.addEventListener('pointermove', ev => {
+      const hr = hero.getBoundingClientRect();
+      const px = ev.clientX - hr.left, py = ev.clientY - hr.top;
+      els.forEach(e => {
+        const cx = e.offsetLeft + e.offsetWidth / 2, cy = e.offsetTop + e.offsetHeight / 2;
+        const dx = px - cx, dy = py - cy, dist = Math.hypot(dx, dy) || 1;
+        if (dist < RADIUS) {
+          const f = 1 - dist / RADIUS;                  /* 0 far away, 1 right on it */
+          const k = (+e.dataset.depth || 16) * f * 1.1;
+          e.style.setProperty('--mx', (-dx / dist * k).toFixed(1) + 'px');
+          e.style.setProperty('--my', (-dy / dist * k).toFixed(1) + 'px');
+          e.style.setProperty('--sc', (1 + f * 0.4).toFixed(3));
+          e.classList.add('near');
+        } else if (e.classList.contains('near')) rest(e);
+      });
+    });
+    hero.addEventListener('pointerleave', () => els.forEach(rest));
   } else {
-    scrollHandler = () => fl.style.setProperty('--py', Math.min(window.scrollY / 160, 3));
+    scrollHandler = () => {
+      const y = Math.min(window.scrollY / 150, 3);
+      els.forEach(e => e.style.setProperty('--my', (y * (+e.dataset.depth || 16) * 0.35).toFixed(1) + 'px'));
+    };
     window.addEventListener('scroll', scrollHandler, { passive: true });
   }
 }
@@ -1457,6 +1505,12 @@ function journey() {
   return `<section class="block" data-reveal><h2>Your day at STEM FEST</h2><ol class="journey">${steps.map((x, i) => `<li class="jstep ${x.state || ''}"><span class="jn">${i + 1}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p><a href="${x.href}">${icon(x.ic)}${esc(x.cta)}</a></div></li>`).join('')}</ol></section>`;
 }
 
+function brandBar() {
+  const s = S.data.settings; const yl = logoSrc(s.yojak_logo); const pl = partnerList();
+  const chip = (src, name) => `<span class="bl">${src ? `<img src="${esc(src)}" alt="${esc(name)}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${esc(name).replace(/'/g, '')}'}))">` : `<span>${esc(name)}</span>`}</span>`;
+  return `<div class="brandbar">${chip(yl, 'YOJAK')}${pl.map(p => chip(p.logo, p.name || 'Partner')).join('')}</div>`;
+}
+
 function linksBlock() {
   const links = (S.data.links || []).filter(l => l.label && l.url);
   if (!links.length) return '';
@@ -1483,13 +1537,12 @@ VIEWS.home = () => {
   const map = s.map_link ? `<a class="btn btn-gold" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const open = toBool(s.voting_open);
   const val = (v, fb) => isTbd(v) ? `<dd class="tbd">${esc(fb)}</dd>` : `<dd>${esc(v)}</dd>`;
-  const logoChip = (src, name) => src ? `<img src="${esc(src)}" alt="${esc(name)}" onerror="this.outerHTML='<span class=&quot;lr-text&quot;>${esc(name).replace(/'/g, '')}</span>'">` : `<span class="lr-text">${esc(name)}</span>`;
   const dateTxt = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
   return {
     html: `
-    <section class="hero v2">${floaters()}<div class="wrap"><div class="hero-in">
+    <section class="hero v2">${floaters()}${brandBar()}<div class="wrap"><div class="hero-in">
       <p class="presents">YOJAK presents</p>
-      <h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>
+      ${fl ? `<div class="fest-hero"><div class="fest-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.closest('.fest-hero').outerHTML='<h1 class=&quot;title&quot;>${esc(s.event_name || 'STEM FEST')}</h1>'"></div></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
       <dl class="facts">
         <div><dt>Date</dt>${dateTxt ? `<dd>${esc(dateTxt)}</dd>` : `<dd class="tbd">To be announced</dd>`}</div>
@@ -1498,7 +1551,6 @@ VIEWS.home = () => {
       </dl>
       ${heroTimer()}
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
-      <div class="hero-logos">${logoChip(yl, 'YOJAK')}${pl.map(p => logoChip(p.logo, p.name || 'Partner')).join('')}${fl ? logoChip(fl, s.event_name || 'STEM FEST') : ''}</div>
     </div></div></section>
     <div class="wrap">
       ${s.welcome_note ? `<section class="card welcome-card"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
