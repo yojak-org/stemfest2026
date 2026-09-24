@@ -4,7 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#7A1C24">
-<title>STEM FEST by YOJAK</title>
+<title>STEM FEST 2026 by YOJAK</title>
+<!-- ===== Link preview (what people see when the link is shared on WhatsApp) =====
+     Edit the three lines below whenever the date or venue changes, then upload again. -->
+<meta name="description" content="STEM FEST 2026 by YOJAK. Student models in Science, Math and Tech. Tap for the schedule, venue map, live results and rating.">
+<meta property="og:title" content="STEM FEST 2026 by YOJAK">
+<meta property="og:description" content="Student models in Science, Math and Tech. Tap for the schedule, venue map, live results and rating.">
+<meta property="og:image" content="https://yojak-org.github.io/stemfest2026/preview.png">
+<meta property="og:url" content="https://yojak-org.github.io/stemfest2026/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="STEM FEST 2026">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A1C24'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='%23F2A900' font-family='Arial' font-weight='bold'>S</text></svg>">
 <link rel="preconnect" href="https://script.google.com">
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
@@ -673,6 +683,19 @@ body.projector #bgfx{display:none}
 .env-sheet > svg{width:170mm;height:136mm;max-width:100%;height:auto;background:#fff}
 
 
+/* ===== Invitation countdown ===== */
+.invite{margin-top:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:16px 16px 18px}
+.invite .cd-label{margin:0 0 10px;font-size:15px;opacity:.9;font-weight:600}
+.countdown.big{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0}
+.countdown.big .cd{max-width:none;background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.28);padding:10px 4px}
+.countdown.big .cd b{font-size:clamp(30px,9vw,54px);line-height:1;font-variant-numeric:tabular-nums}
+.countdown.big .cd span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.invite-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.invite-acts .btn{flex:1;min-width:140px;font-size:15px;padding:0 12px}
+.invite-note{margin-top:10px;font-size:13px;opacity:.75}
+.live.big{margin-top:24px;font-size:18px;padding:12px 20px}
+@media (min-width:720px){ .countdown.big .cd b{font-size:56px} }
+
 /* ===== Judging form sections ===== */
 .jsec{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .jsec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--maroon-tint);padding:10px 14px}
@@ -809,6 +832,8 @@ const ICONS = {
   search: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
   megaphone: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>',
   link: '<path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/>',
+  share: '<path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M12 15V3M8 7l4-4 4 4"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 18h6"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   flask: '<path d="M9 3h6M10 3v6L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9V3"/><path d="M7.5 15h9"/>',
@@ -1355,12 +1380,56 @@ function countdownTarget() {
   const end = new Date(d); const em = last ? (last.e != null && last.e > last.s ? last.e : last.s + 60) : 18 * 60; end.setHours(Math.floor(em / 60), em % 60, 0, 0);
   return { start, end };
 }
-function heroTimer() {
+function inviteText() {
+  const s = S.data.settings;
+  const when = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
+  const bits = [`You are invited to ${s.event_name || 'STEM FEST'} by YOJAK.`];
+  if (when) bits.push(when + (isTbd(s.event_hours) ? '' : ', ' + s.event_hours) + '.');
+  if (!isTbd(s.venue_name)) bits.push('Venue: ' + s.venue_name + '.');
+  bits.push('Schedule, venue map and models: ' + siteBase());
+  return bits.join(' ');
+}
+function calendarLink() {
   const t = countdownTarget(); if (!t) return '';
-  const now = new Date();
-  if (now >= t.end) return '';
-  if (now >= t.start) return `<div class="live"><i></i>STEM FEST is live now</div>`;
-  return `<p class="cd-label">The fest begins in</p><div class="countdown" id="cd">${['Days', 'Hours', 'Mins', 'Secs'].map(l => `<div class="cd"><b data-cd="${l}">0</b><span>${l}</span></div>`).join('')}</div>`;
+  const s = S.data.settings;
+  const fmt = d => d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + 'T' +
+    String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0') + '00';
+  const q = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: (s.event_name || 'STEM FEST') + ' by YOJAK',
+    dates: fmt(t.start) + '/' + fmt(t.end),
+    details: (s.tagline || '') + '\n' + siteBase(),
+    location: [orTbd(s.venue_name, ''), orTbd(s.venue_address, '')].filter(Boolean).join(', ')
+  });
+  return 'https://calendar.google.com/calendar/render?' + q.toString();
+}
+function heroTimer() {
+  const t = countdownTarget(); const now = new Date();
+  if (t && now >= t.end) return '';
+  if (t && now >= t.start) return `<div class="live big"><i></i>STEM FEST is live now</div>${inviteActions()}`;
+  if (!t) return inviteActions();
+  return `<section class="invite">
+    <p class="cd-label">The fest begins in</p>
+    <div class="countdown big" id="cd">${[['Days', 'Days'], ['Hours', 'Hours'], ['Mins', 'Minutes'], ['Secs', 'Seconds']].map(([k, l]) => `<div class="cd"><b data-cd="${k}">0</b><span>${l}</span></div>`).join('')}</div>
+    ${inviteActions(true)}
+  </section>`;
+}
+function inviteActions(inside) {
+  const cal = calendarLink();
+  return `<div class="invite-acts">
+      <button class="btn ${inside ? 'btn-gold' : 'btn-light'}" id="shareBtn">${icon('share')}Share invite</button>
+      ${cal ? `<a class="btn btn-outline-light" href="${esc(cal)}" target="_blank" rel="noopener">${icon('calendar')}Add to calendar</a>` : ''}
+    </div>
+    ${inside ? '<p class="invite-note">Forward the link to parents, guests and centres.</p>' : ''}`;
+}
+async function doShare() {
+  const text = inviteText(); const url = siteBase();
+  if (navigator.share) {
+    try { await navigator.share({ title: (S.data.settings.event_name || 'STEM FEST') + ' by YOJAK', text, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  const wa = 'https://wa.me/?text=' + encodeURIComponent(text);
+  const w = window.open(wa, '_blank', 'noopener');
+  if (!w) { try { await navigator.clipboard.writeText(text); toast('Invitation copied. Paste it in WhatsApp.'); } catch (e) { toast('Copy this link: ' + url); } }
 }
 function tickCountdown() {
   const el = $('#cd'); const t = countdownTarget(); if (!el || !t) return;
@@ -1451,6 +1520,7 @@ VIEWS.home = () => {
     mount() {
       $$('.ctile').forEach(t => t.addEventListener('pointerdown', () => { t.classList.remove('bounce'); void t.offsetWidth; t.classList.add('bounce'); }));
       if ($('#cd')) { tickCountdown(); ticker = setInterval(tickCountdown, 1000); }
+      const sb = $('#shareBtn'); if (sb) sb.addEventListener('click', doShare);
       bindParallax();
     }
   };
