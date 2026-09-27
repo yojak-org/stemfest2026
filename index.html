@@ -62,7 +62,12 @@ button,input,select,textarea{font:inherit;color:inherit}
 .judge-btn svg{width:16px;height:16px}
 #notice:empty{display:none}
 .announce{background:var(--gold-t);color:#5A3B00;border-bottom:1px solid #F1DFA6}
-.announce .wrap{padding-top:10px;padding-bottom:10px;display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:16px}
+.announce .wrap{padding-top:10px;padding-bottom:10px;display:flex;gap:10px;align-items:center;font-weight:500;font-size:16px}
+.ann-win{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.ann-track{display:flex;width:max-content;white-space:nowrap;animation:marquee var(--d,24s) linear infinite}
+.ann-track:hover,.ann-track:active{animation-play-state:paused}
+.ann-track span{padding-right:70px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .demo{background:var(--maroon-tint);color:var(--maroon-dk);font-size:14px}
 .demo .wrap{padding-top:7px;padding-bottom:7px}
 
@@ -554,6 +559,8 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .sw,[data-reveal]{opacity:1!important;transform:none!important}
   .sparks{display:none}
+  .ann-track{animation:none;white-space:normal;width:auto}
+  .ann-track span:last-child{display:none}
   .fl{transform:none!important}
   .fest-plate,.fest-plate::after{animation:none!important}
 }
@@ -2529,7 +2536,10 @@ function renderNotice() {
   const n = $('#notice'); let html = '';
   if (DEMO) html += `<div class="demo"><div class="wrap">Preview mode: sample data, and ratings are saved only on this phone.</div></div>`;
   const a = S.data?.settings?.announcement;
-  if (a && !isTbd(a)) html += `<div class="announce" role="status"><div class="wrap">${icon('megaphone').replace('<svg', '<svg style="width:22px;height:22px;flex:none;margin-top:1px"')}<span>${esc(a)}</span></div></div>`;
+  if (a && !isTbd(a)) {
+    const secs = Math.max(16, Math.round(String(a).length * 0.42));   /* longer notices scroll for longer */
+    html += `<div class="announce" role="status"><div class="wrap">${icon('megaphone').replace('<svg', '<svg style="width:22px;height:22px;flex:none"')}<div class="ann-win"><div class="ann-track" style="--d:${secs}s"><span>${esc(a)}</span><span aria-hidden="true">${esc(a)}</span></div></div></div></div>`;
+  }
   n.innerHTML = html;
 }
 function renderTop(page) {
