@@ -756,6 +756,9 @@ body.projector #bgfx{display:none}
 .linkrow small{font-size:14px;color:var(--muted)}
 .linkrow > svg{width:22px;height:22px;color:var(--gold-dk)}
 @media (min-width:720px){.linkgrid{grid-template-columns:1fr 1fr}}
+.students{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px}
+.students li{position:relative;padding-left:16px;font-size:17px}
+.students li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--maroon)}
 @media print{
   @page{size:A4;margin:8mm}
   body{padding:0;font-size:14px}
@@ -1729,7 +1732,7 @@ VIEWS.project = (id) => {
         <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
         ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
-        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
+        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><ul class="students">${String(p.students).split(/[,;\n]/).map(n => n.trim()).filter(Boolean).map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
       </article>
       <div id="votebox"></div></div>
     </div>`,
