@@ -27,7 +27,7 @@
   --maroon:#7A1C24; --maroon-dk:#5A1219; --maroon-deep:#43100F; --maroon-tint:#F8EDEE; --rose:#E9B9BE;
   --gold:#F2A900; --gold-dk:#B77F00; --gold-t:#FFF4D1;
   --ink:#2B1517; --muted:#6F5A5C; --line:#ECDFE0; --bg:#FFFFFF; --soft:#FBF7F7;
-  --sci:#2E7D4F; --sci-t:#E7F3EB; --math:#A85F14; --math-t:#FBF0E2; --tech:#56479A; --tech-t:#EEEBF8;
+  --sci:#2E7D4F; --sci-t:#E7F3EB; --math:#A85F14; --math-t:#FBF0E2; --tech:#56479A; --tech-t:#EEEBF8; --eng:#12707C; --eng-t:#E2F4F6;
   --ok:#2E7D4F; --ok-t:#E3F2E8; --err:#B42318;
   --nav-h:66px;
   color-scheme:light;
@@ -143,7 +143,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,78,.7)}70%{box-shadow:0 0 0 12px rgba(255,90,78,0)}100%{box-shadow:0 0 0 0 rgba(255,90,78,0)}}
 
 /* Corner tiles */
-.corners-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:-48px;position:relative}
+.corners-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-48px;position:relative}
+@media (min-width:640px){.corners-strip{grid-template-columns:repeat(4,1fr)}}
 .ctile{border-radius:18px;padding:12px 12px 12px;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;color:#fff;background:var(--c);box-shadow:0 10px 22px -12px rgba(60,10,15,.6);transition:transform .15s;position:relative;overflow:hidden}
 .ctile:active{transform:scale(.96)}
 .ctile svg{width:30px;height:30px;stroke-width:1.8;transition:transform .3s}
@@ -156,6 +157,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .c-sci{--c:var(--sci);--t:var(--sci-t)}
 .c-math{--c:var(--math);--t:var(--math-t)}
 .c-tech{--c:var(--tech);--t:var(--tech-t)}
+.c-eng{--c:var(--eng);--t:var(--eng-t)}
 
 .block{margin-top:30px}
 .block h2{font-size:24px;margin-bottom:8px}
@@ -539,7 +541,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
   .hero{padding:64px 0 110px}
   .title{font-size:112px}
   .fl.r{opacity:calc(var(--o) * 1.6);--k:1.5}
-  .res-grid{grid-template-columns:repeat(3,1fr)}
+  .res-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (pointer:fine){
   .pcard:hover{transform:translateY(-2px)}
@@ -722,6 +724,11 @@ body.projector #bgfx{display:none}
 @keyframes shine{0%{left:-70%}55%{left:130%}100%{left:130%}}
 @media (max-width:420px){ .brandbar .bl{height:38px;padding:4px 8px} .brandbar .bl img{height:29px;max-width:84px} .hero.v2{padding-top:64px} }
 
+/* ===== Hero background image (optional, set hero_image in Settings) ===== */
+.hero.has-img{background-image:linear-gradient(180deg,rgba(13,10,11,.55),rgba(13,10,11,.8) 55%,rgba(13,10,11,.97)),var(--heroimg);background-size:cover;background-position:center;background-repeat:no-repeat}
+.hero.has-img::before{opacity:.06}
+.hero.has-img::after{opacity:.5}
+
 /* ===== Hero statistics ===== */
 .hstats{display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
 .hstat b{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,7vw,46px);line-height:1;letter-spacing:-.04em;color:var(--gold)}
@@ -773,7 +780,7 @@ body.projector #bgfx{display:none}
   --maroon:#7A1C24; --maroon-dk:#5A1219; --maroon-deep:#0D0A0B; --maroon-tint:#241517; --rose:#E9B9BE;
   --brand:#D8414F;                        /* maroon, brightened so it reads on black */
   --gold:#FFC53D; --gold-dk:#FFC53D; --gold-t:#2A2113;
-  --sci:#2BD97C; --sci-t:#12301F; --math:#FFB020; --math-t:#332310; --tech:#9B8CFF; --tech-t:#211C3B;
+  --sci:#2BD97C; --sci-t:#12301F; --math:#FFB020; --math-t:#332310; --tech:#9B8CFF; --tech-t:#211C3B; --eng:#38D6E0; --eng-t:#0F2C30;
   --ok:#2BD97C; --ok-t:#12301F; --err:#FF6B6B;
   color-scheme:dark;
 }
@@ -1071,9 +1078,9 @@ const CONFIG = {
 
 /* ---------------- basics ---------------- */
 const DEMO = !CONFIG.API_URL;
-const CATS = ['Science', 'Math', 'Tech'];
-const CAT_CLS = { Science: 'sci', Math: 'math', Tech: 'tech' };
-const CAT_ICON = { Science: 'flask', Math: 'pi', Tech: 'chip' };
+const CATS = ['Science', 'Math', 'Tech', 'English'];
+const CAT_CLS = { Science: 'sci', Math: 'math', Tech: 'tech', English: 'eng' };
+const CAT_ICON = { Science: 'flask', Math: 'pi', Tech: 'chip', English: 'book' };
 const REFRESH_MS = 3 * 60 * 1000;
 const SYNC_MS = 15 * 60 * 1000;
 const $ = (s, el = document) => el.querySelector(s);
@@ -1089,6 +1096,7 @@ function normCat(c) {
   if (s.startsWith('sci')) return 'Science';
   if (s.startsWith('mat')) return 'Math';
   if (s.startsWith('tec')) return 'Tech';
+  if (s.startsWith('eng')) return 'English';
   return '';
 }
 const store = {
@@ -1119,6 +1127,7 @@ const ICONS = {
   star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   flask: '<path d="M9 3h6M10 3v6L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9V3"/><path d="M7.5 15h9"/>',
   pi: '<path d="M4 7h16M9 7v11M15 7v8.5a2.5 2.5 0 0 0 4 2"/>',
+  book: '<path d="M4 5a2 2 0 0 1 2-2h5v17H6a2 2 0 0 0-2 2z"/><path d="M20 5a2 2 0 0 0-2-2h-5v17h5a2 2 0 0 1 2 2z"/><path d="M11 3v17"/>',
   chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
   medal: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/><path d="M12 6.5l.9 1.8 2 .3-1.4 1.4.3 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3z"/>',
   gavel: '<path d="M14 4l6 6M11 7l6 6M12.5 5.5l-4 4 6 6 4-4M9.5 12.5L3 19l2 2 6.5-6.5"/>',
@@ -1193,6 +1202,7 @@ const SAMPLE = {
       Science: ['Scientific Principle: Is the scientific concept or principle correct?', 'Research Question or Hypothesis: Is the question or hypothesis clearly defined?', 'Experimentation or Investigation: How effectively was the investigation carried out?', 'Observation and Evidence: Are observations, data and evidence collected and interpreted well?', 'Scientific Application: How effectively can the concept be applied to a real life problem?'],
       Math: ['Mathematical Concept: Is the mathematical concept correct and clearly demonstrated?', 'Accuracy: Are calculations, measurements and results accurate?', 'Mathematical Reasoning: Do students show logical reasoning and problem solving?', 'Application of Mathematics: Is mathematics meaningfully applied to a real life problem?', 'Mathematical Representation: Are graphs, models, patterns or formulas used effectively?'],
       Tech: ['Technical Concept: Is the underlying technical or computational concept understood correctly?', 'Functionality: Does the prototype, model or system work as intended?', 'Problem Solving: How effectively does the technology address the identified problem?', 'Innovation and Design: How thoughtfully is the technological solution designed?', 'Usability and Scalability: Could the solution be practically used, improved or scaled?'],
+      English: ["Language Accuracy: Is the grammar, spelling and sentence construction correct?", "Vocabulary and Expression: Is the choice of words rich, suitable and used with meaning?", "Creativity and Originality: Is the writing, story or idea imaginative and the students' own?", 'Structure and Flow: Is the work organised clearly, with a beginning, middle and end?', 'Message and Relevance: Does the work carry a clear message that connects to real life?'],
       presentation: ['Communication and Explanation: How clearly do students explain their project, process and outcomes?', "Response to Questions: How confidently and accurately do students answer the judges' questions?"]
     }
   },
@@ -1209,6 +1219,7 @@ const SAMPLE = {
     { name: 'Science Corner', category: 'Science', description: 'Models that explain how nature works', where: 'TBD' },
     { name: 'Math Corner', category: 'Math', description: 'Ideas you can see, touch and measure', where: 'TBD' },
     { name: 'Tech Corner', category: 'Tech', description: 'Machines, circuits and smart solutions', where: 'TBD' },
+    { name: 'English Corner', category: 'English', description: 'Stories, words and ideas that speak', where: 'TBD' },
     { name: 'Main Stage', category: '', description: 'Inauguration and prize distribution', where: 'TBD' },
     { name: 'Help Desk', category: '', description: 'Questions, lost and found, first aid', where: 'TBD' },
     { name: 'Washrooms', category: '', description: '', where: 'TBD' },
@@ -1230,12 +1241,15 @@ const SAMPLE = {
     { project_id: 'M03', stall: '6', title: 'Geometry in Rangoli (sample)', category: 'Math', centre: 'Sample Centre C', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
     { project_id: 'T01', stall: '7', title: 'Smart Dustbin (sample)', category: 'Tech', centre: 'Sample Centre A', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
     { project_id: 'T02', stall: '8', title: 'Line Following Robot (sample)', category: 'Tech', centre: 'Sample Centre B', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
-    { project_id: 'T03', stall: '9', title: 'Automatic Street Light (sample)', category: 'Tech', centre: 'Sample Centre C', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' }
+    { project_id: 'T03', stall: '9', title: 'Automatic Street Light (sample)', category: 'Tech', centre: 'Sample Centre C', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'E01', stall: '10', title: 'Story Wall: Voices of Our Village (sample)', category: 'English', centre: 'Sample Centre A', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' },
+    { project_id: 'E02', stall: '11', title: 'Word Garden Vocabulary Model (sample)', category: 'English', centre: 'Sample Centre B', students: 'TBD', description: 'Sample project. Replace with the real list.', photo_url: '' }
   ],
   judges: [
     { judge_id: 'J01', name: 'Judge 1', pin: '4821', categories: 'All' },
     { judge_id: 'J02', name: 'Judge 2', pin: '7390', categories: 'Science, Math' },
-    { judge_id: 'J03', name: 'Judge 3', pin: '1564', categories: 'Tech' }
+    { judge_id: 'J03', name: 'Judge 3', pin: '1564', categories: 'Tech' },
+    { judge_id: 'J04', name: 'Judge 4', pin: '2937', categories: 'English' }
   ],
   codes: ['K7M2QX', 'P4TR9B', 'Z8HN3W', 'C6VD2L'],
   links: [{ label: 'Presentation', url: 'https://example.com/deck', note: 'Shown on the main screen' }, { label: 'Programme dashboard', url: 'https://example.com/dashboard', note: '' }]
@@ -1584,7 +1598,9 @@ const STEM = {
   magnet: '<path d="M12 6v18a12 12 0 0 0 24 0V6h-8v18a4 4 0 0 1-8 0V6z"/><path d="M12 12h8M28 12h8"/>',
   pi: '<path d="M8 14h32M18 14v26M30 14v20a6 6 0 0 0 8 4"/>',
   microscope: '<path d="M21 5l8 4-7 15-8-4z"/><path d="M17 23l-2 4M27 17a12 12 0 0 1 2 22H11M17 44h22"/>',
-  triangle: '<path d="M6 42h36L6 8z"/><path d="M6 34h8v8"/>'
+  triangle: '<path d="M6 42h36L6 8z"/><path d="M6 34h8v8"/>',
+  book: '<path d="M6 8a4 4 0 0 1 4-4h10v36H10a4 4 0 0 0-4 4z"/><path d="M42 8a4 4 0 0 0-4-4H28v36h10a4 4 0 0 1 4 4z"/><path d="M20 4v36"/>',
+  quote: '<path d="M18 30H8V18c0-5 4-8 9-8v6c-3 0-5 1-5 4h6zM40 30H30V18c0-5 4-8 9-8v6c-3 0-5 1-5 4h6z"/>'
 };
 const stemSvg = n => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${STEM[n]}</svg>`;
 /* name, x%, y%, size, opacity, depth, seconds, rotate, classes (w = tablet and up, r = right side, white = white line) */
@@ -1593,7 +1609,8 @@ const FLOATS = [
   ['rocket', 88, 80, 50, .32, 22, 10, -8, 'r'], ['bulb', 4, 26, 42, .26, 16, 12, 10, 'white'], ['compass', 95, 20, 34, .24, 14, 8, 12, 'r white'],
   ['triangle', 6, 88, 38, .22, 12, 14, -6, ''], ['flask', 3, 58, 44, .24, 20, 10, 10, 'white'], ['circuit', 14, 92, 52, .2, 16, 15, -8, 'w white'],
   ['magnet', 12, 8, 40, .22, 24, 9, -14, 'w'], ['pi', 20, 40, 38, .24, 20, 12, 8, 'w white'], ['microscope', 50, 4, 42, .18, 12, 13, -6, 'w r'],
-  ['dna', 34, 90, 40, .16, 18, 12, 10, 'w'], ['gear', 44, 30, 34, .14, 22, 16, 18, 'w r']
+  ['dna', 34, 90, 40, .16, 18, 12, 10, 'w'], ['gear', 44, 30, 34, .14, 22, 16, 18, 'w r'],
+  ['book', 28, 20, 42, .2, 18, 12, 8, 'white'], ['quote', 66, 12, 36, .18, 14, 10, -8, 'w r white']
 ];
 function floaters() {
   return `<div class="floaters" id="floaters" aria-hidden="true">${FLOATS.map(([n, x, y, sz, o, d, t, r, c], i) => `<span class="fl ${c}" data-depth="${d}" style="--x:${x}%;--y:${y}%;--s:${sz}px;--o:${o};--t:${t}s;--r:${r}deg;--dl:-${(i * 1.7).toFixed(1)}s">${stemSvg(n)}</span>`).join('')}</div>`;
@@ -1604,7 +1621,8 @@ const PAGE_FLOATS = [
   ['flask', 4, 48, 54, .14, 18, 12, 8], ['circuit', 16, 80, 62, .11, 16, 16, -8], ['rocket', 84, 78, 52, .14, 22, 10, -8],
   ['dna', 50, 18, 46, .1, 18, 13, 10], ['bulb', 30, 40, 44, .12, 14, 12, 12], ['microscope', 68, 28, 48, .11, 20, 14, -6],
   ['triangle', 40, 88, 44, .1, 12, 15, 8], ['magnet', 72, 62, 46, .12, 24, 11, -14], ['compass', 26, 62, 40, .12, 16, 10, 12],
-  ['gear', 56, 52, 36, .1, 22, 18, 16], ['atom', 62, 92, 42, .12, 20, 12, -12]
+  ['gear', 56, 52, 36, .1, 22, 18, 16], ['atom', 62, 92, 42, .12, 20, 12, -12],
+  ['book', 36, 18, 44, .12, 18, 13, 8], ['quote', 78, 40, 38, .1, 16, 11, -10]
 ];
 function buildPageFx() {
   const el = $('#pagefx'); if (!el || REDUCED) return;
@@ -1818,6 +1836,7 @@ function scheduleStrip() {
 VIEWS.home = () => {
   const s = S.data.settings; const th = theme();
   const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo); const pl = partnerList();
+  const heroImg = logoSrc(s.hero_image);
   const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
   const map = s.map_link ? `<a class="btn btn-gold" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const open = toBool(s.voting_open);
@@ -1825,7 +1844,7 @@ VIEWS.home = () => {
   const dateTxt = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
   return {
     html: `
-    <section class="hero v2">${floaters()}${brandBar()}<div class="wrap"><div class="hero-in">
+    <section class="hero v2 ${heroImg ? 'has-img' : ''}" ${heroImg ? `style="--heroimg:url('${esc(heroImg)}')"` : ''}>${floaters()}${brandBar()}<div class="wrap"><div class="hero-in">
       <p class="presents">YOJAK presents</p>
       ${fl ? `<div class="fest-hero"><div class="fest-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.closest('.fest-hero').outerHTML='<h1 class=&quot;title&quot;>${esc(s.event_name || 'STEM FEST')}</h1>'"></div></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
@@ -1839,7 +1858,6 @@ VIEWS.home = () => {
       ${heroStats()}
     </div></div></section>
     <div class="wrap">
-      ${s.welcome_note ? `<section class="card welcome-card"><h2>Welcome</h2><p>${esc(s.welcome_note)}</p></section>` : ''}
       ${linksBlock()}
       <section class="theme hl">
         <span class="theme-kicker">THE THEME OF ${esc(String(s.event_name || 'STEM FEST').toUpperCase())}</span>
@@ -2300,7 +2318,7 @@ function scorePanel(p) {
     ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
     ${prev ? '<p class="banner" style="background:var(--ok-t);color:var(--ok)">Already scored. Change any mark and save again to update it.</p>' : ''}
     ${sec('a', 'Section A: Common criteria', 8 * max, cs.a)}
-    ${sec('b', `Section B: ${p.category === 'Math' ? 'Mathematics' : p.category === 'Tech' ? 'Technology' : 'Science'} project`, 5 * max, cs.b)}
+    ${sec('b', `Section B: ${({ Math: 'Mathematics', Tech: 'Technology', English: 'English', Science: 'Science' })[p.category] || p.category} project`, 5 * max, cs.b)}
     ${sec('c', 'Section C: Presentation and viva', 2 * max, cs.c)}
     <p class="err jerr2" role="alert" style="margin-top:8px"></p>
     <div class="savebar"><span class="tot">Total <b class="jtot">0</b> of ${15 * max}</span>${locked ? '' : '<button class="btn btn-primary jsave">Save score</button>'}</div>
@@ -2695,6 +2713,14 @@ function themeFx(cat, level) {
       ${level ? '<g class="rot"><rect class="d" x="130" y="52" width="14" height="14"/></g><path class="d" d="M60 86 A26 26 0 0 1 100 86"/>' : ''}
     </svg>`;
     if (level === 2) h += burst(24, i => `<span style="font-family:'Baloo 2',serif;font-weight:800;font-size:${rnd(3, 6).toFixed(1)}vh;color:#F2A900">${syms[i % syms.length]}</span>`);
+  } else if (cat === 'English') {
+    const words = ['A', 'B', 'C', '“', '”', '?', '!', 'Aa', 'Zz', 'Ww', ',', '.', 'Ee'];
+    const n = [10, 18, 28][level];
+    for (let i = 0; i < n; i++) h += `<span class="msym" style="left:${rnd(0, 100).toFixed(1)}%;font-size:${rnd(3, 8).toFixed(1)}vh;color:rgba(56,214,224,.6);--r:${rnd(-300, 300).toFixed(0)}deg;animation-duration:${rnd(7, 14).toFixed(1)}s;animation-delay:-${rnd(0, 12).toFixed(1)}s">${words[i % words.length]}</span>`;
+    h += `<span class="fx-spin" style="left:5vw;bottom:8vh;width:26vh;height:26vh;animation-duration:22s">${stemSvg('book')}</span>`;
+    h += `<span class="fx-spin" style="right:6vw;top:9vh;width:18vh;height:18vh;animation-duration:16s;animation-direction:reverse">${stemSvg('quote')}</span>`;
+    if (level) h += `<span class="fx-spin" style="right:10vw;bottom:12vh;width:14vh;height:14vh;animation-duration:12s;opacity:.22">${stemSvg('quote')}</span>`;
+    if (level === 2) h += burst(24, i => `<span style="font-family:'Space Grotesk',serif;font-weight:700;font-size:${rnd(3, 6).toFixed(1)}vh;color:#38D6E0">${words[i % words.length]}</span>`);
   } else {
     const cols = [8, 14, 22][level];
     for (let i = 0; i < cols; i++) { let t = ''; for (let k = 0; k < 18; k++) t += (Math.random() < .5 ? '0' : '1') + '\n'; h += `<span class="bits" style="left:${(i / cols * 100 + rnd(0, 3)).toFixed(1)}%;animation-duration:${rnd(5, 10).toFixed(1)}s;animation-delay:-${rnd(0, 8).toFixed(1)}s">${t}</span>`; }
@@ -2784,11 +2810,6 @@ function route() { return location.hash.replace(/^#\/?/, '').split('/').filter(B
 function renderNotice() {
   const n = $('#notice'); let html = '';
   if (DEMO) html += `<div class="demo"><div class="wrap">Preview mode: sample data, and ratings are saved only on this phone.</div></div>`;
-  const a = S.data?.settings?.announcement;
-  if (a && !isTbd(a)) {
-    const secs = Math.max(16, Math.round(String(a).length * 0.42));   /* longer notices scroll for longer */
-    html += `<div class="announce" role="status"><div class="wrap">${icon('megaphone').replace('<svg', '<svg style="width:22px;height:22px;flex:none"')}<div class="ann-win"><div class="ann-track" style="--d:${secs}s"><span>${esc(a)}</span><span aria-hidden="true">${esc(a)}</span></div></div></div></div>`;
-  }
   n.innerHTML = html;
 }
 function renderTop(page) {
