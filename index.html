@@ -389,7 +389,7 @@ table.wide{min-width:460px}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 th{background:var(--soft);font-weight:600;white-space:nowrap}
 tr:last-child td{border-bottom:0}
-td.num-c{text-align:right;white-space:nowrap}
+td.num-c{text-align:left;white-space:nowrap}
 tr.tie td{background:#FFF1F0}
 .warn{color:var(--err);font-size:13px;font-weight:600}
 .adm-cat{margin-top:26px}
@@ -423,7 +423,7 @@ tr.tie td{background:#FFF1F0}
 .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .qr-card{border:1.5px dashed #bbb;border-radius:14px;padding:16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff}
 .qr-card .qh{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--maroon);font-size:22px;line-height:1}
-.qr-head-logo{height:96px;width:auto;max-width:92%;object-fit:contain}
+.qr-head-logo{height:96px;width:80%;max-width:92%;object-fit:contain}
 .qr-card .qcat{font-weight:600;color:var(--c,var(--muted))}
 .qr-card .qid small{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .qr-card .qid b{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--c,var(--ink))}
@@ -436,7 +436,7 @@ tr.tie td{background:#FFF1F0}
 .qr-foot small{font-size:11px;color:var(--muted)}
 .qr-foot div{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:nowrap;width:100%}
 .qf-item{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0}
-.qr-foot img{height:42px;width:auto;max-width:100%;object-fit:contain}
+.qr-foot img{height:42px;width:120px;max-width:100%;object-fit:contain}
 .code-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .code-card{border:1.5px dashed #bbb;border-radius:10px;padding:10px;text-align:center}
 .code-card b{display:block;font-size:22px;letter-spacing:.12em}
@@ -596,7 +596,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .jc-l small{font-size:2.3mm;position:relative;text-align:center;line-height:1.2}
 .jc-r{padding:3mm 3.5mm 2.5mm;display:flex;flex-direction:column;min-width:0;border-top:1.2mm solid var(--gold)}
 .jc-top{display:flex;align-items:center;justify-content:space-between;gap:2mm}
-.jc-top img{height:8mm;width:auto;max-width:30mm;object-fit:contain}
+.jc-top img{height:8mm;width:30mm;object-fit:contain;object-position:left center}
 .jc-top .qh{font-size:4.2mm}
 .jc-tag{font-size:2.3mm;font-weight:700;letter-spacing:.08em;color:var(--maroon);border:.3mm solid var(--maroon);border-radius:1mm;padding:.3mm 1.2mm}
 .jc-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:5.2mm;line-height:1.05;margin-top:2mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -605,7 +605,7 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .jc-pin small{font-size:2.3mm;color:var(--muted);font-weight:600}
 .jc-pin b{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:7mm;letter-spacing:.18em;color:var(--maroon);line-height:1}
 .jc-logos{display:flex;gap:2mm;align-items:center;margin-top:1.2mm}
-.jc-logos img{height:5mm;width:auto;max-width:15mm;object-fit:contain}
+.jc-logos img{height:5mm;width:15mm;object-fit:contain}
 /* ===== Envelopes ===== */
 .env-page{display:flex;flex-direction:column;align-items:center;gap:4mm;margin-bottom:10mm}
 .env-page > svg{width:181mm;height:190mm;max-width:100%;height:auto;background:#fff}
@@ -1363,6 +1363,15 @@ body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bott
 .qr-card .qcode{font-size:13px;letter-spacing:.06em;color:var(--muted)}
 .qr-card .qcode b{font-size:18px;letter-spacing:.14em;color:var(--ink)}
 @media print{.qr-card .qcode{font-size:11px;color:#555}.qr-card .qcode b{font-size:16px;color:#000}}
+
+.pcnote{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:rgba(242,169,0,.12);border:1px solid var(--gold)}
+.pcnote > svg{flex:none;width:26px;height:26px;color:var(--gold);margin-top:2px}
+.pcnote b{display:block;font-size:16px;margin-bottom:2px}
+.pcnote p{font-size:14px;margin:0}
+.pcnote .mr{display:block;font-size:13px;margin-top:4px}
+.pc-cheer{font-weight:600;color:var(--gold);margin-top:6px;font-size:15px}
+.badge .bcount{margin-left:2px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:inline-grid;place-items:center;font-size:13px;background:rgba(255,255,255,.12);color:inherit}
+.badge.got .bcount{background:var(--gold);color:#1a0d0e}
 </style>
 </head>
 <body>
@@ -2057,16 +2066,20 @@ function partnersBlock() {
 /* Rating progress and badges */
 function ratingProgress() {
   const ids = Object.keys(S.rated).filter(id => findProject(id));
-  const done = CATS.filter(c => ids.some(id => findProject(id).category === c));
-  return { count: ids.length, done, champ: done.length === CATS.length };
+  const per = {}; CATS.forEach(c => per[c] = 0); ids.forEach(id => { const c = findProject(id).category; if (c in per) per[c]++; });
+  const done = CATS.filter(c => per[c] > 0);
+  return { count: ids.length, done, per, champ: done.length === CATS.length };
 }
 function progressCard() {
   const pr = ratingProgress();
-  const badge = c => `<span class="badge c-${CAT_CLS[c]} ${pr.done.includes(c) ? 'got' : ''}">${icon(CAT_ICON[c])}${catHtml(c)}</span>`;
+  const badge = c => `<span class="badge c-${CAT_CLS[c]} ${pr.done.includes(c) ? 'got' : ''}">${icon(CAT_ICON[c])}${catHtml(c)}<b class="bcount">${pr.per[c]}</b></span>`;
+  const n = pr.count;
+  const cheer = n === 0 ? 'Rate your first model to start your journey!' : n < 5 ? 'Great start! Every rating helps a young maker shine.' : n < 15 ? 'You are on a roll! Keep rating to climb the Top raters list.' : 'Superstar rater! How many more can you rate?';
   const hint = pr.champ ? `You explored all ${CATS.length} corners. Thank you!` : pr.count ? `Rate a model in the ${joinAnd(CATS.filter(c => !pr.done.includes(c)).map(catFull))} ${CATS.filter(c => !pr.done.includes(c)).length === 1 ? 'corner' : 'corners'} to unlock the next badge.` : 'Rate a model in each corner to collect all the badges.';
   return `<section class="progress-card" data-reveal>
     <div class="pc-top"><h2>Your SPARK journey</h2><b>${pr.count}</b></div>
     <p class="muted" style="font-size:15px">${pr.count === 1 ? 'model rated' : 'models rated'}</p>
+    <p class="pc-cheer">${esc(cheer)}</p>
     <div class="badges">${CATS.map(badge).join('')}<span class="badge champ ${pr.champ ? 'got' : ''}">${icon('medal')}SPARK champion</span></div>
     <p class="pc-hint">${esc(hint)}</p>
   </section>`;
@@ -2401,7 +2414,7 @@ function renderRateBox(p, st = {}) {
   } else {
     const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
     const askMe = !me() && !store.get('sf_me_skip');
-    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${catFull(p.category)} corner.<span class="mr" style="font-weight:500">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल.</span></p>
+    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><div class="pcnote">${icon('trophy')}<div><b>Your stars choose the People's Choice winner</b><p>Every rating counts towards the People's Choice award for the ${catFull(p.category)} corner. Talk to the students first, then rate honestly.</p><span class="mr">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल. विद्यार्थ्यांशी बोला आणि प्रामाणिकपणे गुण द्या.</span></div></div>
       ${askMe ? `<div class="idbox"><b>Win goodies for rating</b><p>The visitors who rate the most models win goodies. Add your name and mobile once. The number is only used to contact winners.</p>
         <label class="field"><span>Your name</span><input id="myname" autocomplete="name" maxlength="40" value="${esc(st.idn || '')}"></label>
         <label class="field"><span>Mobile number</span><input id="mymob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(st.idm || '')}"></label>
@@ -2569,15 +2582,7 @@ async function openScanner() {
     } catch (e) {} finally { busy = false; }
   }, 250);
 }
-function scanFab() {
-  let b = $('#scanfab');
-  const show = S.data && scanOn() && toBool(S.data.settings.voting_open) && document.body.hasAttribute('data-pub');
-  if (!show) { if (b) b.remove(); return; }
-  if (!b) {
-    b = document.createElement('button'); b.id = 'scanfab'; b.type = 'button'; b.className = 'scanfab';
-    b.innerHTML = `${icon('scan')}<span>Scan stall QR</span>`; b.addEventListener('click', openScanner); document.body.appendChild(b);
-  }
-}
+function scanFab() { const b = $('#scanfab'); if (b) b.remove(); }   /* floating button retired: scanning lives in the rating box */
 /* iPhones have no built in QR reader for web pages, so fetch the small one ahead of time */
 setTimeout(async () => { if (scanOn() && !(await qrDetector())) loadJsQR(); }, 4000);
 
@@ -3012,7 +3017,7 @@ function adminDash() {
 
       <section class="block"><h2>Judges' progress</h2>
         <div class="tbl-wrap"><table><thead><tr><th>Judge</th><th>Corners</th><th>Scored</th></tr></thead><tbody>
-          ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(j.categories)}</td><td class="num-c">${j.done} of ${j.total}</td></tr>`).join('')}
+          ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(String(j.categories || '').split(',').map(c => normCat(c)).filter(Boolean).map(catLabel).join(', ') || j.categories)}</td><td class="num-c">${j.done} of ${j.total}</td></tr>`).join('')}
         </tbody></table></div>
       </section>
 
@@ -3075,10 +3080,19 @@ async function waitForQR() {
   for (let i = 0; i < 50 && !window.QRCode; i++) await sleep(100);
   return !!window.QRCode;
 }
+/* Logos for printed cards. Optional Settings rows fest_logo_print, yojak_logo_print and partner_logo_print
+   hold versions made for white paper; if empty, the normal logos are used. */
+function printLogos() {
+  const st = S.data.settings;
+  const fl = logoSrc(st.fest_logo_print || st.fest_logo), yl = logoSrc(st.yojak_logo_print || st.yojak_logo);
+  const alt = splitList(st.partner_logo_print);
+  const pl = partnerList().map((p, i) => ({ ...p, logo: alt[i] ? logoSrc(alt[i]) : p.logo })).filter(p => p.logo);
+  return { fl, yl, pl };
+}
 function cardBits() {
-  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo);
+  const st = S.data.settings; const { fl, yl } = printLogos();
   const head = fl ? `<img class="qr-head-logo" src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>';
-  const pl = partnerList().filter(p => p.logo);
+  const { pl } = printLogos();
   const lab = (t, img) => `<span class="qf-item"><small>${esc(t)}</small>${img}</span>`;
   const foot = (yl || pl.length) ? `<div class="qr-foot"><div>${yl ? lab('Presented by', `<img src="${esc(yl)}" alt="YOJAK">`) : ''}${pl.map(p => lab(orTbd(st.partner_label, 'Supported by'), `<img src="${esc(p.logo)}" alt="${esc(p.name || 'Partner')}">`)).join('')}</div></div>` : '';
   return { head, foot };
@@ -3111,7 +3125,7 @@ function qrSheet() {
 
 function judgeCards() {
   const base = siteBase(); const judges = S.admin.stats.judges || [];
-  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo); const pl = partnerList().filter(p => p.logo);
+  const st = S.data.settings; const { fl, yl, pl } = printLogos();
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
@@ -3138,7 +3152,7 @@ function judgeCards() {
 }
 
 function envelopeSvg(j) {
-  const st = S.data.settings; const fl = logoSrc(st.fest_logo); const yl = logoSrc(st.yojak_logo); const pl = partnerList().filter(p => p.logo);
+  const st = S.data.settings; const { fl, yl, pl } = printLogos();
   const th = theme();
   const icons = ['atom', 'gear', 'pi', 'flask', 'circuit', 'bulb', 'dna', 'rocket'];
   const ico = (n, x, y, sz, col, op) => `<svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 48 48" fill="none" stroke="${col}" stroke-width="2" opacity="${op}">${STEM[n]}</svg>`;
@@ -3158,9 +3172,8 @@ function envelopeSvg(j) {
     <rect x="40" y="37" width="38" height="14" rx="2.5" fill="#fff"/>
     ${fl ? `<image href="${esc(fl)}" x="41.5" y="38" width="35" height="12" preserveAspectRatio="xMidYMid meet"/>` : `<text x="59" y="46.5" font-size="6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
     <text x="129" y="44" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
-    <text x="41" y="62" font-size="3.4" fill="#F2A900">For our honoured judge</text>
-    <text x="41" y="71.5" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
-    <text x="41" y="77.5" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}, theme ${esc(th.name)}</text>
+    <text x="41" y="67" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
+    <text x="41" y="74" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}</text>
     ${logoRow.map((src, i) => `<rect x="${41 + i * 24}" y="82" width="22" height="11" rx="2" fill="#fff"/><image href="${esc(src)}" x="${42 + i * 24}" y="83" width="20" height="9" preserveAspectRatio="xMidYMid meet"/>`).join('')}
     <text x="129" y="92" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
     <g fill="none" stroke="#2B1517" stroke-width=".3">
@@ -3409,7 +3422,6 @@ function render() {
   if (v.mount) v.mount(app);
   observeReveals();
   floatNow();
-  scanFab();
 }
 let floatHidden = false;
 function floatNow() {
