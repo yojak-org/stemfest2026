@@ -7,9 +7,9 @@
 <title>STEM FEST 2026 by YOJAK</title>
 <!-- ===== Link preview (what people see when the link is shared on WhatsApp) =====
      Edit the three lines below whenever the date or venue changes, then upload again. -->
-<meta name="description" content="STEM FEST 2026 by YOJAK. Wednesday 7 October 2026 at Swa. Yashwantrao Chavan Smruti Bhavan, Nigdi, Pimpri-Chinchwad. Student models from the Explorers, Thinkers, Makers and Communicators corners.">
+<meta name="description" content="STEM FEST 2026 by YOJAK. Wednesday 7 October 2026. Venue is yet to be announced. Student models in Science, Math and Tech.">
 <meta property="og:title" content="STEM FEST 2026 by YOJAK, 7 October">
-<meta property="og:description" content="Wednesday 7 October 2026 at Swa. Yashwantrao Chavan Smruti Bhavan, Nigdi. Student models from the Explorers, Thinkers, Makers and Communicators corners. Tap for the schedule, venue map and live results.">
+<meta property="og:description" content="Wednesday 7 October 2026. Venue is yet to be announced. Student models in Science, Math and Tech. Tap for the schedule, venue map and live results.">
 <meta property="og:image" content="https://yojak-org.github.io/stemfest2026/preview.png">
 <meta property="og:url" content="https://yojak-org.github.io/stemfest2026/">
 <meta property="og:type" content="website">
@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Oswald:wght@500;700&family=Merienda:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <style>
 :root{
@@ -1011,15 +1011,15 @@ body[data-pub] .block h2::after,body[data-pub] .phead h1::after{content:"";posit
 body[data-pub] .phead{background:linear-gradient(115deg,var(--maroon-deep),var(--maroon));border-radius:6px}
 body[data-pub] .phead h1{color:#fff}
 body[data-pub] .phead p{color:rgba(255,255,255,.82)}
-/* hero facts as one bordered strip */
-body[data-pub] .hero.v2 .facts{gap:0;border:1px solid rgba(255,255,255,.28);border-radius:6px;overflow:hidden;width:min(100%,560px)}
-body[data-pub] .hero.v2 .facts>div{padding:10px 14px;grid-template-columns:64px 1fr}
-body[data-pub] .hero.v2 .facts>div+div{border-top:1px solid rgba(255,255,255,.2)}
-@media (min-width:720px){
-  body[data-pub] .hero.v2 .facts{grid-template-columns:repeat(3,auto);width:auto}
-  body[data-pub] .hero.v2 .facts>div{grid-template-columns:1fr;gap:2px}
-  body[data-pub] .hero.v2 .facts>div+div{border-top:0;border-left:1px solid rgba(255,255,255,.2)}
-}
+/* date, time and venue under the countdown */
+.cdband .info{position:relative;margin:26px 0 0;display:grid;gap:10px}
+.cdband .info>div{display:grid;grid-template-columns:46px 1fr;column-gap:14px;align-items:center;padding:14px 16px;background:rgba(13,10,11,.38);border:1px solid rgba(255,255,255,.2);border-radius:10px}
+.cdband .info svg{grid-row:1/3;width:46px;height:46px;padding:11px;border-radius:50%;background:var(--gold);color:#1a0d0e;stroke-width:2}
+.cdband .info dt{font-size:13px;opacity:.78}
+.cdband .info dd{margin:0;font:700 19px/1.25 'Baloo 2',sans-serif}
+.cdband .info .addr{display:block;font:400 14px 'Hind',sans-serif;opacity:.85}
+.cdband .info .tbd{opacity:.8;font-weight:600}
+@media (min-width:720px){.cdband .info{grid-template-columns:repeat(3,1fr)}}
 /* countdown band */
 .cdband{position:relative;overflow:hidden;color:#fff;padding:28px 0;background:linear-gradient(115deg,var(--maroon-deep),var(--maroon) 48%,#C4404F)}
 .cdband::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.14) 1.2px,transparent 1.4px);background-size:16px 16px}
@@ -1041,33 +1041,217 @@ body[data-pub] .hero.v2 .facts>div+div{border-top:1px solid rgba(255,255,255,.2)
 body[data-pub] .theme.hl{border-radius:6px;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon))}
 body[data-pub] .theme.hl>*{position:relative;z-index:1}
 body[data-pub] .theme.hl::before{content:attr(data-g);position:absolute;right:-.05em;top:-.2em;font:800 clamp(220px,42vw,400px)/1 'Baloo 2',sans-serif;color:rgba(255,255,255,.06);pointer-events:none}
-/* journey steps as ticket cards */
-body[data-pub] .journey{gap:14px}
-body[data-pub] .jstep{grid-template-columns:44px 1fr;gap:14px;padding:18px 20px!important;border:1px solid var(--line);border-radius:8px;background:radial-gradient(circle at 0 50%,var(--bg) 9px,transparent 10px),radial-gradient(circle at 100% 50%,var(--bg) 9px,transparent 10px),var(--surface,#fff)}
-body[data-pub] .jstep::before{display:none!important}
-body[data-pub] .jstep.jlive{border-color:var(--gold)}
-@media (min-width:900px){body[data-pub] .jstep{grid-template-columns:1fr}}
 /* tiles, strips, cards */
 body[data-pub] .ctile{border-radius:6px;box-shadow:inset 0 -70px 60px -44px rgba(0,0,0,.3)}
 body[data-pub] .corners-strip{margin-top:30px}
 body[data-pub] .sched-strip,body[data-pub] .nownext,body[data-pub] .progress-card{border-radius:6px}
-body[data-pub] .pcard{border-radius:6px;border-left:5px solid var(--maroon)}
-body[data-pub] .pcard.c-sci{border-left-color:var(--sci)}
-body[data-pub] .pcard.c-math{border-left-color:var(--math)}
-body[data-pub] .pcard.c-tech{border-left-color:var(--tech)}
-body[data-pub] .pcard.c-eng{border-left-color:var(--eng)}
+/* corner colour code: Explorers green, Thinkers blue, Communicators pink, Makers orange */
+:root{--sci:#2BD97C;--sci-t:#12301F;--math:#4DA3FF;--math-t:#10263F;--eng:#FF6FA5;--eng-t:#3A1626;--tech:#FF8A3D;--tech-t:#382010}
+.c-eng .ctile-count,.c-eng .ctile-sub{opacity:.85}
+.ctile-sub{font-size:13px;font-weight:600;opacity:.85}
+body[data-pub] .theme.hl h2{font-size:clamp(46px,10vw,76px);letter-spacing:.05em}
+body[data-pub] .theme.hl .theme-list p{opacity:.92}
+/* models page */
+.mhero{position:relative;overflow:hidden;border-radius:10px;padding:26px 22px 30px;color:#fff;background:linear-gradient(115deg,var(--maroon-deep),var(--maroon))}
+.mhero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:linear-gradient(90deg,var(--sci) 25%,var(--math) 0 50%,var(--eng) 0 75%,var(--tech) 0)}
+.mhero h1{color:#fff;font-size:clamp(30px,6vw,46px)}
+.mhero p{margin-top:6px;max-width:52ch;color:rgba(255,255,255,.86)}
+.corner-pick{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+@media (min-width:720px){.corner-pick{grid-template-columns:repeat(5,1fr)}}
+.cpick{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-height:106px;padding:14px;border-radius:10px;border:2px solid var(--c);background:var(--t,var(--surface));color:var(--ink);font:inherit;cursor:pointer;transition:background .2s,transform .15s}
+.cpick.c-all{--c:var(--gold);--t:var(--surface)}
+.cpick svg{width:28px;height:28px;color:var(--c);margin-bottom:6px}
+.cpick b{font:800 18px/1.1 'Baloo 2',sans-serif}
+.cpick small{font-size:13px;color:var(--muted)}
+.cpick:active{transform:scale(.97)}
+.cpick[aria-pressed="true"]{background:var(--c);color:#0D0A0B}
+.cpick[aria-pressed="true"] svg,.cpick[aria-pressed="true"] small{color:#0D0A0B}
+.plist{gap:14px}
+body[data-pub] .mcard{flex-direction:column;align-items:stretch;gap:0;padding:0;overflow:hidden;border-radius:10px;border:1px solid var(--c);background:var(--surface)}
+.mcard .pc-band{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--c);color:#0D0A0B}
+.mcard .pc-band svg{width:22px;height:22px}
+.mcard .pc-band b{font:800 17px/1 'Baloo 2',sans-serif}
+.mcard .pc-band small{margin-left:auto;font-weight:600;font-size:13px}
+.mcard .pc-main{display:flex;gap:14px;align-items:center;padding:14px}
+.mcard .stall{background:var(--t);color:var(--c);border:2px solid var(--c)}
+.mcard .voted-mark{position:static;display:inline-flex;margin-top:4px}
+body[data-pub] .pd-head{padding-bottom:16px;border-bottom:4px solid var(--c)}
 body[data-pub] .contact{border-radius:6px;border-top:4px solid var(--gold)}
 body[data-pub] .res-cat{border-radius:6px}
-/* schedule as a table */
-body[data-pub] .tl{padding:0;background:var(--surface,#fff);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(67,16,15,.5)}
-body[data-pub] .tl::before,body[data-pub] .tl-fill,body[data-pub] .tl li::before{display:none}
-body[data-pub] .tl li{padding:14px 16px;grid-template-columns:96px 1fr}
-body[data-pub] .tl li:nth-of-type(even){background:var(--soft)}
-body[data-pub] .tl li.now{margin:0;padding-right:16px;border-radius:0;background:var(--gold-t);box-shadow:inset 4px 0 0 var(--gold)}
+/* schedule as a grid of session cards */
+body[data-pub] .tl{padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+body[data-pub] .tl::before,body[data-pub] .tl li::before{display:none}
+body[data-pub] .tl li{display:block;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+body[data-pub] .tl .t{display:flex;align-items:baseline;gap:8px;padding:10px 16px;color:#fff;font-size:22px;background:linear-gradient(115deg,var(--maroon-deep),var(--maroon))}
+body[data-pub] .tl .t small{display:inline;color:rgba(255,255,255,.75)}
+body[data-pub] .tl li>div:last-child{padding:14px 16px 16px}
+body[data-pub] .tl .loc{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:99px;border:1px solid var(--line);font-size:14px}
+body[data-pub] .tl li.now{margin:0;border-color:var(--gold);background:var(--gold-t);box-shadow:0 0 0 3px rgba(242,169,0,.25)}
+body[data-pub] .tl li.now .t{color:#1a0d0e;background:var(--gold)}
+body[data-pub] .tl li.done>div{opacity:.6}
 /* partners in a quiet band */
 body[data-pub] .partners{background:var(--soft);border:0;border-radius:6px;padding:28px 14px}
 body[data-pub] .plogo img{filter:grayscale(1);opacity:.75;transition:filter .2s,opacity .2s}
 body[data-pub] .plogo img:hover{filter:none;opacity:1}
+
+
+/* ===== fonts: Cubao Narrow for the STEM FEST title, Montserrat for text, Lucida Calligraphy for subtitles and quotes ===== */
+@font-face{font-family:'Cubao Narrow';src:local('Cubao Free Narrow'),local('Cubao Narrow'),url(fonts/CubaoNarrow.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Lucida Calligraphy';src:local('Lucida Calligraphy'),local('LucidaCalligraphy-Italic'),url(fonts/LucidaCalligraphy.woff2) format('woff2');font-display:swap}
+:root{--fb:'Montserrat',system-ui,sans-serif;--ft:'Cubao Narrow','Cubao Free Narrow','Oswald','Arial Narrow',sans-serif;--fs:'Lucida Calligraphy','Lucida Handwriting','Apple Chancery','Merienda',cursive}
+body[data-pub] *{font-family:var(--fb)!important}
+body[data-pub] .hero.v2 h1,body[data-pub] .title,body[data-pub] .brand,body[data-pub] .brand *,body[data-pub] .brandbar .bl span{font-family:var(--ft)!important;text-transform:uppercase;letter-spacing:.03em}
+body[data-pub] .title{font-size:clamp(44px,13vw,128px);line-height:.95;overflow-wrap:anywhere}
+body[data-pub] :is(.tagline,.presents,.phead p,.mhero p,.cd-label,.theme-kicker,blockquote,q,.quote,.pmeta.q){font-family:var(--fs)!important;text-transform:none;letter-spacing:0;font-weight:400}
+body[data-pub] :is(.tagline,.phead p,.mhero p){line-height:1.6}
+/* floating schedule box */
+.floatnow{position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;width:min(300px,calc(100vw - 28px));border-radius:12px;box-shadow:0 18px 40px -12px rgba(0,0,0,.7);animation:fnIn .5s ease-out both}
+.floatnow .sched-strip{margin:0;box-shadow:none;border:1px solid var(--gold);background:var(--surface);border-radius:12px}
+.fn-x{position:absolute;top:-10px;right:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--gold);color:#1a0d0e;font:700 16px/1 sans-serif;cursor:pointer}
+@media (min-width:720px){.floatnow{bottom:24px;right:24px}}
+@keyframes fnIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+/* SPARK */
+.spark{isolation:isolate}
+.spark .spark-title{letter-spacing:.12em}
+.spark .theme-list{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px;margin-top:24px}
+.spark .theme-list li{display:block;position:relative;overflow:hidden;padding:22px 18px 20px;border-radius:12px;border:1px solid rgba(255,197,61,.35);background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.02));transition:transform .25s,border-color .25s,opacity .55s}
+.spark .theme-list li:hover{transform:translateY(-6px);border-color:var(--gold)}
+.spark .tl-ic{position:relative;display:grid;place-items:center;width:56px;height:56px;margin-bottom:14px;border-radius:50%;background:var(--gold);color:#1a0d0e}
+.spark .tl-ic svg{width:28px;height:28px;stroke-width:2}
+.spark .tl-ic::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);opacity:0}
+.spark .tl-l{position:absolute;right:10px;top:-10px;width:auto;height:auto;border:0;background:none;font:800 92px/1 var(--fb);color:rgba(255,255,255,.07);animation:none}
+.spark .tl-tx b{display:block;font-size:20px}
+.spark .tl-tx b em{font-style:normal;color:var(--gold)}
+.spark .theme-list p{margin-top:6px;font-size:14px;line-height:1.55}
+@media (prefers-reduced-motion:no-preference){
+  .spark{animation:spkGlow 4s ease-in-out infinite}
+  .spark::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 15% 25%,rgba(255,197,61,.2),transparent 42%),radial-gradient(circle at 85% 75%,rgba(255,111,165,.16),transparent 42%);animation:spkDrift 10s ease-in-out infinite alternate}
+  .spark-title span{display:inline-block;animation:spkWave 2.4s ease-in-out infinite;animation-delay:calc(var(--i)*.15s)}
+  .spark .tl-ic{animation:spkFloat 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*.3s)}
+  .spark .tl-ic::after{animation:spkRing 2.8s ease-out infinite;animation-delay:calc(var(--i)*.3s)}
+  .spark .theme-list li::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-120%);animation:spkSweep 5s ease-in-out infinite;animation-delay:calc(var(--i)*.7s)}
+}
+@keyframes spkGlow{0%,100%{box-shadow:0 0 0 1px rgba(255,197,61,.1),0 30px 60px -40px rgba(255,197,61,.4)}50%{box-shadow:0 0 0 1px rgba(255,197,61,.4),0 30px 70px -30px rgba(255,197,61,.75)}}
+@keyframes spkDrift{to{transform:translate(2%,3%) scale(1.05)}}
+@keyframes spkWave{0%,60%,100%{transform:none}30%{transform:translateY(-10px)}}
+@keyframes spkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes spkRing{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+@keyframes spkSweep{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+/* schedule route guide */
+.route{margin:18px 0 4px;padding:26px 14px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow-x:auto}
+.route-h{display:flex;align-items:center;gap:8px;margin:-12px 0 16px;font-size:13px;font-weight:700;color:var(--gold)}
+.route-h svg{width:16px;height:16px}
+.route-track{display:flex;align-items:flex-start;min-width:max-content}
+.rstop{position:relative;flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:92px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer;text-align:center}
+.rstop i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--bg);font-style:normal;font-weight:800;font-size:14px}
+.rstop b{font-size:13px}
+.rstop small{max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted)}
+.rstop.done i{background:var(--sci);border-color:var(--sci);color:#0D0A0B}
+.rstop.now i{background:var(--gold);border-color:var(--gold);color:#1a0d0e}
+.rstop.now::before{content:"You are here";position:absolute;top:-20px;font-size:10px;font-weight:800;color:var(--gold);white-space:nowrap}
+.rarrow{position:relative;flex:none;width:40px;height:2px;margin-top:17px;background:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 12px)}
+.rarrow::after{content:"";position:absolute;right:-2px;top:-5px;border:6px solid transparent;border-left:9px solid var(--gold);border-right:0}
+@media (prefers-reduced-motion:no-preference){
+  .rarrow{background-size:12px 2px;animation:rflow .7s linear infinite}
+  .rstop.now i{animation:rpulse 1.6s ease-out infinite}
+}
+@keyframes rflow{to{background-position:12px 0}}
+@keyframes rpulse{0%{box-shadow:0 0 0 0 rgba(242,169,0,.65)}100%{box-shadow:0 0 0 14px rgba(242,169,0,0)}}
+body[data-pub] .tl{counter-reset:stop}
+body[data-pub] .tl li{counter-increment:stop}
+body[data-pub] .tl .t::before{content:counter(stop);display:inline-grid;place-items:center;width:26px;height:26px;margin-right:4px;border-radius:50%;background:rgba(255,255,255,.22);font-size:13px;font-weight:800}
+body[data-pub] .tl li.flash{animation:cardFlash 1.2s ease-out}
+@keyframes cardFlash{0%,60%{box-shadow:0 0 0 4px var(--gold)}100%{box-shadow:0 0 0 0 transparent}}
+/* centre chips */
+.cen-bar{margin-top:16px}
+.cen-l{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:13px;font-weight:700;color:var(--muted)}
+.cen-l svg{width:16px;height:16px}
+.cen-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.cenchip{flex:none;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}
+.cenchip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1a0d0e}
+/* venue */
+.maplink{display:flex;align-items:center;gap:14px;margin-top:14px;padding:16px 18px;border-radius:10px;background:var(--gold);color:#1a0d0e;font-weight:800;text-decoration:none;transition:transform .15s}
+.maplink:active{transform:scale(.98)}
+.maplink svg{width:28px;height:28px}
+.maplink small{display:block;font-weight:600;opacity:.75}
+.maplink .go{margin-left:auto}
+body[data-pub] .corner.cv{display:block;padding:0;overflow:hidden;border:1px solid var(--c,var(--gold));border-radius:10px;background:var(--surface);margin-bottom:14px}
+.cv .bar{display:none}
+.cv-head{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--c);color:#0D0A0B}
+.cv-head svg{width:26px;height:26px}
+.cv-head b{font-size:19px;font-weight:800}
+.cv-head small{margin-left:auto;font-weight:600}
+.cv-body{padding:16px}
+.cv .where{display:inline-flex;align-items:center;gap:6px;margin:6px 0;padding:3px 12px;border-radius:99px;background:var(--t,var(--soft));color:var(--c,var(--gold));font-weight:700;font-size:14px}
+.cv .where svg{width:15px;height:15px}
+
+
+/* ===== responsive pass: 360 / 768 / 1024 / 1440 / 1920 ===== */
+html{-webkit-text-size-adjust:100%}
+body[data-pub]{overflow-x:clip}
+body[data-pub] img,body[data-pub] svg{max-width:100%}
+body[data-pub] :is(h1,h2,h3,b,dd,.ptitle,.ctile-name){overflow-wrap:anywhere}
+/* corner tiles and pickers: names like "Communicators" must never overflow */
+.cpick b,.ctile-name{font-size:clamp(14px,4vw,18px)}
+.cpick{padding:12px}
+@media (min-width:720px){.corner-pick{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1000px){.corner-pick{grid-template-columns:repeat(5,1fr)}}
+/* SPARK: beat the older 5-column rule and step 1 / 2 / 3 / 5 columns */
+.theme.hl.spark .theme-list{grid-template-columns:1fr}
+@media (min-width:520px){.theme.hl.spark .theme-list{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:720px){.theme.hl.spark .theme-list{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1000px){.theme.hl.spark .theme-list{grid-template-columns:repeat(5,1fr)}}
+.spark .theme-list li{min-width:0}
+.theme.hl.spark{padding:26px 18px}
+@media (min-width:720px){.theme.hl.spark{padding:36px 30px}}
+/* date / time / venue cards */
+.cdband .info dd{font-size:17px}
+@media (min-width:1000px){.cdband .info dd{font-size:19px}}
+@media (max-width:420px){
+  .cdband{padding:22px 0}
+  .cdband .info>div{grid-template-columns:40px 1fr;column-gap:12px;padding:12px}
+  .cdband .info svg{width:40px;height:40px;padding:9px}
+}
+/* floating schedule box: compact on phones, clear of the tab bar, hidden on short landscape screens */
+@media (max-width:480px){
+  .floatnow{right:10px;left:10px;width:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .fn-x{width:32px;height:32px;top:-12px;right:-4px}
+}
+@media (max-height:420px){.floatnow{display:none}}
+/* schedule: wider grid on desktop, route bar stays scrollable */
+@media (min-width:900px){body[data-pub] .wrap.narrow{max-width:980px}}
+@media (max-width:420px){
+  body[data-pub] .tl{grid-template-columns:1fr}
+  body[data-pub] .tl .t{font-size:19px}
+  .rstop{width:82px}
+}
+/* model cards and centre chips */
+@media (max-width:420px){
+  .mcard .pc-main{padding:12px;gap:12px}
+  .mcard .pc-band{padding:9px 12px}
+  .mhero{padding:20px 16px 24px}
+}
+.cen-row,.route{-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+/* venue */
+@media (max-width:420px){.maplink{padding:14px}.cv-head,.cv-body{padding-left:14px;padding-right:14px}}
+/* large screens */
+@media (min-width:1440px){
+  body[data-pub] .wrap{max-width:1280px}
+  body[data-pub] .wrap.narrow{max-width:1080px}
+  .corner-pick{gap:14px}
+  .plist{grid-template-columns:repeat(4,1fr)}
+}
+@media (min-width:1900px){body[data-pub] .wrap{max-width:1360px}}
+
+
+/* SPARK logo in the top bar */
+.brand{gap:9px}
+.brand .dot{display:none}
+.brand-mark{flex:none;width:34px;height:34px;filter:drop-shadow(0 0 6px rgba(255,197,61,.55))}
+.brand-word{font-size:27px;line-height:1;letter-spacing:.14em;background:linear-gradient(180deg,#fff 35%,#FFD466);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (max-width:360px){.brand-mark{width:28px;height:28px}.brand-word{font-size:22px}}
+@media (prefers-reduced-motion:no-preference){.brand-mark .tw{transform-origin:29px 7px;animation:brandTw 2.4s ease-in-out infinite}}
+@keyframes brandTw{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.55);opacity:.55}}
 
 /* printing stays on white paper */
 @media print{
@@ -1116,7 +1300,7 @@ body[data-pub] .plogo img:hover{filter:none;opacity:1}
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#/"><span class="dot"></span>STEM FEST</a>
+    <a class="brand" href="#/" aria-label="SPARK, STEM FEST 2026 home"><svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#F2A900"/></linearGradient></defs><path fill="url(#spg)" d="M15 3l3.6 11.4L30 18l-11.4 3.6L15 33l-3.6-11.4L0 18l11.4-3.6z"/><path class="tw" fill="#FF6FA5" d="M29 2l1.3 3.7L34 7l-3.7 1.3L29 12l-1.3-3.7L24 7l3.7-1.3z"/></svg><span class="brand-word">SPARK</span></a>
     <nav class="topnav" aria-label="Main">
       <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Help</a>
     </nav>
@@ -1154,12 +1338,20 @@ const CONFIG = {
 const DEMO = !CONFIG.API_URL;
 const CATS = ['Science', 'Math', 'Tech', 'English'];
 const CAT_CLS = { Science: 'sci', Math: 'math', Tech: 'tech', English: 'eng' };
-const CAT_ICON = { Science: 'flask', Math: 'pi', Tech: 'chip', English: 'book' };
-/* Names shown on the site. The keys stay as subjects so the Sheet's criteria rows keep working. */
+const mapLink = s => (s.map_link && !isTbd(s.map_link)) ? s.map_link : 'https://share.google/F8vamBjlbKK5IcIuQ';
+const SPK_ICON = ['spk_s', 'spk_p', 'spk_a', 'spk_r', 'spk_k'];
+const CAT_ICON = { Science: 'xplor', Math: 'think', Tech: 'make', English: 'comm' };
 const CAT_NAME = { Science: 'Explorers', Math: 'Thinkers', Tech: 'Makers', English: 'Communicators' };
-const CAT_SUB = { Science: 'Science', Math: 'Mathematics', Tech: 'Technology', English: 'English' };
-const catName = c => CAT_NAME[c] || c;
-const joinAnd = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+const CAT_SUBJ = { Science: 'Science', Math: 'Maths', Tech: 'Tech', English: 'English' };
+const CATS_PUB = ['Science', 'Math', 'English', 'Tech'];
+const catLabel = c => CAT_NAME[c] || c;
+function modelCard(p, i = 0) {
+  const c = p.category;
+  return `<a class="pcard mcard c-${CAT_CLS[c]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}">
+    <span class="pc-band">${icon(CAT_ICON[c])}<b>${catLabel(c)}</b><small>${CAT_SUBJ[c] || ''}</small></span>
+    <span class="pc-main">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span>${S.rated[p.project_id] ? `<span class="voted-mark">${icon('check')}Rated</span>` : ''}</span></span>
+  </a>`;
+}
 const REFRESH_MS = 3 * 60 * 1000;
 const SYNC_MS = 15 * 60 * 1000;
 const $ = (s, el = document) => el.querySelector(s);
@@ -1172,10 +1364,10 @@ const orTbd = (v, fb) => isTbd(v) ? fb : v;
 const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 function normCat(c) {
   const s = String(c || '').trim().toLowerCase();
-  if (s.startsWith('sci') || s.startsWith('exp')) return 'Science';
-  if (s.startsWith('mat') || s.startsWith('thi')) return 'Math';
-  if (s.startsWith('tec') || s.startsWith('mak')) return 'Tech';
-  if (s.startsWith('eng') || s.startsWith('com')) return 'English';
+  if (s.startsWith('sci')) return 'Science';
+  if (s.startsWith('mat')) return 'Math';
+  if (s.startsWith('tec')) return 'Tech';
+  if (s.startsWith('eng')) return 'English';
   return '';
 }
 const store = {
@@ -1187,6 +1379,15 @@ const jparse = (s, fb) => { try { return s ? JSON.parse(s) : fb; } catch (e) { r
 const splitList = v => String(v || '').split(';').map(x => x.trim());
 
 const ICONS = {
+  spk_s: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+  spk_p: '<path d="M9 3h6M10 3v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V3M7.5 15h9"/>',
+  spk_a: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+  spk_r: '<path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5M3 12A9 9 0 0 1 18.5 5.8L21 8M21 3v5h-5"/>',
+  spk_k: '<path d="M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2"/><path d="m12 15-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5"/>',
+  xplor: '<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
+  think: '<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V18h6v-1.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+  make: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.3-.5-.5-2.3z"/>',
+  comm: '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 20l1.1-5.1A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/>',
   home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   grid: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
@@ -1605,7 +1806,8 @@ function theme() {
   const s = S.data.settings;
   const words = splitList(s.theme_words || 'Seek; Probe; Analyze; Rethink; Kreate').filter(Boolean);
   const descs = splitList(s.theme_descriptions);
-  return { name: orTbd(s.theme_name, 'SPARK'), words, descs };
+  const D = ['Stay curious, ask questions, and discover what lies beyond the obvious.', 'Explore deeper, experiment boldly, and find out how things really work.', 'Observe, connect the dots, and turn information into understanding.', 'Challenge the usual, look at problems differently, and imagine new possibilities.', 'Turn ideas into action by building, making, creating, and bringing solutions to life.'];
+  return { name: 'SPARK', words, descs: words.map((_, i) => descs[i] || D[i] || '') };
 }
 function sparkWords(cls = '') {
   const t = theme();
@@ -1780,8 +1982,8 @@ function ratingProgress() {
 }
 function progressCard() {
   const pr = ratingProgress();
-  const badge = c => `<span class="badge c-${CAT_CLS[c]} ${pr.done.includes(c) ? 'got' : ''}">${icon(CAT_ICON[c])}${catName(c)}</span>`;
-  const hint = pr.champ ? `You explored all ${CATS.length} corners. Thank you!` : pr.count ? `Rate a model in the ${joinAnd(CATS.filter(c => !pr.done.includes(c)).map(catName))} ${CATS.filter(c => !pr.done.includes(c)).length === 1 ? 'corner' : 'corners'} to unlock the next badge.` : 'Rate a model in each corner to collect all the badges.';
+  const badge = c => `<span class="badge c-${CAT_CLS[c]} ${pr.done.includes(c) ? 'got' : ''}">${icon(CAT_ICON[c])}${c} explorer</span>`;
+  const hint = pr.champ ? 'You explored all three corners. Thank you!' : pr.count ? `Rate a model in ${CATS.filter(c => !pr.done.includes(c)).join(' and ')} to unlock the next badge.` : 'Rate a model in each corner to collect all the badges.';
   return `<section class="progress-card" data-reveal>
     <div class="pc-top"><h2>Your SPARK journey</h2><b>${pr.count}</b></div>
     <p class="muted" style="font-size:15px">${pr.count === 1 ? 'model rated' : 'models rated'}</p>
@@ -1873,7 +2075,7 @@ function journey() {
   const n = S.data.projects.length; const code = votingMode() === 'code';
   const steps = [
     { t: 'Find your way', d: isTbd(s.venue_name) ? 'The venue map and corners will be shared soon.' : `Head to ${s.venue_name}. The venue page shows where each corner is.`, href: '#/venue', cta: 'Venue and corners', ic: 'pin' },
-    { t: 'Explore the corners', d: `${n} ${n === 1 ? 'model' : 'models'} across the ${joinAnd(CATS.map(catName))} corners. Talk to the students about how they work.`, href: '#/projects', cta: 'Browse models', ic: 'grid' },
+    { t: 'Explore the corners', d: `${n} ${n === 1 ? 'model' : 'models'} across Science, Math and Tech. Talk to the students about how they work.`, href: '#/projects', cta: 'Browse models', ic: 'grid' },
     { t: 'Rate the models you like', d: !open ? 'Rating is closed. Thank you to everyone who took part.' : pr.count ? `You have rated ${pr.count} so far. Rate as many as you like, once each.` : `Scan the QR code at a stall and answer three quick star questions.${code ? ' Keep the voter code from your entry pass handy.' : ''}`, href: '#/projects', cta: pr.count ? 'Rate another model' : 'Start rating', ic: 'star', state: pr.count ? 'done' : (open ? 'jlive' : '') },
     { t: 'Celebrate the winners', d: revealed ? 'The winners are out. See the podium for every corner.' : "Judges' awards and People's Choice are announced at the prize distribution.", href: '#/results', cta: 'Results', ic: 'trophy', state: revealed ? 'jlive' : '' }
   ];
@@ -1883,7 +2085,7 @@ function journey() {
 function heroStats() {
   const n = S.data.projects.length; if (!n) return '';
   const centres = new Set(S.data.projects.map(p => p.centre).filter(c => c && !isTbd(c))).size;
-  const items = [[n, n === 1 ? 'Model' : 'Models'], [CATS.filter(c => projectsIn(c).length).length || CATS.length, (CATS.filter(c => projectsIn(c).length).length || CATS.length) === 1 ? 'Corner' : 'Corners'], [centres || CATS.length, centres ? (centres === 1 ? 'Centre' : 'Centres') : 'Subjects']];
+  const items = [[n, n === 1 ? 'Model' : 'Models'], [CATS.length, 'Corners'], [centres || CATS.length, centres ? (centres === 1 ? 'Centre' : 'Centres') : 'Subjects']];
   return `<div class="hstats">${items.map(([v, l]) => `<div class="hstat"><b>${v}</b><span>${l}</span></div>`).join('')}</div>`;
 }
 
@@ -1917,7 +2119,7 @@ VIEWS.home = () => {
   const yl = logoSrc(s.yojak_logo), fl = logoSrc(s.fest_logo); const pl = partnerList();
   const heroImg = logoSrc(s.hero_image);
   const addr = !isTbd(s.venue_address) ? `<span class="addr">${esc(s.venue_address)}</span>` : '';
-  const map = s.map_link ? `<a class="btn btn-gold" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
+  const map = mapLink(s) ? `<a class="btn btn-gold" href="${esc(mapLink(s))}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a>` : '';
   const open = toBool(s.voting_open);
   const val = (v, fb) => isTbd(v) ? `<dd class="tbd">${esc(fb)}</dd>` : `<dd>${esc(v)}</dd>`;
   const dateTxt = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
@@ -1927,26 +2129,23 @@ VIEWS.home = () => {
       <p class="presents">YOJAK presents</p>
       ${fl ? `<div class="fest-hero"><div class="fest-plate"><img src="${esc(fl)}" alt="${esc(s.event_name || 'STEM FEST')}" onerror="this.closest('.fest-hero').outerHTML='<h1 class=&quot;title&quot;>${esc(s.event_name || 'STEM FEST')}</h1>'"></div></div><h1 class="sr">${esc(s.event_name || 'STEM FEST')}</h1>` : `<h1 class="title">${esc(s.event_name || 'STEM FEST')}</h1>`}
       ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
-      <dl class="facts">
-        <div><dt>Date</dt>${dateTxt ? `<dd>${esc(dateTxt)}</dd>` : `<dd class="tbd">To be announced</dd>`}</div>
-        <div><dt>Time</dt>${val(s.event_hours, 'To be announced')}</div>
-        <div><dt>Venue</dt>${isTbd(s.venue_name) ? '<dd class="tbd">To be announced</dd>' : `<dd>${esc(s.venue_name)}${addr}</dd>`}</div>
-      </dl>
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
       ${heroStats()}
     </div></div></section>
-    ${(() => { const h = heroTimer(); return h ? `<section class="cdband"><div class="wrap">${h}</div></section>` : ''; })()}
+    <section class="cdband"><div class="wrap">${heroTimer()}
+      <dl class="info">
+        <div>${icon('calendar')}<dt>Date</dt>${dateTxt ? `<dd>${esc(dateTxt)}</dd>` : '<dd class="tbd">To be announced</dd>'}</div>
+        <div>${icon('clock')}<dt>Time</dt>${val(s.event_hours, 'To be announced')}</div>
+        <div>${icon('pin')}<dt>Venue</dt>${isTbd(s.venue_name) ? '<dd class="tbd">To be announced</dd>' : `<dd>${esc(s.venue_name)}${addr}</dd>`}</div>
+      </dl></div></section>
     <div class="wrap">
-      ${linksBlock()}
-      <section class="theme hl" data-g="${esc(String(th.name || 'S').charAt(0))}">
+      <section class="theme hl spark" data-g="${esc(String(th.name || 'S').charAt(0))}">
         <span class="theme-kicker">THE THEME OF ${esc(String(s.event_name || 'STEM FEST').toUpperCase())}</span>
-        <h2>${esc(th.name)}</h2>
-        <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l" style="animation-delay:${0.1 + i * 0.12}s">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
+        <h2 class="spark-title" aria-label="SPARK">${[...'SPARK'].map((ch, i) => `<span aria-hidden="true" style="--i:${i}">${ch}</span>`).join('')}</h2>
+        <ul class="theme-list">${th.words.map((w, i) => `<li data-reveal style="--i:${i};transition-delay:${i * 0.1}s"><span class="tl-ic">${icon(SPK_ICON[i] || 'star')}</span><span class="tl-l">${esc(w.charAt(0))}</span><span class="tl-tx"><b><em>${esc(w.charAt(0))}</em> — ${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
       </section>
-      ${journey()}
-      ${scheduleStrip()}
       <section class="corners-strip flat" aria-label="Corners">
-        ${CATS.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}">${icon(CAT_ICON[c])}<span><span class="ctile-name">${catName(c)}</span><br><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></span></a>`; }).join('')}
+        ${CATS_PUB.map(c => { const n = projectsIn(c).length; return `<a class="ctile c-${CAT_CLS[c]}" href="#/projects/${c}">${icon(CAT_ICON[c])}<span><span class="ctile-name">${catLabel(c)}</span><br><span class="ctile-sub">${CAT_SUBJ[c]}</span><br><span class="ctile-count">${n} ${n === 1 ? 'model' : 'models'}</span></span></a>`; }).join('')}
       </section>
       ${open || ratingProgress().count ? progressCard() : ''}
       ${partnersBlock()}
@@ -1997,7 +2196,7 @@ VIEWS.schedule = () => {
   return {
     html: `<div class="wrap page narrow">
       <div class="phead"><h1>Schedule</h1><p>${esc(fmtDate(S.data.settings.event_date))}</p></div>
-      ${items.length ? `<ol class="tl" id="tl"><span class="tl-fill" id="tlfill"></span>${items.map((i, k) => {
+      ${items.length ? `<ol class="tl" id="tl">${items.map((i, k) => {
         let st = '';
         if (live && i.s != null) {
           const end = i.e != null && i.e > i.s ? i.e : i.s + 1;
@@ -2008,10 +2207,18 @@ VIEWS.schedule = () => {
       }).join('')}</ol>` : '<p class="count">The schedule will be shared soon.</p>'}
     </div>`,
     mount() {
-      const tl = $('#tl'), fill = $('#tlfill'); if (!tl || !fill) return;
-      const marks = $$('li.done, li.now', tl); if (!marks.length) return;
-      const lastEl = marks[marks.length - 1];
-      setTimeout(() => { fill.style.height = (lastEl.offsetTop + 18) + 'px'; }, 150);
+      const tl = $('#tl'); if (!tl) return;
+      const lis = $$('li', tl);
+      const stop = (li, k) => `<button class="rstop ${li.classList.contains('now') ? 'now' : li.classList.contains('done') ? 'done' : ''}" data-k="${k}"><i>${k + 1}</i><b>${esc($('.t', li).firstChild.textContent)}</b><small>${esc($('h3', li).firstChild.textContent)}</small></button>`;
+      const box = document.createElement('div'); box.className = 'route';
+      box.innerHTML = `<div class="route-h">${icon('pin')}Follow the day, stop by stop</div><div class="route-track">${lis.map(stop).join('<span class="rarrow" aria-hidden="true"></span>')}</div>`;
+      tl.before(box);
+      box.addEventListener('click', e => {
+        const b = e.target.closest('.rstop'); if (!b) return;
+        const li = lis[+b.dataset.k]; li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        li.classList.add('flash'); setTimeout(() => li.classList.remove('flash'), 1200);
+      });
+      const cur = $('.rstop.now', box); if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest' });
     }
   };
 };
@@ -2022,12 +2229,12 @@ VIEWS.projects = (cat) => {
   const centres = [...new Set(S.data.projects.map(p => p.centre).filter(c => c && !isTbd(c)))].sort();
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Models on display</h1><p>Tap a model to read about it and rate it.</p></div>
-      <label class="search"><span class="sr">Search models</span>${icon('search')}<input id="q" type="search" placeholder="Search by name, stall or centre" value="${esc(S.filter.q)}" autocomplete="off"></label>
-      <div class="chips" role="group" aria-label="Filter by corner">
-        ${['All', ...CATS].map(c => `<button class="chip ${c !== 'All' ? 'c-' + CAT_CLS[c] : ''}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c === 'All' ? c : catName(c)}</button>`).join('')}
+      <div class="mhero"><h1>Models on display</h1><p>Four corners, one theme. Pick a corner or search, then tap a model to read about it and rate it.</p></div>
+      <div class="corner-pick" role="group" aria-label="Filter by corner">
+        ${['All', ...CATS_PUB].map(c => `<button class="cpick ${c === 'All' ? 'c-all' : 'c-' + CAT_CLS[c]}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c === 'All' ? icon('grid') : icon(CAT_ICON[c])}<b>${c === 'All' ? 'All corners' : catLabel(c)}</b><small>${c === 'All' ? S.data.projects.length : projectsIn(c).length} ${c === 'All' ? 'models' : CAT_SUBJ[c]}</small></button>`).join('')}
       </div>
-      ${centres.length > 1 ? `<select class="select" id="centre" aria-label="Filter by centre"><option value="">All centres</option>${centres.map(c => `<option ${S.filter.centre === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>` : ''}
+      <label class="search"><span class="sr">Search models</span>${icon('search')}<input id="q" type="search" placeholder="Search by name, stall or centre" value="${esc(S.filter.q)}" autocomplete="off"></label>
+      ${centres.length > 1 ? `<div class="cen-bar"><span class="cen-l">${icon('pin')}Centre</span><div class="cen-row">${['', ...centres].map(c => `<button class="cenchip" data-centre="${esc(c)}" aria-pressed="${(S.filter.centre || '') === c}">${c ? esc(c) : 'All centres'}</button>`).join('')}</div></div>` : ''}
       <p class="count" id="count"></p>
       <div class="plist" id="plist"></div>
     </div>`,
@@ -2041,16 +2248,16 @@ VIEWS.projects = (cat) => {
         ).sort(byStall);
         const n = Object.keys(S.rated).filter(id => list.some(p => p.project_id === id)).length;
         $('#count').textContent = `${list.length} ${list.length === 1 ? 'model' : 'models'}${n ? `, you rated ${n}` : ''}`;
-        $('#plist').innerHTML = list.length ? list.map((p, i) => projectCard(p, i)).join('') : `<div class="empty"><p>No models match your search. Try a different word or pick All.</p></div>`;
+        $('#plist').innerHTML = list.length ? list.map((p, i) => modelCard(p, i)).join('') : `<div class="empty"><p>No models match your search. Try a different word or pick All.</p></div>`;
       };
       $('#q').addEventListener('input', e => { S.filter.q = e.target.value; draw(); });
-      $$('.chip').forEach(b => b.addEventListener('click', () => {
+      $$('.cpick').forEach(b => b.addEventListener('click', () => {
         S.filter.cat = b.dataset.cat;
-        $$('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+        $$('.cpick').forEach(x => x.setAttribute('aria-pressed', x === b));
         history.replaceState(null, '', S.filter.cat === 'All' ? '#/projects' : '#/projects/' + S.filter.cat);
         draw();
       }));
-      const c = $('#centre'); if (c) c.addEventListener('change', e => { S.filter.centre = e.target.value; draw(); });
+      $$('.cenchip').forEach(b => b.addEventListener('click', () => { S.filter.centre = b.dataset.centre; $$('.cenchip').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); }));
       draw();
     }
   };
@@ -2058,7 +2265,7 @@ VIEWS.projects = (cat) => {
 function projectCard(p, i = 0) {
   return `<a class="pcard c-${CAT_CLS[p.category]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}">
     ${stallBadge(p)}
-    <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span><span class="ptag">${catName(p.category)}</span></span>
+    <span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span><span class="ptag">${p.category}</span></span>
     ${S.rated[p.project_id] ? `<span class="voted-mark">${icon('check')}Rated</span>` : ''}
   </a>`;
 }
@@ -2072,7 +2279,7 @@ VIEWS.project = (id) => {
     html: `<div class="wrap page">
       <a class="back" href="#/projects">${icon('back')}All models</a>
       <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
-        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${catName(p.category)} corner (${CAT_SUB[p.category]})${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
+        <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${catLabel(p.category)} (${CAT_SUBJ[p.category] || p.category})${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
         ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
@@ -2105,7 +2312,7 @@ function renderRateBox(p, st = {}) {
       <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
   } else {
     const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
-    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${catName(p.category)} corner.<span class="mr" style="font-weight:500">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल.</span></p>
+    html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${catLabel(p.category)} corner.<span class="mr" style="font-weight:500">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल.</span></p>
       ${qs.map((q, i) => `<div class="rq"><p>${esc(q.en)}${q.mr ? `<span class="mr">${esc(q.mr)}</span>` : ''}</p><div class="stars" role="radiogroup" aria-label="${esc(q.en)}">
         ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${esc(SW[n - 1].en)}">${icon('star')}</button>`).join('')}
         <span class="slabel" id="sl${i}">${vals[i] ? `${esc(SW[vals[i] - 1].en)}${SW[vals[i] - 1].mr ? `<span class="mr">${esc(SW[vals[i] - 1].mr)}</span>` : ''}` : 'Tap a star / तारांकित करा'}</span></div></div>`).join('')}
@@ -2164,14 +2371,14 @@ VIEWS.venue = () => {
   return {
     html: `<div class="wrap page">
       <div class="phead"><h1>Venue and corners</h1><p>${esc(orTbd(s.venue_name, 'Venue to be announced'))}${!isTbd(s.venue_address) ? ', ' + esc(s.venue_address) : ''}</p></div>
-      ${s.map_link ? `<p style="margin-top:14px"><a class="btn btn-primary" href="${esc(s.map_link)}" target="_blank" rel="noopener">${icon('pin')}Open in Maps</a></p>` : ''}
+      <a class="maplink" href="${esc(mapLink(s))}" target="_blank" rel="noopener">${icon('pin')}<span>Open the venue in Google Maps<small>Get directions</small></span><span class="go">${icon('arrow')}</span></a>
       ${fp ? `<img class="floor" src="${esc(fp)}" alt="Floor plan of the venue" onerror="this.remove()">` : ''}
       <div class="corner-grid" style="margin-top:12px">
       ${S.data.corners.map(c => {
         const cat = normCat(c.category); const n = cat ? projectsIn(cat).length : 0;
-        return `<div class="corner ${cat ? 'c-' + CAT_CLS[cat] : ''}" data-reveal><span class="bar"></span><div>
+        return `<div class="corner cv ${cat ? 'c-' + CAT_CLS[cat] : ''}" data-reveal><span class="bar"></span>${cat ? `<span class="cv-head">${icon(CAT_ICON[cat])}<b>${catLabel(cat)}</b><small>${CAT_SUBJ[cat]}</small></span>` : ''}<div class="cv-body">
           <h3>${esc(c.name)}</h3>
-          ${!isTbd(c.where) ? `<p class="where">${esc(c.where)}</p>` : ''}
+          ${!isTbd(c.where) ? `<p class="where">${icon('pin')}${esc(c.where)}</p>` : ''}
           ${!isTbd(c.description) ? `<p>${esc(c.description)}</p>` : ''}
           ${cat ? `<a href="#/projects/${cat}">See the ${n} ${n === 1 ? 'model' : 'models'}</a>` : ''}
         </div></div>`;
@@ -2227,7 +2434,7 @@ VIEWS.results = () => {
       <div class="res-grid">${CATS.map(c => {
         const x = r[c] || { judges: [], people: [] }; const pc = x.people[0];
         return `<section class="res-cat c-${CAT_CLS[c]}" data-reveal>
-          <div class="res-head">${icon(CAT_ICON[c])}<h2>${catName(c)} corner</h2></div>
+          <div class="res-head">${icon(CAT_ICON[c])}<h2>${catLabel(c)} <small>${CAT_SUBJ[c]}</small></h2></div>
           <div class="res-body">
             <h3>Judges' awards</h3>
             ${x.judges.length ? podium(x.judges) : '<p class="muted">No awards in this corner.</p>'}
@@ -2334,7 +2541,7 @@ function judgeList(openPid) {
       ${toBool(S.data.settings.judging_locked) ? '<p class="banner">Judging is locked. Scores can no longer be changed.</p>' : ''}
       <div class="progress"><div class="bar-o"><span id="jbar" style="width:0%"></span></div><p id="jprog"></p></div>
       <p class="muted" style="font-size:14px;margin-top:10px">Tap a model to open its marking panel. It closes and turns green when you save.</p>
-      ${cats.map(c => `<section class="block"><h2>${catName(c)} corner</h2><div class="jlist">
+      ${cats.map(c => `<section class="block"><h2>${c} corner</h2><div class="jlist">
         ${list.filter(p => p.category === c).map(p => `<div class="jitem" id="ji-${esc(p.project_id)}">${judgeHeader(p)}</div>`).join('')}
       </div></section>`).join('')}
       ${!list.length ? '<p class="count">No models have been assigned to you yet.</p>' : ''}
@@ -2397,7 +2604,7 @@ function scorePanel(p) {
     ${locked ? '<p class="banner">Judging is locked. You can view but not change scores.</p>' : ''}
     ${prev ? '<p class="banner" style="background:var(--ok-t);color:var(--ok)">Already scored. Change any mark and save again to update it.</p>' : ''}
     ${sec('a', 'Section A: Common criteria', 8 * max, cs.a)}
-    ${sec('b', `Section B: ${catName(p.category)} (${CAT_SUB[p.category] || p.category}) project`, 5 * max, cs.b)}
+    ${sec('b', `Section B: ${({ Math: 'Mathematics', Tech: 'Technology', English: 'English', Science: 'Science' })[p.category] || p.category} project`, 5 * max, cs.b)}
     ${sec('c', 'Section C: Presentation and viva', 2 * max, cs.c)}
     <p class="err jerr2" role="alert" style="margin-top:8px"></p>
     <div class="savebar"><span class="tot">Total <b class="jtot">0</b> of ${15 * max}</span>${locked ? '' : '<button class="btn btn-primary jsave">Save score</button>'}</div>
@@ -2551,7 +2758,7 @@ function adminDash() {
 
       ${CATS.map(c => {
         const r = a.results[c];
-        return `<section class="adm-cat c-${CAT_CLS[c]}"><h2>${catName(c)}</h2>
+        return `<section class="adm-cat c-${CAT_CLS[c]}"><h2>${c}</h2>
           <h3>Judges' ranking, by average score (top 3 win)</h3>
           ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>ID</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
             ${r.judges.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td><b>${esc(x.project_id)}</b></td><td>${esc(x.title)}<br><span class="muted">${esc([x.centre, x.stall ? 'stall ' + x.stall : ''].filter(Boolean).join(', '))}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
@@ -2633,7 +2840,7 @@ function qrSheet() {
       </div>
       <div class="qr-grid">
         <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and rating</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
-        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catName(p.category)} corner</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and rate it</span>${foot}</div>`).join('')}
+        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${p.category} corner</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and rate it</span>${foot}</div>`).join('')}
       </div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
@@ -2655,7 +2862,7 @@ function judgeCards() {
           <div class="jc-r">
             <div class="jc-top">${fl ? `<img src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>'}<span class="jc-tag">JUDGE</span></div>
             <span class="jc-name">${esc(j.name)}</span>
-            <div class="jc-chips">${String(j.categories).split(',').map(c => normCat(c)).filter(Boolean).map(c => `<span class="jc-chip c-${CAT_CLS[c]}">${catName(c)}</span>`).join('')}</div>
+            <div class="jc-chips">${String(j.categories).split(',').map(c => normCat(c)).filter(Boolean).map(c => `<span class="jc-chip c-${CAT_CLS[c]}">${c}</span>`).join('')}</div>
             <div class="jc-spark">${theme().words.map(w => `<span>${esc(w.charAt(0))}</span>`).join('')}</div>
             <p class="jc-url">Or open <b>${esc(siteBase().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b> and tap Judges</p>
             <div class="jc-bottom"><div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
@@ -2784,34 +2991,34 @@ function themeFx(cat, level) {
     const syms = ['π', '√', '∑', '∞', '÷', '×', '+', '=', '∫', 'Δ', 'θ', '%', 'x²', 'φ', '≈'];
     const n = [10, 18, 30][level];
     for (let i = 0; i < n; i++) h += `<span class="msym" style="left:${rnd(0, 100).toFixed(1)}%;font-size:${rnd(3, 8).toFixed(1)}vh;--r:${rnd(-360, 360).toFixed(0)}deg;animation-duration:${rnd(7, 14).toFixed(1)}s;animation-delay:-${rnd(0, 12).toFixed(1)}s">${syms[i % syms.length]}</span>`;
-    h += `<svg class="geo" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#F2A900" stroke-width=".35" opacity=".45">
+    h += `<svg class="geo" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#4DA3FF" stroke-width=".35" opacity=".45">
       <g class="rot"><path class="d" d="M18 70 L38 34 L58 70 Z"/></g>
       <g class="rot" style="animation-direction:reverse"><circle class="d" cx="136" cy="24" r="12"/><path class="d" d="M124 24 H148 M136 12 V36"/></g>
       <path class="d" d="M112 80 L148 80 L112 56 Z"/><path class="d" d="M112 74 H118 V80"/>
       <path class="d" d="M8 14 Q20 2 32 14 T56 14"/>
       ${level ? '<g class="rot"><rect class="d" x="130" y="52" width="14" height="14"/></g><path class="d" d="M60 86 A26 26 0 0 1 100 86"/>' : ''}
     </svg>`;
-    if (level === 2) h += burst(24, i => `<span style="font-family:'Baloo 2',serif;font-weight:800;font-size:${rnd(3, 6).toFixed(1)}vh;color:#F2A900">${syms[i % syms.length]}</span>`);
+    if (level === 2) h += burst(24, i => `<span style="font-family:'Baloo 2',serif;font-weight:800;font-size:${rnd(3, 6).toFixed(1)}vh;color:#4DA3FF">${syms[i % syms.length]}</span>`);
   } else if (cat === 'English') {
     const words = ['A', 'B', 'C', '“', '”', '?', '!', 'Aa', 'Zz', 'Ww', ',', '.', 'Ee'];
     const n = [10, 18, 28][level];
-    for (let i = 0; i < n; i++) h += `<span class="msym" style="left:${rnd(0, 100).toFixed(1)}%;font-size:${rnd(3, 8).toFixed(1)}vh;color:rgba(56,214,224,.6);--r:${rnd(-300, 300).toFixed(0)}deg;animation-duration:${rnd(7, 14).toFixed(1)}s;animation-delay:-${rnd(0, 12).toFixed(1)}s">${words[i % words.length]}</span>`;
+    for (let i = 0; i < n; i++) h += `<span class="msym" style="left:${rnd(0, 100).toFixed(1)}%;font-size:${rnd(3, 8).toFixed(1)}vh;color:rgba(255,111,165,.6);--r:${rnd(-300, 300).toFixed(0)}deg;animation-duration:${rnd(7, 14).toFixed(1)}s;animation-delay:-${rnd(0, 12).toFixed(1)}s">${words[i % words.length]}</span>`;
     h += `<span class="fx-spin" style="left:5vw;bottom:8vh;width:26vh;height:26vh;animation-duration:22s">${stemSvg('book')}</span>`;
     h += `<span class="fx-spin" style="right:6vw;top:9vh;width:18vh;height:18vh;animation-duration:16s;animation-direction:reverse">${stemSvg('quote')}</span>`;
     if (level) h += `<span class="fx-spin" style="right:10vw;bottom:12vh;width:14vh;height:14vh;animation-duration:12s;opacity:.22">${stemSvg('quote')}</span>`;
-    if (level === 2) h += burst(24, i => `<span style="font-family:'Space Grotesk',serif;font-weight:700;font-size:${rnd(3, 6).toFixed(1)}vh;color:#38D6E0">${words[i % words.length]}</span>`);
+    if (level === 2) h += burst(24, i => `<span style="font-family:'Space Grotesk',serif;font-weight:700;font-size:${rnd(3, 6).toFixed(1)}vh;color:#FF6FA5">${words[i % words.length]}</span>`);
   } else {
     const cols = [8, 14, 22][level];
     for (let i = 0; i < cols; i++) { let t = ''; for (let k = 0; k < 18; k++) t += (Math.random() < .5 ? '0' : '1') + '\n'; h += `<span class="bits" style="left:${(i / cols * 100 + rnd(0, 3)).toFixed(1)}%;animation-duration:${rnd(5, 10).toFixed(1)}s;animation-delay:-${rnd(0, 8).toFixed(1)}s">${t}</span>`; }
-    h += `<svg class="trace" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#C9C1FF" stroke-width=".4" opacity=".6">
-      <path class="d" d="M0 20 H30 L38 28 H60"/><circle class="node" cx="60" cy="28" r="1.2" fill="#F2A900" style="animation-delay:2.2s"/>
-      <path class="d" d="M160 70 H128 L120 62 H96" style="animation-delay:.3s"/><circle class="node" cx="96" cy="62" r="1.2" fill="#F2A900" style="animation-delay:2.5s"/>
-      <path class="d" d="M20 90 V72 L28 64 H44" style="animation-delay:.6s"/><circle class="node" cx="44" cy="64" r="1.2" fill="#F2A900" style="animation-delay:2.8s"/>
-      <path class="d" d="M140 0 V16 L132 24 H112" style="animation-delay:.9s"/><circle class="node" cx="112" cy="24" r="1.2" fill="#F2A900" style="animation-delay:3.1s"/>
+    h += `<svg class="trace" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#FFB37A" stroke-width=".4" opacity=".6">
+      <path class="d" d="M0 20 H30 L38 28 H60"/><circle class="node" cx="60" cy="28" r="1.2" fill="#FF8A3D" style="animation-delay:2.2s"/>
+      <path class="d" d="M160 70 H128 L120 62 H96" style="animation-delay:.3s"/><circle class="node" cx="96" cy="62" r="1.2" fill="#FF8A3D" style="animation-delay:2.5s"/>
+      <path class="d" d="M20 90 V72 L28 64 H44" style="animation-delay:.6s"/><circle class="node" cx="44" cy="64" r="1.2" fill="#FF8A3D" style="animation-delay:2.8s"/>
+      <path class="d" d="M140 0 V16 L132 24 H112" style="animation-delay:.9s"/><circle class="node" cx="112" cy="24" r="1.2" fill="#FF8A3D" style="animation-delay:3.1s"/>
     </svg>`;
     h += `<span class="fx-spin" style="left:3vw;bottom:6vh;width:24vh;height:24vh;animation-duration:12s">${stemSvg('gear')}</span><span class="fx-spin" style="left:calc(3vw + 19vh);bottom:22vh;width:14vh;height:14vh;animation-duration:8s;animation-direction:reverse">${stemSvg('gear')}</span>`;
     if (level) h += `<span class="fx-spin" style="right:5vw;top:8vh;width:18vh;height:18vh;animation-duration:16s;opacity:.22">${stemSvg('chip' in STEM ? 'chip' : 'circuit')}</span>`;
-    if (level === 2) h += burst(26, () => `<span style="font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:${rnd(2.5, 5).toFixed(1)}vh;color:${Math.random() < .5 ? '#F2A900' : '#C9C1FF'}">${Math.random() < .5 ? '0' : '1'}</span>`);
+    if (level === 2) h += burst(26, () => `<span style="font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:${rnd(2.5, 5).toFixed(1)}vh;color:${Math.random() < .5 ? '#FF8A3D' : '#FFB37A'}">${Math.random() < .5 ? '0' : '1'}</span>`);
   }
   return `<div class="fx" aria-hidden="true">${h}</div>`;
 }
@@ -2828,8 +3035,8 @@ function setBgFx(mode) {
   if (!mode) { el.innerHTML = ''; return; }
   const swap = cat => { el.classList.add('fade'); setTimeout(() => { paintBg(cat); el.classList.remove('fade'); }, 700); };
   if (mode === 'cycle') {
-    swap(CATS[bgIdx % CATS.length]);
-    bgTimer = setInterval(() => { bgIdx++; swap(CATS[bgIdx % CATS.length]); }, 12000);
+    swap(CATS[bgIdx % 3]);
+    bgTimer = setInterval(() => { bgIdx++; swap(CATS[bgIdx % 3]); }, 12000);
   } else swap(mode);
 }
 function heartFx() {
@@ -2843,10 +3050,10 @@ function slideHtml(sl) {
   const logos = [yl && `<img src="${esc(yl)}" alt="YOJAK">`, fl && `<img src="${esc(fl)}" alt="STEM FEST">`, ...pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`)].filter(Boolean).join('');
   if (sl.type === 'intro') return `<div class="slide">${logos ? `<div class="s-logos">${logos}</div>` : ''}<p class="s-kicker">Prize distribution</p><p class="s-big">${esc(s.event_name || 'STEM FEST')}</p><div class="s-spark">${sparkWords()}</div></div>`;
   const sub = w => esc([isTbd(w.centre) ? '' : w.centre, w.stall ? 'stall ' + w.stall : ''].filter(Boolean).join(', '));
-  if (sl.type === 'cat') return themeFx(sl.cat, 0) + `<div class="slide"><div class="s-icon" style="width:14vh;height:14vh;margin:0 auto 3vh;color:#fff">${icon(CAT_ICON[sl.cat])}</div><p class="s-kicker" style="color:#fff;opacity:.85">Judges' awards for the</p><p class="s-big">${catName(sl.cat)} corner</p></div>`;
-  if (sl.type === 'place') return themeFx(sl.cat, sl.place === 1 ? 2 : 1) + `<div class="slide"><p class="s-kicker">${catName(sl.cat)} corner, Judges' award</p><div class="s-place ${sl.place === 1 ? 'first' : ''}" style="margin-top:3vh">${['', '1st', '2nd', '3rd'][sl.place]}</div><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
+  if (sl.type === 'cat') return themeFx(sl.cat, 0) + `<div class="slide"><div class="s-icon" style="width:14vh;height:14vh;margin:0 auto 3vh;color:#fff">${icon(CAT_ICON[sl.cat])}</div><p class="s-kicker" style="color:#fff;opacity:.85">Judges' awards for the</p><p class="s-big">${sl.cat} corner</p></div>`;
+  if (sl.type === 'place') return themeFx(sl.cat, sl.place === 1 ? 2 : 1) + `<div class="slide"><p class="s-kicker">${sl.cat} corner, Judges' award</p><div class="s-place ${sl.place === 1 ? 'first' : ''}" style="margin-top:3vh">${['', '1st', '2nd', '3rd'][sl.place]}</div><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
   if (sl.type === 'pchead') return heartFx() + `<div class="slide"><div class="s-place first"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-big">People's Choice awards</p><p class="s-sub">Chosen by our visitors, one winner from each corner</p></div>`;
-  if (sl.type === 'people') return themeFx(sl.cat, 2) + `<div class="slide"><p class="s-kicker">${catName(sl.cat)} corner</p><div class="s-place first" style="margin-top:3vh"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-kicker" style="font-size:4.4vh">People's Choice</p><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
+  if (sl.type === 'people') return themeFx(sl.cat, 2) + `<div class="slide"><p class="s-kicker">${sl.cat} corner</p><div class="s-place first" style="margin-top:3vh"><span class="s-icon" style="width:8vh;height:8vh;display:block;color:var(--maroon-deep)">${icon('heart').replace('fill="none"', 'fill="currentColor"')}</span></div><p class="s-kicker" style="font-size:4.4vh">People's Choice</p><p class="s-mid">${esc(sl.w.title)}</p>${sl.w.project_id ? `<span class="s-id">${esc(sl.w.project_id)}</span>` : ''}<p class="s-sub">${sub(sl.w)}</p></div>`;
   return `<div class="slide"><p class="s-big">Congratulations!</p><p class="s-sub">To every young maker at ${esc(s.event_name || 'STEM FEST')}. Keep sparking.</p>${logos ? `<div class="s-logos" style="margin-top:5vh">${logos}</div>` : ''}${pl.length ? `<p class="s-sub" style="font-size:2.6vh">${esc(orTbd(s.partner_label, 'Supported by'))} ${esc(pl.map(p => p.name).filter(Boolean).join(', '))}</p>` : ''}</div>`;
 }
 VIEWS.reveal = () => {
@@ -2907,7 +3114,7 @@ function shellHtml(page) {
       <div class="spark-row"><span class="spark-label">Theme: SPARK</span>${words.map((w, i) => `<span class="sw" style="animation-delay:${0.2 + i * 0.25}s"><b>${w[0]}</b><span>${w.slice(1)}</span></span>`).join('')}</div>
       <p class="cd-label">Loading today's details...</p>
     </div></div></section>
-    <div class="wrap"><div class="corners-strip">${CATS.map(c => `<span class="ctile c-${CAT_CLS[c]}">${icon(CAT_ICON[c])}<span class="ctile-name">${catName(c)}</span></span>`).join('')}</div>
+    <div class="wrap"><div class="corners-strip">${CATS.map(c => `<span class="ctile c-${CAT_CLS[c]}">${icon(CAT_ICON[c])}<span class="ctile-name">${c}</span></span>`).join('')}</div>
     <div class="sk" style="height:84px;margin-top:22px"></div><div class="sk" style="height:160px;margin-top:14px"></div></div>`;
 }
 
@@ -2939,7 +3146,20 @@ function render() {
   lastPage = key;
   if (v.mount) v.mount(app);
   observeReveals();
+  floatNow();
 }
+let floatHidden = false;
+function floatNow() {
+  let box = $('#floatnow');
+  const html = S.data && document.body.hasAttribute('data-pub') && route()[0] !== 'schedule' && !floatHidden ? scheduleStrip() : '';
+  if (!html) { if (box) box.remove(); return; }
+  if (!box) {
+    box = document.createElement('div'); box.id = 'floatnow'; box.className = 'floatnow'; document.body.appendChild(box);
+    box.addEventListener('click', e => { if (e.target.closest('.fn-x')) { floatHidden = true; box.remove(); } });
+  }
+  box.innerHTML = html + '<button class="fn-x" type="button" aria-label="Hide this box">×</button>';
+}
+setInterval(floatNow, 30000);
 
 window.addEventListener('hashchange', render);
 
