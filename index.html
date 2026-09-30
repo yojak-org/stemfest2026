@@ -2103,13 +2103,16 @@ function countdownTarget() {
   const end = new Date(d); const em = last ? (last.e != null && last.e > last.s ? last.e : last.s + 60) : 18 * 60; end.setHours(Math.floor(em / 60), em % 60, 0, 0);
   return { start, end };
 }
+/* Shared links carry ?v=... so WhatsApp fetches a fresh preview. Raise the number after changing preview.png or the preview text. */
+const PREVIEW_VERSION = '3';
+const shareLink = () => siteBase() + '?v=' + PREVIEW_VERSION;
 function inviteText() {
   const s = S.data.settings;
   const when = parseDate(s.event_date) ? fmtDate(s.event_date) : '';
   const bits = [`You are invited to ${s.event_name || 'STEM FEST'} by YOJAK.`];
   if (when) bits.push(when + (isTbd(s.event_hours) ? '' : ', ' + s.event_hours) + '.');
   if (!isTbd(s.venue_name)) bits.push('Venue: ' + s.venue_name + '.');
-  bits.push('Schedule, venue map and models: ' + siteBase());
+  bits.push('Schedule, venue map and models: ' + shareLink());
   return bits.join(' ');
 }
 function calendarLink() {
@@ -2146,9 +2149,9 @@ function inviteActions(inside) {
     ${inside ? '<p class="invite-note">Forward the link to parents, guests and centres.</p>' : ''}`;
 }
 async function doShare() {
-  const text = inviteText(); const url = siteBase();
+  const text = inviteText(); const url = shareLink();
   if (navigator.share) {
-    try { await navigator.share({ title: (S.data.settings.event_name || 'STEM FEST') + ' by YOJAK', text, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+    try { await navigator.share({ title: (S.data.settings.event_name || 'STEM FEST') + ' by YOJAK', text }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
   }
   const wa = 'https://wa.me/?text=' + encodeURIComponent(text);
   const w = window.open(wa, '_blank', 'noopener');
