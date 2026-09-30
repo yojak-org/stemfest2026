@@ -1372,6 +1372,11 @@ body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bott
 .pc-cheer{font-weight:600;color:var(--gold);margin-top:6px;font-size:15px}
 .badge .bcount{margin-left:2px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:inline-grid;place-items:center;font-size:13px;background:rgba(255,255,255,.12);color:inherit}
 .badge.got .bcount{background:var(--gold);color:#1a0d0e}
+
+.pdesc p + p{margin-top:12px}
+.studs{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:6px}
+.studs li{padding-left:14px;position:relative;font-size:17px}
+.studs li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 </style>
 </head>
 <body>
@@ -2374,8 +2379,8 @@ VIEWS.project = (id) => {
       <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
         <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${catLabel(p.category)} (${CAT_SUBJ[p.category] || p.category})${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
-        ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
-        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
+        ${!isTbd(p.description) ? `<div class="pdesc">${String(p.description).split(/\r?\n/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('')}</div>` : ''}
+        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><ul class="studs">${String(p.students).split(/[,;\r\n]+/).map(x => x.trim()).filter(Boolean).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       </article>
       <div id="votebox"></div></div>
     </div>`,
