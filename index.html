@@ -728,10 +728,7 @@ body.projector #bgfx{display:none}
 .hero.has-img{background-image:linear-gradient(180deg,rgba(13,10,11,.55),rgba(13,10,11,.8) 55%,rgba(13,10,11,.97)),var(--heroimg);background-size:cover;background-position:center;background-repeat:no-repeat}
 .hero.has-img::before{opacity:.06}
 .hero.has-img::after{opacity:.5}
-.students{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
-.students li{position:relative;padding-left:18px;font-size:17px}
-.students li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--brand)}
-.students.mentors li::before{background:var(--gold)}
+
 /* ===== Hero statistics ===== */
 .hstats{display:flex;flex-wrap:wrap;gap:10px 34px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
 .hstat b{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,7vw,46px);line-height:1;letter-spacing:-.04em;color:var(--gold)}
@@ -1004,6 +1001,73 @@ tr.tie td{background:rgba(255,107,107,.12)}
   .block{margin-top:64px}
   .phead{padding:34px 30px}
 }
+
+
+/* ===== Lviv-style restyle: public pages only (body[data-pub]); staff and print pages are untouched ===== */
+body[data-pub] a:focus-visible,body[data-pub] button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+body[data-pub] .btn{border-radius:4px;text-transform:uppercase;letter-spacing:.08em;font-size:13px;font-weight:700}
+body[data-pub] .block h2,body[data-pub] .phead h1{position:relative;padding-bottom:12px}
+body[data-pub] .block h2::after,body[data-pub] .phead h1::after{content:"";position:absolute;left:0;bottom:0;width:44px;height:4px;border-radius:2px;background:var(--gold)}
+body[data-pub] .phead{background:linear-gradient(115deg,var(--maroon-deep),var(--maroon));border-radius:6px}
+body[data-pub] .phead h1{color:#fff}
+body[data-pub] .phead p{color:rgba(255,255,255,.82)}
+/* hero facts as one bordered strip */
+body[data-pub] .hero.v2 .facts{gap:0;border:1px solid rgba(255,255,255,.28);border-radius:6px;overflow:hidden;width:min(100%,560px)}
+body[data-pub] .hero.v2 .facts>div{padding:10px 14px;grid-template-columns:64px 1fr}
+body[data-pub] .hero.v2 .facts>div+div{border-top:1px solid rgba(255,255,255,.2)}
+@media (min-width:720px){
+  body[data-pub] .hero.v2 .facts{grid-template-columns:repeat(3,auto);width:auto}
+  body[data-pub] .hero.v2 .facts>div{grid-template-columns:1fr;gap:2px}
+  body[data-pub] .hero.v2 .facts>div+div{border-top:0;border-left:1px solid rgba(255,255,255,.2)}
+}
+/* countdown band */
+.cdband{position:relative;overflow:hidden;color:#fff;padding:28px 0;background:linear-gradient(115deg,var(--maroon-deep),var(--maroon) 48%,#C4404F)}
+.cdband::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.14) 1.2px,transparent 1.4px);background-size:16px 16px}
+.cdband .wrap{position:relative;z-index:1}
+.cdband .invite{margin:0;padding:0;border:0;background:none;display:grid;gap:16px}
+.cdband .cd-label{margin:0;font:800 26px/1.1 'Baloo 2',sans-serif;opacity:1}
+.cdband .countdown.big .cd{background:none;border:0;border-left:1px solid rgba(255,255,255,.32);border-radius:0;padding:0 6px}
+.cdband .countdown.big .cd:first-child{border-left:0}
+.cdband .countdown.big .cd b{font-weight:300;color:#fff;font-size:clamp(34px,10vw,64px)}
+.cdband .live.big,.cdband .invite-acts{margin:0}
+@media (min-width:900px){
+  .cdband{padding:36px 0}
+  .cdband .invite{grid-template-columns:1fr 1.25fr;grid-template-areas:"l c" "a c";column-gap:56px;align-items:center}
+  .cdband .cd-label{grid-area:l;font-size:34px}
+  .cdband .countdown{grid-area:c}
+  .cdband .invite-acts{grid-area:a}
+}
+/* SPARK theme with ghosted initial */
+body[data-pub] .theme.hl{border-radius:6px;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon))}
+body[data-pub] .theme.hl>*{position:relative;z-index:1}
+body[data-pub] .theme.hl::before{content:attr(data-g);position:absolute;right:-.05em;top:-.2em;font:800 clamp(220px,42vw,400px)/1 'Baloo 2',sans-serif;color:rgba(255,255,255,.06);pointer-events:none}
+/* journey steps as ticket cards */
+body[data-pub] .journey{gap:14px}
+body[data-pub] .jstep{grid-template-columns:44px 1fr;gap:14px;padding:18px 20px!important;border:1px solid var(--line);border-radius:8px;background:radial-gradient(circle at 0 50%,var(--bg) 9px,transparent 10px),radial-gradient(circle at 100% 50%,var(--bg) 9px,transparent 10px),var(--surface,#fff)}
+body[data-pub] .jstep::before{display:none!important}
+body[data-pub] .jstep.jlive{border-color:var(--gold)}
+@media (min-width:900px){body[data-pub] .jstep{grid-template-columns:1fr}}
+/* tiles, strips, cards */
+body[data-pub] .ctile{border-radius:6px;box-shadow:inset 0 -70px 60px -44px rgba(0,0,0,.3)}
+body[data-pub] .corners-strip{margin-top:30px}
+body[data-pub] .sched-strip,body[data-pub] .nownext,body[data-pub] .progress-card{border-radius:6px}
+body[data-pub] .pcard{border-radius:6px;border-left:5px solid var(--maroon)}
+body[data-pub] .pcard.c-sci{border-left-color:var(--sci)}
+body[data-pub] .pcard.c-math{border-left-color:var(--math)}
+body[data-pub] .pcard.c-tech{border-left-color:var(--tech)}
+body[data-pub] .pcard.c-eng{border-left-color:var(--eng)}
+body[data-pub] .contact{border-radius:6px;border-top:4px solid var(--gold)}
+body[data-pub] .res-cat{border-radius:6px}
+/* schedule as a table */
+body[data-pub] .tl{padding:0;background:var(--surface,#fff);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(67,16,15,.5)}
+body[data-pub] .tl::before,body[data-pub] .tl-fill,body[data-pub] .tl li::before{display:none}
+body[data-pub] .tl li{padding:14px 16px;grid-template-columns:96px 1fr}
+body[data-pub] .tl li:nth-of-type(even){background:var(--soft)}
+body[data-pub] .tl li.now{margin:0;padding-right:16px;border-radius:0;background:var(--gold-t);box-shadow:inset 4px 0 0 var(--gold)}
+/* partners in a quiet band */
+body[data-pub] .partners{background:var(--soft);border:0;border-radius:6px;padding:28px 14px}
+body[data-pub] .plogo img{filter:grayscale(1);opacity:.75;transition:filter .2s,opacity .2s}
+body[data-pub] .plogo img:hover{filter:none;opacity:1}
 
 /* printing stays on white paper */
 @media print{
@@ -1863,13 +1927,13 @@ VIEWS.home = () => {
         <div><dt>Time</dt>${val(s.event_hours, 'To be announced')}</div>
         <div><dt>Venue</dt>${isTbd(s.venue_name) ? '<dd class="tbd">To be announced</dd>' : `<dd>${esc(s.venue_name)}${addr}</dd>`}</div>
       </dl>
-      ${heroTimer()}
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
       ${heroStats()}
     </div></div></section>
+    ${(() => { const h = heroTimer(); return h ? `<section class="cdband"><div class="wrap">${h}</div></section>` : ''; })()}
     <div class="wrap">
       ${linksBlock()}
-      <section class="theme hl">
+      <section class="theme hl" data-g="${esc(String(th.name || 'S').charAt(0))}">
         <span class="theme-kicker">THE THEME OF ${esc(String(s.event_name || 'STEM FEST').toUpperCase())}</span>
         <h2>${esc(th.name)}</h2>
         <ul class="theme-list">${th.words.map((w, i) => `<li><span class="tl-l" style="animation-delay:${0.1 + i * 0.12}s">${esc(w.charAt(0))}</span><span><b>${esc(w)}</b>${th.descs[i] ? `<p>${esc(th.descs[i])}</p>` : ''}</span></li>`).join('')}</ul>
@@ -2005,8 +2069,8 @@ VIEWS.project = (id) => {
       <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
         <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${p.category} corner${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
         ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
-        ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><ul class="students">${String(p.students).split(/[,;\n]/).map(n => n.trim()).filter(Boolean).map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
-        ${!isTbd(p.mentors) ? `<h2 class="h-sm">Mentors</h2><ul class="students mentors">${String(p.mentors).split(/[,;\n]/).map(n => n.trim()).filter(Boolean).map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
+        ${!isTbd(p.description) ? `<p class="pdesc">${esc(p.description)}</p>` : ''}
+        ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><p>${esc(p.students)}</p>` : ''}
       </article>
       <div id="votebox"></div></div>
     </div>`,
@@ -2848,6 +2912,7 @@ function render() {
   window.onkeydown = null;
   if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
+  document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','venue','results','help'].includes(page));
   if (page !== 'reveal') document.body.classList.remove('projector');
   const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes'].includes(a);
   if (page === 'reveal' || printPage) setBgFx(null);
