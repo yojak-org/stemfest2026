@@ -1329,6 +1329,40 @@ body[data-pub] .plogo span{color:#fff;font-size:16px;font-weight:700}
   .phead{display:none}
   body,.jc,.jc-l,.env-page > svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ===== Scan to rate, rater details, top raters ===== */
+.scanfab{position:fixed;left:14px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 14px);z-index:75;display:inline-flex;align-items:center;gap:8px;padding:12px 18px 12px 14px;border:0;border-radius:999px;background:var(--gold);color:#1a0d0e;font:700 16px/1 inherit;font-family:inherit;box-shadow:0 14px 30px -10px rgba(0,0,0,.6);cursor:pointer}
+.scanfab svg{width:22px;height:22px}
+.scanfab:active{transform:scale(.97)}
+body:has(#scanfab){padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 90px)}
+body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 92px)}
+@media (min-width:720px){.scanfab,body:has(#floatnow) .scanfab{left:24px;bottom:24px}}
+.scanner{position:fixed;inset:0;z-index:200;background:#0D0A0B;color:#fff;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.scanner .sc-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:18px}
+.scanner .sc-x{width:44px;height:44px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:transparent;color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.scanner .sc-view{position:relative;flex:1;min-height:0;margin:14px 0;border-radius:6px;overflow:hidden;background:#000}
+.scanner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scanner .sc-frame{position:absolute;left:50%;top:50%;width:min(64vw,280px);aspect-ratio:1;transform:translate(-50%,-50%);border:3px solid var(--gold);border-radius:10px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+.scanner .sc-msg{font-weight:600;text-align:center}
+.scanner .sc-alt{font-size:14px;opacity:.8;text-align:center;margin-top:6px}
+.scanner .sc-alt a{color:var(--gold)}
+.scanbox .btn svg{width:22px;height:22px}
+.idbox{display:grid;gap:10px;padding:14px;border:1px dashed var(--gold);border-radius:10px;background:rgba(255,197,61,.07)}
+.idbox > b{font-size:17px}
+.idbox p{font-size:14px;opacity:.85}
+.linkbtn{background:none;border:0;padding:4px 0;color:var(--gold);font:inherit;font-weight:600;text-decoration:underline;cursor:pointer;justify-self:start}
+.rater-line{font-size:14px;opacity:.85}
+.rater-line a{color:var(--gold)}
+.raters{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.raters li{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface,transparent)}
+.raters li .rk{font:800 20px/1 'Space Grotesk',sans-serif;color:var(--gold);text-align:center}
+.raters li b{font-size:17px}
+.raters li span.cnt{font-size:14px;opacity:.85;text-align:right}
+.raters li:nth-child(-n+3){border-color:var(--gold)}
+.mecard{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:8px;display:grid;gap:10px}
+.qr-card .qcode{font-size:13px;letter-spacing:.06em;color:var(--muted)}
+.qr-card .qcode b{font-size:18px;letter-spacing:.14em;color:var(--ink)}
+@media print{.qr-card .qcode{font-size:11px;color:#555}.qr-card .qcode b{font-size:16px;color:#000}}
 </style>
 </head>
 <body>
@@ -1422,6 +1456,7 @@ const jparse = (s, fb) => { try { return s ? JSON.parse(s) : fb; } catch (e) { r
 const splitList = v => String(v || '').split(';').map(x => x.trim());
 
 const ICONS = {
+  scan: '<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 12h10"/>',
   spk_s: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
   spk_p: '<path d="M9 3h6M10 3v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V3M7.5 15h9"/>',
   spk_a: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
@@ -1626,6 +1661,7 @@ const Demo = {
     await sleep(450);
     const s = this.settings();
     if (b.action === 'checkcode') return { ok: true, valid: SAMPLE.codes.includes(String(b.code || '').toUpperCase()) };
+    if (b.action === 'checkstall') return { ok: true, valid: String(b.code || '').length === 4 };
     if (b.action === 'rate') {
       if (!toBool(s.voting_open)) return { ok: false, code: 'closed', error: 'Rating is closed.' };
       if (s.voting_mode === 'code' && !SAMPLE.codes.includes(String(b.voter_id).slice(2))) return { ok: false, code: 'badcode', error: 'This voter code is not valid.' };
@@ -1652,7 +1688,7 @@ const Demo = {
       if (b.key !== 'demo') { await sleep(2000); return { ok: false, code: 'badkey', error: 'That admin key is not correct. In preview mode the key is: demo' }; }
       const v = this.ratings(); const sc = Object.values(this.scores());
       return {
-        ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(),
+        ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(), top_raters: [], stall_codes: {},
         stats: {
           projects: SAMPLE.projects.length, ratings: v.length, raters: new Set(v.map(x => x.voter_id)).size, scores: sc.length,
           judges: SAMPLE.judges.map(j => { const cats = this.cats(j.categories); return { judge_id: j.judge_id, name: j.name, pin: j.pin, categories: cats.join(', '), total: SAMPLE.projects.filter(p => cats.includes(p.category)).length, done: sc.filter(x => x.judge_id === j.judge_id).length }; })
@@ -1735,6 +1771,7 @@ function queueFailed(it, r) {
   if (it.type === 'rate') {
     delete S.rated[it.pid]; const vid = voterId(); if (vid) store.set('sf_rated:' + vid, JSON.stringify(S.rated));
     if (r.code === 'badcode') store.del('sf_code');
+    if (r.code === 'noscan') dropScan(it.pid);
     toast(r.code === 'closed' ? 'Rating had closed, so one rating could not be counted.' : (r.error || 'One rating could not be saved. Please rate that model again.'));
     if (route()[0] === 'project' && route()[1] === it.pid) render();
   } else if (it.type === 'score') {
@@ -2272,7 +2309,7 @@ VIEWS.projects = (cat) => {
   const centres = [...new Set(S.data.projects.map(p => p.centre).filter(c => c && !isTbd(c)))].sort();
   return {
     html: `<div class="wrap page">
-      <div class="mhero"><h1>Models on display</h1><p>Four corners, one theme. Pick a corner or search, then tap a model to read about it and rate it.</p></div>
+      <div class="mhero"><h1>Models on display</h1><p>Four corners, one theme. Pick a corner or search, then tap a model to read about it. Scan the QR code at a stall to rate it.${boardOn() ? ' <a href="#/raters" style="color:var(--gold)">Top raters win goodies</a>.' : ''}</p></div>
       <div class="corner-pick" role="group" aria-label="Filter by corner">
         ${['All', ...CATS_PUB].map(c => `<button class="cpick ${c === 'All' ? 'c-all' : 'c-' + CAT_CLS[c]}" data-cat="${c}" aria-pressed="${S.filter.cat === c}">${c === 'All' ? icon('grid') : icon(CAT_ICON[c])}<b>${c === 'All' ? 'All corners' : catLabel(c)}</b><small>${c === 'All' ? S.data.projects.length : projectsIn(c).length} ${c === 'All' ? 'models' : CAT_SUBJ[c]}</small></button>`).join('')}
       </div>
@@ -2343,7 +2380,8 @@ function renderRateBox(p, st = {}) {
     html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Rating saved' : 'You rated this model'}</h2><p>Your score: ${sum(mine)} out of 15.</p><p class="sendnote muted" style="font-size:14px">${Queue.pending('rate', p.project_id) ? 'Sending to the fest server. It keeps trying even if the signal is weak.' : 'Sent to the fest server.'}</p></div></div>
       ${progressCard()}
       <div style="display:grid;gap:10px;margin-top:12px">
-        <a class="btn btn-primary btn-block" href="#/projects">Rate another model</a>
+        ${scanOn() && open ? `<button class="btn btn-primary btn-block" id="scannext">${icon('scan')}Scan the next model</button><a class="btn btn-ghost btn-block" href="#/projects">All models</a>` : '<a class="btn btn-primary btn-block" href="#/projects">Rate another model</a>'}
+        ${raterLine()}
         ${open ? '<button class="btn btn-ghost btn-block" id="editrate">Change my rating</button>' : ''}
       </div>`;
   } else if (!open) {
@@ -2353,9 +2391,21 @@ function renderRateBox(p, st = {}) {
       <label class="field"><span>Voter code</span><input id="codein" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="For example K7M2QX"></label>
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
       <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
+  } else if (scanOn() && !scans()[p.project_id]) {
+    html = `<div class="votebox scanbox"><h2>Scan to rate this model</h2>
+      <p>Ratings count only from the stall. Scan the QR code on this model's card, or type the 4 letter stall code printed under it.</p>
+      <button class="btn btn-primary btn-block btn-big" id="scanbtn">${icon('scan')}Scan stall QR</button>
+      <label class="field"><span>Stall code</span><input id="stallin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6" placeholder="For example K7M2" value="${esc(st.code || '')}"></label>
+      ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
+      <button class="btn btn-ghost btn-block" id="stallbtn">Unlock rating</button></div>`;
   } else {
     const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
+    const askMe = !me() && !store.get('sf_me_skip');
     html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><p>Your rating counts towards the People's Choice award for the ${catFull(p.category)} corner.<span class="mr" style="font-weight:500">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल.</span></p>
+      ${askMe ? `<div class="idbox"><b>Win goodies for rating</b><p>The visitors who rate the most models win goodies. Add your name and mobile once. The number is only used to contact winners.</p>
+        <label class="field"><span>Your name</span><input id="myname" autocomplete="name" maxlength="40" value="${esc(st.idn || '')}"></label>
+        <label class="field"><span>Mobile number</span><input id="mymob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(st.idm || '')}"></label>
+        <button type="button" class="linkbtn" id="idskip">Skip, rate without entering</button></div>` : ''}
       ${qs.map((q, i) => `<div class="rq"><p>${esc(q.en)}${q.mr ? `<span class="mr">${esc(q.mr)}</span>` : ''}</p><div class="stars" role="radiogroup" aria-label="${esc(q.en)}">
         ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${esc(SW[n - 1].en)}">${icon('star')}</button>`).join('')}
         <span class="slabel" id="sl${i}">${vals[i] ? `${esc(SW[vals[i] - 1].en)}${SW[vals[i] - 1].mr ? `<span class="mr">${esc(SW[vals[i] - 1].mr)}</span>` : ''}` : 'Tap a star / तारांकित करा'}</span></div></div>`).join('')}
@@ -2373,21 +2423,47 @@ function renderRateBox(p, st = {}) {
       const e = $('.err', box); if (e && vals.every(Boolean)) e.remove();
     }));
     const ce = $('#canceledit'); if (ce) ce.addEventListener('click', () => renderRateBox(p));
+    const sk = $('#idskip', box); if (sk) sk.addEventListener('click', () => { store.set('sf_me_skip', '1'); const ib = $('.idbox', box); if (ib) ib.remove(); });
     const rb = $('#ratebtn');
     rb.addEventListener('click', async () => {
-      if (vals.some(v => !v)) { renderRateBox(p, { edit: true, vals, err: 'Answer all three questions before submitting.' }); return; }
+      const nIn = $('#myname', box), mIn = $('#mymob', box);
+      const idn = nIn ? nIn.value.replace(/\s+/g, ' ').trim() : '', idm = mIn ? mIn.value.trim() : '';
+      if (vals.some(v => !v)) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Answer all three questions before submitting.' }); return; }
+      if (nIn && (idn || idm)) {
+        if (!idn || !cleanMobile(idm)) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Enter your name and a 10 digit mobile number, or tap Skip.' }); return; }
+        store.set('sf_me', JSON.stringify({ name: idn.slice(0, 40), mobile: cleanMobile(idm) }));
+      }
+      const who = me() || {};
       const before = ratingProgress();
       markRated(p.project_id, vals.slice());
-      Queue.add({ id: Date.now() + '-' + randStr(4), key: 'rate|' + p.project_id, type: 'rate', pid: p.project_id, body: { action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals.slice() } });
+      Queue.add({ id: Date.now() + '-' + randStr(4), key: 'rate|' + p.project_id, type: 'rate', pid: p.project_id, body: { action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals.slice(), stall_code: scans()[p.project_id] || '', name: who.name || '', mobile: who.mobile || '' } });
       renderRateBox(p, { fresh: true });
       const after = ratingProgress();
       if (after.champ && !before.champ) { toast('Badge unlocked: SPARK champion!', true); confetti(80); }
-      else { const nb = after.done.find(c => !before.done.includes(c)); if (nb) toast(`Badge unlocked: ${nb} explorer`, true); }
+      else { const nb = after.done.find(c => !before.done.includes(c)); if (nb) toast(`Badge unlocked: ${catLabel(nb)} corner`, true); }
     });
     return;
   }
   box.innerHTML = html;
   const ed = $('#editrate'); if (ed) ed.addEventListener('click', () => renderRateBox(p, { edit: true }));
+  const sn = $('#scannext'); if (sn) sn.addEventListener('click', openScanner);
+  const sb = $('#scanbtn'); if (sb) sb.addEventListener('click', openScanner);
+  const stb = $('#stallbtn');
+  if (stb) {
+    const sin = $('#stallin');
+    const go = async () => {
+      const code = sin.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (code.length !== 4) { renderRateBox(p, { code, err: 'Type the 4 letter stall code printed under the QR code.' }); return; }
+      stb.disabled = true; stb.innerHTML = '<span class="spin"></span>Checking code...';
+      try {
+        const r = await apiPost({ action: 'checkstall', project_id: p.project_id, code });
+        if (r.ok && !r.valid) { renderRateBox(p, { code, err: 'That code does not match this model. Check the card at its stall.' }); return; }
+        saveScan(p.project_id, code); renderRateBox(p); toast('Rating unlocked for this model.');
+      } catch (e) { saveScan(p.project_id, code); renderRateBox(p); toast('Code saved. It will be checked when your rating is sent.'); }
+    };
+    stb.addEventListener('click', go);
+    sin.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  }
   $$('.progress-card', box).forEach(x => x.classList.add('in'));
 
   const cb = $('#codebtn');
@@ -2407,6 +2483,139 @@ function renderRateBox(p, st = {}) {
     input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   }
 }
+
+
+/* ---------- Scan to rate, rater details and top raters ---------- */
+const scanOn = () => !!(S.data && toBool(S.data.settings.require_scan));
+const boardOn = () => !!(S.data && toBool(S.data.settings.show_leaderboard));
+const scans = () => jparse(store.get('sf_scan'), {});
+function saveScan(pid, code) { const m = scans(); m[pid] = String(code).toUpperCase(); store.set('sf_scan', JSON.stringify(m)); }
+function dropScan(pid) { const m = scans(); delete m[pid]; store.set('sf_scan', JSON.stringify(m)); }
+const me = () => jparse(store.get('sf_me'), null);
+function cleanMobile(m) {
+  let d = String(m || '').replace(/\D/g, '');
+  if (d.length === 12 && d.startsWith('91')) d = d.slice(2);
+  if (d.length === 11 && d[0] === '0') d = d.slice(1);
+  return /^[6-9]\d{9}$/.test(d) ? d : '';
+}
+function raterLine() {
+  const m = me();
+  if (m) return `<p class="rater-line">Counting towards the goodies for <b>${esc(m.name)}</b>.${boardOn() ? ' <a href="#/raters">See top raters</a>' : ''}</p>`;
+  return `<p class="rater-line">Want to win goodies? <a href="#/raters">Add your name</a> and keep rating.</p>`;
+}
+function goHash(h) { if (location.hash === h) render(); else location.hash = h; }
+
+/* A stall QR opens #/s/<project id>/<stall code>: remember the code, then show the model */
+VIEWS.s = (pid, code) => ({ html: '', mount() { if (pid && code) saveScan(pid, code); location.replace('#/project/' + encodeURIComponent(pid || '')); } });
+
+function handleScanText(t) {
+  const m = String(t).match(/#\/s\/([^/?#\s]+)\/([A-Za-z0-9]{4})/);
+  if (m) { const pid = decodeURIComponent(m[1]); saveScan(pid, m[2]); closeScanner(); goHash('#/project/' + encodeURIComponent(pid)); toast('Stall scanned. You can rate this model.'); return true; }
+  const m2 = String(t).match(/#\/project\/([^/?#\s]+)/);
+  if (m2) { closeScanner(); goHash('#/project/' + m2[1]); return true; }
+  return false;
+}
+
+let scanStream = null, scanTimer = null;
+function loadJsQR() {
+  if (window.jsQR) return Promise.resolve(true);
+  return new Promise(res => {
+    const el = document.createElement('script'); el.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
+    el.onload = () => res(!!window.jsQR); el.onerror = () => res(false); document.head.appendChild(el);
+  });
+}
+async function qrDetector() {
+  if (!('BarcodeDetector' in window)) return null;
+  try { const f = await BarcodeDetector.getSupportedFormats(); return f.includes('qr_code') ? new BarcodeDetector({ formats: ['qr_code'] }) : null; } catch (e) { return null; }
+}
+function closeScanner() {
+  clearInterval(scanTimer); scanTimer = null;
+  if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; }
+  const o = $('#scanner'); if (o) o.remove();
+}
+async function openScanner() {
+  closeScanner();
+  const o = document.createElement('div'); o.id = 'scanner'; o.className = 'scanner'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Scan the stall QR code');
+  o.innerHTML = `<div class="sc-top"><b>Scan the stall QR code</b><button class="sc-x" type="button" aria-label="Close">×</button></div>
+    <div class="sc-view"><video playsinline muted></video><span class="sc-frame"></span></div>
+    <p class="sc-msg">Opening the camera...</p>
+    <p class="sc-alt">Camera not working? Open the model from <a href="#/projects">All models</a> and type the stall code printed under its QR code.</p>`;
+  document.body.appendChild(o);
+  $('.sc-x', o).addEventListener('click', closeScanner);
+  const msg = t => { const m = $('.sc-msg', o); if (m) m.textContent = t; };
+  const video = $('video', o);
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { msg('This browser cannot open the camera. Type the stall code on the model page instead.'); return; }
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
+  } catch (e) { msg('The camera was not allowed. Allow the camera for this site in your browser settings, or type the stall code on the model page.'); return; }
+  if (!$('#scanner')) { closeScanner(); return; }
+  video.srcObject = scanStream; try { await video.play(); } catch (e) {}
+  let detector = await qrDetector();
+  if (!detector && !(await loadJsQR())) { msg('The scanner could not load. Check the connection, or type the stall code on the model page.'); return; }
+  msg('Point the camera at the QR code on the model card.');
+  const cv = document.createElement('canvas'); const ctx = cv.getContext('2d', { willReadFrequently: true });
+  let busy = false;
+  scanTimer = setInterval(async () => {
+    if (busy || !video.videoWidth) return; busy = true;
+    try {
+      let text = null;
+      if (detector) { const r = await detector.detect(video); if (r && r[0]) text = r[0].rawValue; }
+      else {
+        const w = Math.min(640, video.videoWidth), h = Math.round(video.videoHeight * w / video.videoWidth);
+        cv.width = w; cv.height = h; ctx.drawImage(video, 0, 0, w, h);
+        const r = window.jsQR(ctx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: 'dontInvert' }); if (r) text = r.data;
+      }
+      if (text && !handleScanText(text)) msg('That QR code is not a STEM FEST stall code. Scan the code on the model card.');
+    } catch (e) {} finally { busy = false; }
+  }, 250);
+}
+function scanFab() {
+  let b = $('#scanfab');
+  const show = S.data && scanOn() && toBool(S.data.settings.voting_open) && document.body.hasAttribute('data-pub');
+  if (!show) { if (b) b.remove(); return; }
+  if (!b) {
+    b = document.createElement('button'); b.id = 'scanfab'; b.type = 'button'; b.className = 'scanfab';
+    b.innerHTML = `${icon('scan')}<span>Scan stall QR</span>`; b.addEventListener('click', openScanner); document.body.appendChild(b);
+  }
+}
+/* iPhones have no built in QR reader for web pages, so fetch the small one ahead of time */
+setTimeout(async () => { if (scanOn() && !(await qrDetector())) loadJsQR(); }, 4000);
+
+/* ---------- Top raters ---------- */
+VIEWS.raters = () => {
+  const m = me(); const lb = S.data.leaderboard; const rows = (lb && lb.rows) || [];
+  const count = Object.keys(S.rated || {}).length; const gap = parseInt(S.data.settings.min_gap_seconds, 10) || 0;
+  const mask = n => '••••••' + String(n).slice(-4);
+  const form = (err, n = '', mob = '') => `<label class="field"><span>Your name</span><input id="rname" autocomplete="name" maxlength="40" value="${esc(n)}"></label>
+    <label class="field"><span>Mobile number</span><input id="rmob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(mob)}"></label>
+    ${err ? `<p class="err" role="alert">${esc(err)}</p>` : ''}
+    <button class="btn btn-primary btn-block" id="rsave">Save my details</button>`;
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Top raters</h1><p>Scan and rate models at their stalls to climb the list. The visitors who rate the most models win goodies.</p></div>
+      <section class="mecard" id="mecard">
+        ${m ? `<p>Entered as <b>${esc(m.name)}</b>, mobile ${mask(m.mobile)}. <button class="linkbtn" id="rchange">Change</button></p>` : `<p><b>Add your details to win goodies.</b> The number is only used to contact winners and is never shown on this site.</p>${form()}`}
+        <p class="muted" style="font-size:14px">You have rated ${count} ${count === 1 ? 'model' : 'models'} on this phone.</p>
+      </section>
+      ${!boardOn() ? '<p class="muted" style="margin-top:18px">The list is hidden right now.</p>' : rows.length ? `<ol class="raters">${rows.map((r, i) => `<li><span class="rk">${i + 1}</span><b>${esc(r.name)}</b><span class="cnt">${r.models} ${r.models === 1 ? 'model' : 'models'}<br>${r.corners} ${r.corners === 1 ? 'corner' : 'corners'}</span></li>`).join('')}</ol>
+        <p class="muted" style="font-size:14px;margin-top:10px">Updates every few minutes.${gap ? ` A rating made within ${gap} seconds of your previous one is not counted here, so take your time at each stall.` : ''}</p>` : '<p class="muted" style="margin-top:18px">No named raters yet. Be the first!</p>'}
+    </div>`,
+    mount() {
+      const wire = () => {
+        const sv = $('#rsave');
+        if (sv) sv.addEventListener('click', () => {
+          const n = $('#rname').value.replace(/\s+/g, ' ').trim(), mob = $('#rmob').value.trim();
+          if (!n || !cleanMobile(mob)) { $('#mecard').innerHTML = `<p><b>Add your details to win goodies.</b></p>${form('Enter your name and a 10 digit mobile number.', n, mob)}`; wire(); return; }
+          store.set('sf_me', JSON.stringify({ name: n.slice(0, 40), mobile: cleanMobile(mob) })); store.del('sf_me_skip');
+          toast('Saved. Your next rating links all your ratings on this phone to your name.'); render();
+        });
+        const ch = $('#rchange');
+        if (ch) ch.addEventListener('click', () => { const cur = me() || {}; $('#mecard').innerHTML = form('', cur.name || '', cur.mobile || ''); wire(); });
+      };
+      wire();
+    }
+  };
+};
 
 /* ---------- Venue ---------- */
 VIEWS.venue = () => {
@@ -2794,6 +3003,13 @@ function adminDash() {
         : '<p class="muted" style="font-size:14px;margin-top:8px">To change these, edit the Settings tab in the Google Sheet. The website picks up changes within a minute.</p>'}
       </section>
 
+      <section class="block"><h2>Top raters (goodies)</h2>
+        ${(a.top_raters || []).length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Name</th><th>Mobile</th><th>Models counted</th><th>All ratings</th><th>Corners</th></tr></thead><tbody>
+          ${a.top_raters.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.name)}</td><td><a href="tel:${esc(x.mobile)}">${esc(x.mobile)}</a></td><td class="num-c"><b>${x.counted}</b></td><td class="num-c">${x.total}</td><td class="num-c">${x.corners}</td></tr>`).join('')}
+        </tbody></table></div>` : '<p class="muted">No named raters yet.</p>'}
+        <p class="muted" style="font-size:14px;margin-top:8px">Models counted leaves out ratings made within ${esc(s.min_gap_seconds || '0')} seconds of the same phone's previous rating. All ratings shows every model they rated. Stall scanning is ${toBool(s.require_scan) ? 'on' : 'off'} (require_scan in Settings).</p>
+      </section>
+
       <section class="block"><h2>Judges' progress</h2>
         <div class="tbl-wrap"><table><thead><tr><th>Judge</th><th>Corners</th><th>Scored</th></tr></thead><tbody>
           ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(j.categories)}</td><td class="num-c">${j.done} of ${j.total}</td></tr>`).join('')}
@@ -2873,6 +3089,7 @@ async function drawQRs() {
 }
 
 function qrSheet() {
+  const codes = (S.admin && S.admin.stall_codes) || {};
   const base = siteBase(); const list = S.data.projects.slice().sort((a, b) => String(a.project_id).localeCompare(String(b.project_id), undefined, { numeric: true }));
   const { head, foot } = cardBits();
   return {
@@ -2880,11 +3097,12 @@ function qrSheet() {
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
         <div class="phead"><h1>QR cards</h1><p>One card for the entrance and one for each model, labelled with its project ID. Prints 4 cards per A4 sheet.</p></div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+        ${!DEMO && scanOn() && !Object.keys(codes).length ? '<p class="banner">Stall codes are missing, so these cards will not unlock rating. Update the Apps Script, deploy a new version and refresh the dashboard before printing.</p>' : ''}
         ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones from the live site.</p>' : ''}
       </div>
       <div class="qr-grid">
         <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and rating</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
-        ${list.map(p => `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catFull(p.category)}</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model and rate it</span>${foot}</div>`).join('')}
+        ${list.map(p => { const sc = codes[p.project_id]; return `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catFull(p.category)}</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + (sc ? '#/s/' + encodeURIComponent(p.project_id) + '/' + sc : '#/project/' + encodeURIComponent(p.project_id)))}"></div>${sc ? `<span class="qcode">Stall code <b>${sc}</b></span>` : ''}<span class="qhint">Scan to rate this model. Already on the site? Tap Scan stall QR.</span>${foot}</div>`; }).join('')}
       </div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
@@ -3168,7 +3386,7 @@ function render() {
   window.onkeydown = null;
   if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
-  document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','venue','results','help'].includes(page));
+  document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','venue','results','help','raters'].includes(page));
   if (page !== 'reveal') document.body.classList.remove('projector');
   const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes'].includes(a);
   if (page === 'reveal' || printPage) setBgFx(null);
@@ -3183,7 +3401,7 @@ function render() {
     app.innerHTML = S.error ? emptyState('Could not load', S.error, '', '') : shellHtml(page);
     return;
   }
-  const v = (VIEWS[page] || VIEWS.home)(a);
+  const v = (VIEWS[page] || VIEWS.home)(a, route()[2]);
   app.innerHTML = v.html;
   const key = page + '/' + (a || '');
   if (key !== lastPage) window.scrollTo(0, 0);
@@ -3191,6 +3409,7 @@ function render() {
   if (v.mount) v.mount(app);
   observeReveals();
   floatNow();
+  scanFab();
 }
 let floatHidden = false;
 function floatNow() {
@@ -3205,13 +3424,13 @@ function floatNow() {
 }
 setInterval(floatNow, 30000);
 
-window.addEventListener('hashchange', render);
+window.addEventListener('hashchange', () => { closeScanner(); render(); });
 
 /* Refresh public info every 3 minutes, only where it matters */
 setInterval(async () => {
   if (document.hidden) return;
   const page = route()[0] || 'home';
-  if (!['home', 'schedule', 'venue', 'help', 'results'].includes(page)) return;
+  if (!['home', 'schedule', 'venue', 'help', 'results', 'raters'].includes(page)) return;
   await loadData(); render();
 }, REFRESH_MS);
 
