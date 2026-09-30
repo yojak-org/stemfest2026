@@ -1253,6 +1253,14 @@ body[data-pub] :is(h1,h2,h3,b,dd,.ptitle,.ctile-name){overflow-wrap:anywhere}
 @media (prefers-reduced-motion:no-preference){.brand-mark .tw{transform-origin:29px 7px;animation:brandTw 2.4s ease-in-out infinite}}
 @keyframes brandTw{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.55);opacity:.55}}
 
+
+/* partner logos: transparent, with a thin vertical divider */
+.brandbar{gap:18px}
+.brandbar .bl{background:transparent;border-radius:0;padding:0 2px;box-shadow:none;position:relative}
+.brandbar .bl + .bl::before{content:"";position:absolute;left:-10px;top:14%;bottom:14%;width:1px;background:rgba(255,255,255,.45)}
+.brandbar .bl span{color:#fff;font-size:17px;font-weight:800;letter-spacing:.04em}
+@media (max-width:420px){.brandbar{gap:14px}.brandbar .bl + .bl::before{left:-8px}.brandbar .bl span{font-size:14px}}
+
 /* printing stays on white paper */
 @media print{
   :root{--bg:#fff;--surface:#fff;--surface-2:#fff;--line:#DDD;--ink:#111;--muted:#555;--maroon:#7A1C24;--brand:#7A1C24;--gold:#B77F00;color-scheme:light}
