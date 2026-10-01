@@ -1536,6 +1536,31 @@ body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
   #topright{gap:10px}
 }
 @media (min-width:720px) and (max-width:860px){.top .wrap{gap:8px;padding-left:12px;padding-right:12px}.top .topnav a{padding:6px 5px;font-size:13.5px}.top .brand{margin-right:6px}.top .brand-logo{height:26px;max-width:78px}.top .brandbar .bl img.pl-logo{height:26px;max-width:64px}#topright{gap:8px}#topright .si-trigger span{display:none}#topright .si-trigger{padding:0 8px}}
+
+/* ===== Corner posters ===== */
+.poster-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:16px}
+.poster{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:22px 18px;border-radius:14px;background:#fff;border:3px solid var(--c);color:var(--ink)}
+.poster .pt-head .qr-head-logo{height:56px;width:70%}
+.poster .pt-head .qh{font-weight:800;color:var(--maroon)}
+.pt-kick{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#B5862F}
+.pt-name{display:flex;align-items:center;gap:10px;font-size:34px;color:var(--c);margin:0}
+.pt-name svg{width:34px;height:34px}
+.pt-sub{color:var(--muted);font-weight:600}
+.poster .pt-qr{width:200px;height:200px;margin:6px 0}
+.poster .pt-qr img,.poster .pt-qr canvas{width:200px!important;height:200px!important}
+.pt-cta{font-size:19px;font-weight:800;color:var(--ink)}
+.pt-code{font-size:14px;color:var(--muted);letter-spacing:.06em}
+.pt-code b{font-size:22px;letter-spacing:.2em;color:var(--ink)}
+.pt-hint{font-size:13px;color:var(--muted)}
+@media print{
+  .poster-grid{display:block;margin:0}
+  .poster{width:190mm;height:270mm;margin:0 auto;box-sizing:border-box;border-width:2mm;border-radius:0;padding:12mm 10mm;gap:4mm;justify-content:center;page-break-after:always;break-after:page}
+  .poster:last-child{page-break-after:auto;break-after:auto}
+  .poster .pt-head .qr-head-logo{height:22mm}
+  .pt-kick{font-size:12pt}.pt-name{font-size:40pt}.pt-name svg{width:34pt;height:34pt}.pt-sub{font-size:16pt}
+  .poster .pt-qr,.poster .pt-qr img,.poster .pt-qr canvas{width:120mm!important;height:120mm!important}
+  .pt-cta{font-size:20pt}.pt-code{font-size:13pt}.pt-code b{font-size:24pt}.pt-hint{font-size:11pt}
+}
 </style>
 </head>
 <body>
@@ -1866,7 +1891,7 @@ const Demo = {
       if (b.key !== 'demo') { await sleep(2000); return { ok: false, code: 'badkey', error: 'That admin key is not correct. In preview mode the key is: demo' }; }
       const v = this.ratings(); const sc = Object.values(this.scores());
       return {
-        ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(), top_raters: [], stall_codes: {},
+        ok: true, settings: s, default_key: false, codes: SAMPLE.codes, results: this.results(), top_raters: [], corner_codes: { Science: 'DEMO', Math: 'DEMO', Tech: 'DEMO', English: 'DEMO' },
         stats: {
           projects: SAMPLE.projects.length, ratings: v.length, raters: new Set(v.map(x => x.voter_id)).size, scores: sc.length,
           judges: SAMPLE.judges.map(j => { const cats = this.cats(j.categories); return { judge_id: j.judge_id, name: j.name, pin: j.pin, categories: cats.join(', '), total: SAMPLE.projects.filter(p => cats.includes(p.category)).length, done: sc.filter(x => x.judge_id === j.judge_id).length }; })
@@ -1949,7 +1974,7 @@ function queueFailed(it, r) {
   if (it.type === 'rate') {
     delete S.rated[it.pid]; const vid = voterId(); if (vid) store.set('sf_rated:' + vid, JSON.stringify(S.rated));
     if (r.code === 'badcode') store.del('sf_code');
-    if (r.code === 'noscan') dropScan(it.pid);
+    if (r.code === 'noscan') { const pp = findProject(it.pid); if (pp) dropScan(pp.category); }
     toast(r.code === 'closed' ? 'Rating had closed, so one rating could not be counted.' : (r.error || 'One rating could not be saved. Please rate that model again.'));
     if (route()[0] === 'project' && route()[1] === it.pid) render();
   } else if (it.type === 'score') {
@@ -2566,7 +2591,7 @@ function renderRateBox(p, st = {}) {
     html = `<div class="votebox done ${st.fresh ? 'pop' : ''}" role="status"><span class="vb-icon">${icon('check')}</span><div><h2>${st.fresh ? 'Rating saved' : 'You rated this model'}</h2><p>Your score: ${sum(mine)} out of 15.</p><p class="sendnote muted" style="font-size:14px">${Queue.pending('rate', p.project_id) ? 'Sending to the fest server. It keeps trying even if the signal is weak.' : 'Sent to the fest server.'}</p></div></div>
       ${progressCard()}
       <div style="display:grid;gap:10px;margin-top:12px">
-        ${scanOn() && open ? `<button class="btn btn-primary btn-block" id="scannext">${icon('scan')}Scan the next model</button><a class="btn btn-ghost btn-block" href="#/projects">All models</a>` : '<a class="btn btn-primary btn-block" href="#/projects">Rate another model</a>'}
+        ${scanOn() && open ? `<button class="btn btn-primary btn-block" id="scannext">${icon('scan')}Scan another corner</button><a class="btn btn-ghost btn-block" href="#/projects">All models</a>` : '<a class="btn btn-primary btn-block" href="#/projects">Rate another model</a>'}
         ${raterLine()}
         ${open ? '<button class="btn btn-ghost btn-block" id="editrate">Change my rating</button>' : ''}
       </div>`;
@@ -2577,20 +2602,20 @@ function renderRateBox(p, st = {}) {
       <label class="field"><span>Voter code</span><input id="codein" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="For example K7M2QX"></label>
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
       <button class="btn btn-primary btn-block btn-big" id="codebtn">Save code</button></div>`;
-  } else if (scanOn() && !scans()[p.project_id]) {
-    html = `<div class="votebox scanbox"><h2>Scan to rate this model</h2>
-      <p>Ratings count only from the stall. Scan the QR code on this model's card, or type the 4 letter stall code printed under it.</p>
-      <button class="btn btn-primary btn-block btn-big" id="scanbtn">${icon('scan')}Scan stall QR</button>
-      <label class="field"><span>Stall code</span><input id="stallin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6" placeholder="For example K7M2" value="${esc(st.code || '')}"></label>
+  } else if (scanOn() && !scans()[p.category]) {
+    html = `<div class="votebox scanbox"><h2>Unlock the ${esc(catLabel(p.category))} corner</h2>
+      <p>Scan the QR poster at the entrance of the ${esc(catFull(p.category))} corner once, and you can rate every model in it. No poster scan yet? Type the 4 letter corner code printed on the poster.</p>
+      <button class="btn btn-primary btn-block btn-big" id="scanbtn">${icon('scan')}Scan corner poster</button>
+      <label class="field"><span>Corner code</span><input id="stallin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6" placeholder="For example K7M2" value="${esc(st.code || '')}"></label>
       ${st.err ? `<p class="err" role="alert">${esc(st.err)}</p>` : ''}
-      <button class="btn btn-ghost btn-block" id="stallbtn">Unlock rating</button></div>`;
+      <button class="btn btn-ghost btn-block" id="stallbtn">Unlock this corner</button></div>`;
   } else {
     const vals = st.vals || (mine ? mine.slice() : [0, 0, 0]);
     const askMe = !me() && !store.get('sf_me_skip');
     html = `<div class="votebox"><h2>${mine ? 'Change your rating' : 'Rate this model'}</h2><div class="pcnote">${icon('trophy')}<div><b>Your stars choose the People's Choice winner</b><p>Every rating counts towards the People's Choice award for the ${catFull(p.category)} corner. Talk to the students first, then rate honestly.</p><span class="mr">तुमचे मत People's Choice पुरस्कारासाठी मोजले जाईल. विद्यार्थ्यांशी बोला आणि प्रामाणिकपणे गुण द्या.</span></div></div>
-      ${askMe ? `<div class="idbox"><b>Win goodies for rating</b><p>The visitors who rate the most models win goodies. Add your name and mobile once. The number is only used to contact winners.</p>
+      ${askMe ? `<div class="idbox"><b>Win goodies for rating</b><p>The visitors who rate the most models win goodies. Add your name once. A mobile number is optional and only used to contact winners.</p>
         <label class="field"><span>Your name</span><input id="myname" autocomplete="name" maxlength="40" value="${esc(st.idn || '')}"></label>
-        <label class="field"><span>Mobile number</span><input id="mymob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(st.idm || '')}"></label>
+        <label class="field"><span>Mobile number (optional)</span><input id="mymob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(st.idm || '')}"></label>
         <button type="button" class="linkbtn" id="idskip">Skip, rate without entering</button></div>` : ''}
       ${qs.map((q, i) => `<div class="rq"><p>${esc(q.en)}${q.mr ? `<span class="mr">${esc(q.mr)}</span>` : ''}</p><div class="stars" role="radiogroup" aria-label="${esc(q.en)}">
         ${[1, 2, 3, 4, 5].map(n => `<button class="star ${vals[i] >= n ? 'on' : ''}" data-q="${i}" data-n="${n}" role="radio" aria-checked="${vals[i] === n}" aria-label="${n} ${n === 1 ? 'star' : 'stars'}, ${esc(SW[n - 1].en)}">${icon('star')}</button>`).join('')}
@@ -2616,13 +2641,14 @@ function renderRateBox(p, st = {}) {
       const idn = nIn ? nIn.value.replace(/\s+/g, ' ').trim() : '', idm = mIn ? mIn.value.trim() : '';
       if (vals.some(v => !v)) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Answer all three questions before submitting.' }); return; }
       if (nIn && (idn || idm)) {
-        if (!idn || !cleanMobile(idm)) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Enter your name and a 10 digit mobile number, or tap Skip.' }); return; }
+        if (!idn) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Enter your name, or tap Skip.' }); return; }
+        if (idm && !cleanMobile(idm)) { renderRateBox(p, { edit: true, vals, idn, idm, err: 'Check the mobile number (10 digits), or leave it empty.' }); return; }
         store.set('sf_me', JSON.stringify({ name: idn.slice(0, 40), mobile: cleanMobile(idm) }));
       }
       const who = me() || {};
       const before = ratingProgress();
       markRated(p.project_id, vals.slice());
-      Queue.add({ id: Date.now() + '-' + randStr(4), key: 'rate|' + p.project_id, type: 'rate', pid: p.project_id, body: { action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals.slice(), stall_code: scans()[p.project_id] || '', name: who.name || '', mobile: who.mobile || '' } });
+      Queue.add({ id: Date.now() + '-' + randStr(4), key: 'rate|' + p.project_id, type: 'rate', pid: p.project_id, body: { action: 'rate', voter_id: voterId(), project_id: p.project_id, scores: vals.slice(), stall_code: scans()[p.category] || '', name: who.name || '', mobile: who.mobile || '' } });
       renderRateBox(p, { fresh: true });
       const after = ratingProgress();
       if (after.champ && !before.champ) { toast('Badge unlocked: SPARK champion!', true); confetti(80); }
@@ -2639,13 +2665,13 @@ function renderRateBox(p, st = {}) {
     const sin = $('#stallin');
     const go = async () => {
       const code = sin.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-      if (code.length !== 4) { renderRateBox(p, { code, err: 'Type the 4 letter stall code printed under the QR code.' }); return; }
+      if (code.length !== 4) { renderRateBox(p, { code, err: 'Type the 4 letter corner code printed on the poster.' }); return; }
       stb.disabled = true; stb.innerHTML = '<span class="spin"></span>Checking code...';
       try {
         const r = await apiPost({ action: 'checkstall', project_id: p.project_id, code });
-        if (r.ok && !r.valid) { renderRateBox(p, { code, err: 'That code does not match this model. Check the card at its stall.' }); return; }
-        saveScan(p.project_id, code); renderRateBox(p); toast('Rating unlocked for this model.');
-      } catch (e) { saveScan(p.project_id, code); renderRateBox(p); toast('Code saved. It will be checked when your rating is sent.'); }
+        if (r.ok && !r.valid) { renderRateBox(p, { code, err: `That code does not match the ${catLabel(p.category)} corner. Check the poster at its entrance.` }); return; }
+        saveScan(p.category, code); renderRateBox(p); toast(`${catLabel(p.category)} corner unlocked. Rate any model there.`);
+      } catch (e) { saveScan(p.category, code); renderRateBox(p); toast('Code saved. It will be checked when your rating is sent.'); }
     };
     stb.addEventListener('click', go);
     sin.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
@@ -2691,12 +2717,27 @@ function raterLine() {
 }
 function goHash(h) { if (location.hash === h) render(); else location.hash = h; }
 
-/* A stall QR opens #/s/<project id>/<stall code>: remember the code, then show the model */
-VIEWS.s = (pid, code) => ({ html: '', mount() { if (pid && code) saveScan(pid, code); location.replace('#/project/' + encodeURIComponent(pid || '')); } });
+/* A corner poster opens #/s/<corner>/<code>: remember the code for that corner, then list its models */
+function unlockCorner(raw, code) {
+  const cat = normCat(decodeURIComponent(raw || ''));
+  if (!cat || !code) return '';
+  saveScan(cat, code); return cat;
+}
+VIEWS.s = (c, code) => ({ html: '', mount() {
+  const cat = unlockCorner(c, code);
+  location.replace(cat ? '#/projects/' + cat : '#/projects');
+  if (cat) setTimeout(() => toast(`${catLabel(cat)} corner unlocked. Tap any model there to rate it.`, true), 400);
+} });
 
 function handleScanText(t) {
   const m = String(t).match(/#\/s\/([^/?#\s]+)\/([A-Za-z0-9]{4})/);
-  if (m) { const pid = decodeURIComponent(m[1]); saveScan(pid, m[2]); closeScanner(); goHash('#/project/' + encodeURIComponent(pid)); toast('Stall scanned. You can rate this model.'); return true; }
+  if (m) {
+    const cat = unlockCorner(m[1], m[2]); if (!cat) return false;
+    closeScanner();
+    const cur = route(); const here = cur[0] === 'project' && findProject(cur[1]);
+    if (here && here.category === cat) render(); else goHash('#/projects/' + cat);
+    toast(`${catLabel(cat)} corner unlocked. Rate any model there.`, true); return true;
+  }
   const m2 = String(t).match(/#\/project\/([^/?#\s]+)/);
   if (m2) { closeScanner(); goHash('#/project/' + m2[1]); return true; }
   return false;
@@ -2721,11 +2762,11 @@ function closeScanner() {
 }
 async function openScanner() {
   closeScanner();
-  const o = document.createElement('div'); o.id = 'scanner'; o.className = 'scanner'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Scan the stall QR code');
-  o.innerHTML = `<div class="sc-top"><b>Scan the stall QR code</b><button class="sc-x" type="button" aria-label="Close">×</button></div>
+  const o = document.createElement('div'); o.id = 'scanner'; o.className = 'scanner'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Scan the corner poster');
+  o.innerHTML = `<div class="sc-top"><b>Scan the corner poster</b><button class="sc-x" type="button" aria-label="Close">×</button></div>
     <div class="sc-view"><video playsinline muted></video><span class="sc-frame"></span></div>
     <p class="sc-msg">Opening the camera...</p>
-    <p class="sc-alt">Camera not working? Open the model from <a href="#/projects">All models</a> and type the stall code printed under its QR code.</p>`;
+    <p class="sc-alt">Camera not working? Open any model in that corner and type the 4 letter corner code printed on the poster.</p>`;
   document.body.appendChild(o);
   $('.sc-x', o).addEventListener('click', closeScanner);
   const msg = t => { const m = $('.sc-msg', o); if (m) m.textContent = t; };
@@ -2738,7 +2779,7 @@ async function openScanner() {
   video.srcObject = scanStream; try { await video.play(); } catch (e) {}
   let detector = await qrDetector();
   if (!detector && !(await loadJsQR())) { msg('The scanner could not load. Check the connection, or type the stall code on the model page.'); return; }
-  msg('Point the camera at the QR code on the model card.');
+  msg('Point the camera at the QR code on the corner poster.');
   const cv = document.createElement('canvas'); const ctx = cv.getContext('2d', { willReadFrequently: true });
   let busy = false;
   scanTimer = setInterval(async () => {
@@ -2751,7 +2792,7 @@ async function openScanner() {
         cv.width = w; cv.height = h; ctx.drawImage(video, 0, 0, w, h);
         const r = window.jsQR(ctx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: 'dontInvert' }); if (r) text = r.data;
       }
-      if (text && !handleScanText(text)) msg('That QR code is not a STEM FEST stall code. Scan the code on the model card.');
+      if (text && !handleScanText(text)) msg('That QR code is not a STEM FEST corner poster. Scan the poster at the corner entrance.');
     } catch (e) {} finally { busy = false; }
   }, 250);
 }
@@ -2765,14 +2806,14 @@ VIEWS.raters = () => {
   const count = Object.keys(S.rated || {}).length; const gap = parseInt(S.data.settings.min_gap_seconds, 10) || 0;
   const mask = n => '••••••' + String(n).slice(-4);
   const form = (err, n = '', mob = '') => `<label class="field"><span>Your name</span><input id="rname" autocomplete="name" maxlength="40" value="${esc(n)}"></label>
-    <label class="field"><span>Mobile number</span><input id="rmob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(mob)}"></label>
+    <label class="field"><span>Mobile number (optional)</span><input id="rmob" type="tel" inputmode="numeric" autocomplete="tel" maxlength="17" value="${esc(mob)}"></label>
     ${err ? `<p class="err" role="alert">${esc(err)}</p>` : ''}
     <button class="btn btn-primary btn-block" id="rsave">Save my details</button>`;
   return {
     html: `<div class="wrap page">
       <div class="phead"><h1>Top raters</h1><p>Scan and rate models at their stalls to climb the list. The visitors who rate the most models win goodies.</p></div>
       <section class="mecard" id="mecard">
-        ${m ? `<p>Entered as <b>${esc(m.name)}</b>, mobile ${mask(m.mobile)}. <button class="linkbtn" id="rchange">Change</button></p>` : `<p><b>Add your details to win goodies.</b> The number is only used to contact winners and is never shown on this site.</p>${form()}`}
+        ${m ? `<p>Entered as <b>${esc(m.name)}</b>${m.mobile ? `, mobile ${mask(m.mobile)}` : ''}. <button class="linkbtn" id="rchange">Change</button></p>` : `<p><b>Add your name to win goodies.</b> A mobile number is optional, only used to contact winners and never shown on this site.</p>${form()}`}
         <p class="muted" style="font-size:14px">You have rated ${count} ${count === 1 ? 'model' : 'models'} on this phone.</p>
       </section>
       ${!boardOn() ? '<p class="muted" style="margin-top:18px">The list is hidden right now.</p>' : rows.length ? `<ol class="raters">${rows.map((r, i) => `<li><span class="rk">${i + 1}</span><b>${esc(r.name)}</b><span class="cnt">${r.models} ${r.models === 1 ? 'model' : 'models'}<br>${r.corners} ${r.corners === 1 ? 'corner' : 'corners'}</span></li>`).join('')}</ol>
@@ -2783,7 +2824,8 @@ VIEWS.raters = () => {
         const sv = $('#rsave');
         if (sv) sv.addEventListener('click', () => {
           const n = $('#rname').value.replace(/\s+/g, ' ').trim(), mob = $('#rmob').value.trim();
-          if (!n || !cleanMobile(mob)) { $('#mecard').innerHTML = `<p><b>Add your details to win goodies.</b></p>${form('Enter your name and a 10 digit mobile number.', n, mob)}`; wire(); return; }
+          const bad = !n ? 'Enter your name.' : (mob && !cleanMobile(mob)) ? 'Check the mobile number (10 digits), or leave it empty.' : '';
+          if (bad) { $('#mecard').innerHTML = `<p><b>Add your name to win goodies.</b></p>${form(bad, n, mob)}`; wire(); return; }
           store.set('sf_me', JSON.stringify({ name: n.slice(0, 40), mobile: cleanMobile(mob) })); store.del('sf_me_skip');
           toast('Saved. Your next rating links all your ratings on this phone to your name.'); render();
         });
@@ -3111,6 +3153,7 @@ VIEWS.admin = (sub) => {
   if (sub === 'codes') return codesSheet();
   if (sub === 'judgecards') return judgeCards();
   if (sub === 'envelopes') return judgeEnvelopes();
+  if (sub === 'posters') return cornerPosters();
   return adminDash();
 };
 
@@ -3182,7 +3225,8 @@ function adminDash() {
       <section class="dsec no-print" id="a-actions"><h2 class="dsec-h">Announce and print</h2>
         <div class="act-grid">
           <a class="act act-main" href="#/reveal">${icon('screen')}<b>Winner Announcement</b><span>Projector slides, one corner at a time</span></a>
-          <a class="act" href="#/admin/qr">${icon('scan')}<b>QR cards</b><span>One card per model, with its stall code</span></a>
+          <a class="act" href="#/admin/posters">${icon('scan')}<b>Corner posters</b><span>4 A4 posters, scan once per corner to rate</span></a>
+          <a class="act" href="#/admin/qr">${icon('grid')}<b>QR cards</b><span>One card per model, opens its page</span></a>
           <a class="act" href="#/admin/judgecards">${icon('gavel')}<b>Judge cards</b><span>Name, PIN and corners for each judge</span></a>
           <a class="act" href="#/admin/envelopes">${icon('mail')}<b>Judge envelopes</b><span>Two per A4 page</span></a>
           ${a.codes.length ? `<a class="act" href="#/admin/codes">${icon('check')}<b>Voter codes</b><span>${a.codes.length} printed codes</span></a>` : ''}
@@ -3311,7 +3355,6 @@ async function drawQRs() {
 }
 
 function qrSheet() {
-  const codes = (S.admin && S.admin.stall_codes) || {};
   const base = siteBase(); const list = S.data.projects.slice().sort((a, b) => String(a.project_id).localeCompare(String(b.project_id), undefined, { numeric: true }));
   const { head, foot } = cardBits();
   return {
@@ -3319,12 +3362,41 @@ function qrSheet() {
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
         <div class="phead"><h1>QR cards</h1><p>One card for the entrance and one for each model, labelled with its project ID. Prints 4 cards per A4 sheet.</p></div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
-        ${!DEMO && scanOn() && !Object.keys(codes).length ? '<p class="banner">Stall codes are missing, so these cards will not unlock rating. Update the Apps Script, deploy a new version and refresh the dashboard before printing.</p>' : ''}
         ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones from the live site.</p>' : ''}
       </div>
       <div class="qr-grid">
         <div class="qr-card">${head}<span class="qcat">Scan for the schedule, venue map and rating</span><div class="qr-box" data-url="${esc(base)}"></div><span class="qtitle">${esc(S.data.settings.event_name || 'STEM FEST')}</span><span class="qhint">Point your phone camera at the code</span>${foot}</div>
-        ${list.map(p => { const sc = codes[p.project_id]; return `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catFull(p.category)}</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + (sc ? '#/s/' + encodeURIComponent(p.project_id) + '/' + sc : '#/project/' + encodeURIComponent(p.project_id)))}"></div>${sc ? `<span class="qcode">Stall code <b>${sc}</b></span>` : ''}<span class="qhint">Scan to rate this model. Already on the site? Tap Scan stall QR.</span>${foot}</div>`; }).join('')}
+        ${list.map(p => { return `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catFull(p.category)}</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model</span>${foot}</div>`; }).join('')}
+      </div>
+    </div>`,
+    mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
+  };
+}
+
+function cornerPosters() {
+  const codes = (S.admin && S.admin.corner_codes) || {};
+  const base = siteBase(); const { head, foot } = cardBits(); const st = S.data.settings;
+  return {
+    html: `<div class="wrap page">
+      <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
+        <div class="phead"><h1>Corner posters</h1><p>One A4 poster for the entrance of each corner. Visitors scan it once to rate every model in that corner. Print at 100% scale.</p></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+        ${!DEMO && !Object.keys(codes).length ? '<p class="banner">Corner codes are missing. Update the Apps Script, deploy a new version and refresh the dashboard before printing.</p>' : ''}
+        ${!scanOn() ? '<p class="banner">require_scan is FALSE in Settings, so rating is open to everyone right now. Set it to TRUE when the posters are up.</p>' : ''}
+        ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones from the live site.</p>' : ''}
+      </div>
+      <div class="poster-grid">
+        ${CATS.filter(c => projectsIn(c).length).map(c => { const code = codes[c] || (DEMO ? 'DEMO' : ''); return `<div class="poster c-${CAT_CLS[c]}">
+          <div class="pt-head">${head}</div>
+          ${printLogos().fl ? `<p class="pt-kick">${esc(st.event_name || 'STEM FEST')}</p>` : ''}
+          <h2 class="pt-name">${icon(CAT_ICON[c])}${esc(catLabel(c))}</h2>
+          <p class="pt-sub">${esc(CAT_SUBJ[c] || '')} corner, ${projectsIn(c).length} models</p>
+          <div class="qr-box pt-qr" data-url="${esc(base + '#/s/' + c + '/' + code)}"></div>
+          <p class="pt-cta">Scan once to rate every model in this corner</p>
+          ${code ? `<p class="pt-code">Corner code <b>${esc(code)}</b></p>` : ''}
+          <p class="pt-hint">Already on the website? Open any model here and tap Scan corner poster.</p>
+          ${foot}
+        </div>`; }).join('')}
       </div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
@@ -3420,7 +3492,7 @@ function codesSheet() {
         <div class="phead"><h1>Voter codes</h1><p>${codes.length} codes. Cut along the dashed lines and hand one to each visitor, or print them on entry passes.</p></div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
       </div>
-      <div class="code-grid">${codes.map(c => `<div class="code-card"><span>STEM FEST voter code</span><b>${esc(c)}</b><span>Scan a stall QR code and enter this once to rate models</span></div>`).join('')}</div>
+      <div class="code-grid">${codes.map(c => `<div class="code-card"><span>STEM FEST voter code</span><b>${esc(c)}</b><span>Open the STEM FEST website and enter this once to rate models</span></div>`).join('')}</div>
     </div>`,
     mount() { $('#doprint').addEventListener('click', () => window.print()); }
   };
@@ -3611,7 +3683,7 @@ function hdrPartners() {
   const whites = splitList(S.data.settings.partner_logo_white);
   const pl = partnerList();
   if (!pl.length) return '';
-    const heads = splitList(S.data.settings.partner_logo_header);   /* optional tightly cropped logo used only in the header */
+  const heads = splitList(S.data.settings.partner_logo_header);   /* optional tightly cropped logo used only in the header */
   return `<div class="brandbar">${pl.map((p, i) => { const w = whites[i] ? logoSrc(whites[i]) : ''; const c = heads[i] ? logoSrc(heads[i]) : p.logo; return `<span class="bl">${c || w ? hdrLogo(c, w, p.name || 'Partner', 'pl-logo') : `<span>${esc(p.name || 'Partner')}</span>`}</span>`; }).join('')}</div>`;
 }
 function setSignMenu(open) {
@@ -3676,7 +3748,7 @@ function render() {
   const [page = 'home', a] = route();
   document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','venue','results','help','raters'].includes(page));
   if (page !== 'reveal') document.body.classList.remove('projector');
-  const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes'].includes(a);
+  const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes', 'posters'].includes(a);
   if (page === 'reveal' || printPage) setBgFx(null);
   else if (page === 'project' && S.data) { const pr = findProject(a); setBgFx(pr ? pr.category : 'cycle'); }
   else setBgFx('cycle');
