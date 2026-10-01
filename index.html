@@ -1307,6 +1307,196 @@ body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bott
 .studs{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:6px}
 .studs li{padding-left:14px;position:relative;font-size:17px}
 .studs li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+/* =====================================================================
+   SPARK update: header, hero, countdown, models, team, sign in,
+   organiser dashboard, Winner Announcement, results question
+   ===================================================================== */
+:root{--navblue:#1E3F94;--navblue-dk:#13265E;--navblue-lt:#2551B8}
+
+/* header: white on every page */
+.top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 10px 24px -22px rgba(42,35,37,.55);transition:background .35s ease,box-shadow .35s ease,border-color .35s ease}
+.top .topnav a{color:var(--ink);opacity:.78;transition:color .2s,opacity .2s}
+.top .topnav a:hover,.top .topnav a.on{color:var(--maroon);opacity:1;background:transparent}
+.top .topnav a.on::after{background:var(--maroon)}
+.top .brand-logo,.top .brandbar .bl img{filter:none}
+.top .brand-yojak{color:var(--maroon)}
+.top .brandbar .bl span{color:var(--ink)}
+#topright{color:var(--ink)}
+#topright .judge-btn{display:inline-flex;height:36px;padding:0 14px;gap:7px;border-radius:999px;background:#fff;border:1.5px solid var(--line);color:var(--maroon);font-weight:700;font-size:14px;white-space:nowrap;transition:background .2s,border-color .2s,color .2s}
+#topright .judge-btn:hover{border-color:var(--maroon)}
+#topright .judge-btn.org{background:var(--maroon);border-color:var(--maroon);color:#fff}
+#topright .judge-btn.org:hover{background:var(--maroon-dk)}
+.top .brandbar .bl + .bl::before{background:var(--line)}
+/* original logos at a matched size */
+.top .brand-logo{height:36px;max-width:130px;filter:none}
+.top .brandbar .bl,.top .brandbar .bl:first-child{height:44px;padding:0;background:transparent}
+.top .brandbar .bl img,.top .brandbar .bl:first-child img,.top .brandbar .bl + .bl img{height:38px;max-width:140px;object-fit:contain;filter:none}
+/* Home: blue once the SPARK section has scrolled past */
+body.top-blue .top{background:linear-gradient(100deg,var(--navblue-dk),var(--navblue) 60%,var(--navblue-lt));border-bottom-color:transparent;box-shadow:0 12px 28px -16px rgba(19,38,94,.75)}
+body.top-blue .top .topnav a{color:#fff;opacity:.82}
+body.top-blue .top .topnav a:hover,body.top-blue .top .topnav a.on{color:#fff;opacity:1}
+body.top-blue .top .topnav a.on::after{background:var(--gold)}
+body.top-blue .top .brand-logo,body.top-blue .top .brandbar .bl img{filter:brightness(0) invert(1)}
+body.top-blue .top .brand-yojak,body.top-blue .top .brandbar .bl span,body.top-blue #topright{color:#fff}
+body.top-blue .top .brandbar .bl + .bl::before{background:rgba(255,255,255,.4)}
+body.top-blue #topright .judge-btn{background:transparent;border-color:rgba(255,255,255,.45);color:#fff}
+body.top-blue #topright .judge-btn.org{background:#fff;border-color:#fff;color:var(--navblue)}
+@media (max-width:1099px){#topright .judge-btn span{display:none}#topright .judge-btn{width:38px;padding:0;justify-content:center}}
+@media (max-width:719px){#topright{gap:8px}#topright .judge-btn{display:inline-flex;width:34px;height:34px}}
+@media (max-width:480px){.top .brand-logo{height:28px;max-width:84px}.top .brandbar .bl,.top .brandbar .bl:first-child{height:34px}.top .brandbar .bl img,.top .brandbar .bl:first-child img,.top .brandbar .bl + .bl img{height:28px;max-width:82px}#topright .judge-btn{width:32px;height:32px}#topright .judge-btn svg{width:15px;height:15px}}
+@media (max-width:360px){.top .brandbar{display:none}}
+
+/* hero: SPARK leads, STEM FEST 2026 below it */
+body[data-pub] .hero.v2 .hero-spark{gap:clamp(10px,2vw,20px);margin-top:10px}
+body[data-pub] .hero.v2 .hero-spark span{font-size:clamp(64px,17vw,176px);letter-spacing:.1em;line-height:.95;font-weight:800}
+body[data-pub] .hero.v2 .hero-spark svg{width:clamp(46px,10vw,118px)}
+body[data-pub] .hero.v2 .title{font-size:clamp(24px,5vw,50px);letter-spacing:.08em;line-height:1.1;margin-top:12px;font-weight:700;text-shadow:none}
+
+/* countdown: digits roll in, seconds glow, boxes rise in */
+.countdown .cd b{display:inline-block;will-change:transform}
+.countdown .cd b.flip{animation:cdFlip .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes cdFlip{0%{transform:translateY(-55%) scale(.9);opacity:0;filter:blur(3px)}60%{opacity:1;filter:none}100%{transform:none;opacity:1}}
+.countdown.big .cd{position:relative;overflow:hidden}
+.countdown.big .cd::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 55%)}
+.countdown.big .cd:last-child{animation:cdGlow 1s ease-in-out infinite}
+@keyframes cdGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,169,0,0)}50%{box-shadow:0 0 0 3px rgba(242,169,0,.35),0 0 22px -4px rgba(242,169,0,.55)}}
+.countdown.big .cd{animation:cdIn .7s cubic-bezier(.2,.8,.2,1) both}
+.countdown.big .cd:nth-child(2){animation-delay:.08s}.countdown.big .cd:nth-child(3){animation-delay:.16s}
+.countdown.big .cd:last-child{animation:cdIn .7s .24s cubic-bezier(.2,.8,.2,1) both,cdGlow 1s 1s ease-in-out infinite}
+@keyframes cdIn{from{transform:translateY(14px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+
+/* models: corner brackets that draw in, and a highlight around the centre ID tile */
+.mcard{position:relative}
+.mfx{position:absolute;inset:5px;pointer-events:none;z-index:3}
+.mfx i{position:absolute;width:16px;height:16px;border:2.5px solid var(--c,var(--maroon));opacity:.0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s,width .35s,height .35s}
+.mfx i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0;border-top-left-radius:6px}
+.mfx i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0;border-top-right-radius:6px}
+.mfx i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0;border-bottom-left-radius:6px}
+.mfx i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0;border-bottom-right-radius:6px}
+.mcard .mfx i{border-color:#fff}
+.mcard .mfx i:nth-child(3),.mcard .mfx i:nth-child(4){border-color:var(--c,var(--maroon))}
+.plist .mcard .mfx i{animation:brIn .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:inherit}
+@keyframes brIn{from{opacity:0;transform:scale(1.6)}to{opacity:.75;transform:none}}
+.mcard:hover .mfx i,.mcard:focus-visible .mfx i{opacity:1;width:24px;height:24px}
+.mcard:hover .mfx i:nth-child(1),.mcard:focus-visible .mfx i:nth-child(1){transform:translate(-2px,-2px)}
+.mcard:hover .mfx i:nth-child(2),.mcard:focus-visible .mfx i:nth-child(2){transform:translate(2px,-2px)}
+.mcard:hover .mfx i:nth-child(3),.mcard:focus-visible .mfx i:nth-child(3){transform:translate(-2px,2px)}
+.mcard:hover .mfx i:nth-child(4),.mcard:focus-visible .mfx i:nth-child(4){transform:translate(2px,2px)}
+.mcard .stall{position:relative;transition:transform .3s}
+.mcard .stall::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:2px solid var(--c,var(--maroon));opacity:0;pointer-events:none}
+.mcard:hover .stall{transform:scale(1.06)}
+.mcard:hover .stall::after,.mcard:focus-visible .stall::after{animation:ping 1.2s ease-out infinite}
+@keyframes ping{0%{opacity:.8;transform:scale(.9)}100%{opacity:0;transform:scale(1.35)}}
+.pframe{position:relative;margin-top:16px}
+.pframe .pphoto{margin-top:0;display:block;width:100%}
+.pframe .mfx{inset:-6px}
+.pframe .mfx i{width:26px;height:26px;opacity:1;animation:brIn .8s .2s cubic-bezier(.2,.8,.2,1) both}
+.pframe .mfx b{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--c,var(--maroon));animation:ping 1.8s 1s ease-out 3 both}
+
+/* Event Team: compact cards in a grid */
+.contacts{grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media (min-width:640px){.contacts{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.contacts{grid-template-columns:repeat(3,1fr)}}
+body[data-pub] .contact{grid-template-columns:1fr!important;border-top:3px solid var(--maroon);border-radius:10px;box-shadow:0 10px 22px -20px rgba(42,35,37,.7)}
+.c-side{padding:12px 14px}
+.c-side .role{font-size:16px;gap:6px}
+.c-side .role svg{width:18px;height:18px}
+.c-side .resp{padding-top:4px;font-size:13.5px;line-height:1.4}
+.c-side .resp small{font-size:10px}
+.c-people{grid-template-columns:1fr}
+.c-people .person{padding:10px 14px;grid-template-columns:36px 1fr;column-gap:10px}
+.c-people .person h3{font-size:16px;margin:0}
+.contact .av{width:36px;height:36px;font-size:13px}
+.contact .pnum{font-size:14px;margin:2px 0 0}
+.contact .acts{margin-top:6px;gap:6px}
+.contact .acts .btn{height:32px;padding:0 12px;font-size:13px}
+body[data-pub] .phead{padding:16px 18px}
+
+/* sign in pages */
+.signin{max-width:940px;padding-top:28px;padding-bottom:40px}
+.si-card{display:grid;grid-template-columns:1fr;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(42,35,37,.6)}
+@media (min-width:760px){.si-card{grid-template-columns:5fr 6fr}}
+.si-side{position:relative;padding:26px 24px;color:#fff;background:linear-gradient(150deg,var(--maroon-deep),var(--maroon) 70%);overflow:hidden}
+.si-side::after{content:"";position:absolute;right:-60px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(242,169,0,.35),transparent 65%)}
+.si-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}
+.si-icon svg{width:26px;height:26px}
+.si-kick{margin-top:18px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.si-side h1{color:#fff;font-size:clamp(28px,5vw,38px);margin-top:4px;line-height:1.1}
+.si-side p:not(.si-kick){margin-top:8px;color:rgba(255,255,255,.86);font-size:15px}
+.si-spark{display:flex;gap:6px;margin-top:22px}
+.si-spark span{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.1);color:var(--gold);font-weight:800;animation:siPop .5s calc(var(--i) * .08s + .2s) cubic-bezier(.2,.8,.2,1) both}
+@keyframes siPop{from{opacity:0;transform:translateY(8px) scale(.85)}to{opacity:1;transform:none}}
+.si-form{padding:24px;display:grid;gap:14px;align-content:center}
+.si-form .btn-primary{height:50px;font-size:17px}
+.si-switch{text-align:center;margin-top:16px;color:var(--muted);font-size:15px}
+.si-switch a{color:var(--maroon);font-weight:700}
+
+/* organiser dashboard */
+.adm-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;padding:20px 22px;border-radius:16px;color:#fff;background:linear-gradient(120deg,var(--maroon-deep),var(--maroon))}
+.adm-head h1{color:#fff;font-size:clamp(26px,5vw,38px);line-height:1.1}
+.adm-kick{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.adm-time{color:rgba(255,255,255,.8);font-size:14px;margin-top:4px}
+.adm-head-acts{display:flex;gap:8px;flex-wrap:wrap}
+.adm-head .btn-ghost{color:#fff;border-color:rgba(255,255,255,.5);background:transparent}
+.adm-head .btn-primary{background:#fff;color:var(--maroon)}
+.adm-head .btn svg{width:16px;height:16px}
+.dnav{position:sticky;top:calc(var(--top-h,64px) + env(safe-area-inset-top,0px));z-index:15;display:flex;gap:6px;overflow-x:auto;margin:14px -4px 0;padding:8px 4px;background:var(--bg);scrollbar-width:none}
+.dnav::-webkit-scrollbar{display:none}
+.dnav button{flex:none;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 14px/1 inherit;font-family:inherit;cursor:pointer}
+.dnav button:hover{border-color:var(--maroon);color:var(--maroon)}
+.dsec{margin-top:18px;padding:18px;border-radius:14px;background:#fff;border:1px solid var(--line);scroll-margin-top:130px}
+.dsec-h{font-size:clamp(20px,3.4vw,26px);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.dsec-h::before{content:"";width:6px;height:22px;border-radius:3px;background:var(--maroon)}
+.dsec .stats{margin-top:0}
+.dsec-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.dsec-top .dsec-h{margin-bottom:0}
+.adm-tabs{margin:0}
+.dsec .adm-cat{margin-top:16px}
+.act-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.act{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--soft);color:var(--ink);text-decoration:none;text-align:left;font:inherit;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.act svg{grid-row:1/span 2;width:26px;height:26px;color:var(--maroon)}
+.act b{font-size:16px}
+.act span{font-size:13px;color:var(--muted);line-height:1.35}
+.act:hover{transform:translateY(-2px);border-color:var(--maroon);box-shadow:0 12px 24px -20px rgba(42,35,37,.8)}
+.act-main{background:linear-gradient(120deg,var(--maroon),var(--maroon-dk));border-color:var(--maroon);color:#fff}
+.act-main svg{color:var(--gold)}.act-main span{color:rgba(255,255,255,.85)}
+@media (min-width:720px){.act-main{grid-column:span 2}}
+.jprog{display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.pbar{display:inline-block;width:90px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--maroon);border-radius:inherit;transition:width .6s}
+th,td{text-align:left;vertical-align:middle}
+
+/* Winner Announcement: white opening and closing slides */
+.stage.bright{background:#fff;color:var(--ink)}
+.stage.bright::before{opacity:.05;filter:invert(1)}
+.stage.bright .s-logos{gap:0;margin-bottom:5vh}
+.stage.bright .s-logos img{background:none;border-radius:0;padding:0 3vw;height:12vh;max-width:26vw;border-left:2px solid var(--line)}
+.stage.bright .s-logos img:first-child{border-left:0}
+.stage.bright .s-kicker{color:#B5862F;text-transform:uppercase;letter-spacing:.24em;font-size:2.6vh;font-weight:700}
+.stage.bright .s-big{color:var(--maroon);font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;letter-spacing:-.02em;font-size:12vh;margin-top:1.4vh}
+.stage.bright .s-sub{color:var(--muted)}
+.stage.bright .s-spark .sw b{color:var(--maroon)}
+.stage.bright .s-spark .sw span{color:var(--ink)}
+.stage.bright .s-count,.stage.bright .s-hint{color:var(--muted);opacity:.8}
+
+/* results: announce question */
+.annask{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:20px;background:rgba(20,10,12,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:annFade .25s ease both}
+.ann-box{width:min(440px,100%);padding:26px 22px 22px;border-radius:18px;background:#fff;color:var(--ink);text-align:center;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);animation:annUp .35s cubic-bezier(.2,.8,.2,1) both}
+.ann-ic{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--gold-t);color:var(--maroon)}
+.ann-ic svg{width:30px;height:30px}
+.ann-box h2{font-size:clamp(21px,4.6vw,26px);margin-top:12px;line-height:1.25}
+.ann-box p{color:var(--muted);margin-top:6px;font-size:15px}
+.ann-acts{display:grid;gap:10px;margin-top:18px}
+body.ann-open{overflow:hidden}
+@keyframes annFade{from{opacity:0}to{opacity:1}}
+@keyframes annUp{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .countdown .cd b.flip,.countdown.big .cd,.plist .mcard .mfx i,.pframe .mfx i,.pframe .mfx b,.si-spark span,.annask,.ann-box{animation:none!important}
+  .mcard .mfx i{opacity:.75}
+}
+@media print{.dnav,.adm-head-acts,.annask{display:none!important}.dsec{border:0;padding:0}}
 </style>
 </head>
 <body>
@@ -1368,7 +1558,7 @@ const PRIZES = { English: 1 };
 const places = cat => PRIZES[cat] || 3;
 function modelCard(p, i = 0) {
   const c = p.category;
-  return `<a class="pcard mcard c-${CAT_CLS[c]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}">
+  return `<a class="pcard mcard c-${CAT_CLS[c]}" style="animation-delay:${Math.min(i, 10) * 0.04}s" href="#/project/${encodeURIComponent(p.project_id)}"><span class="mfx" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span class="pc-band">${icon(CAT_ICON[c])}<b>${catLabel(c)}</b><small>${CAT_SUBJ[c] || ''}</small></span>
     <span class="pc-main">${stallBadge(p)}<span class="pbody"><span class="ptitle">${esc(p.title)}</span><span class="pmeta">${esc([orTbd(p.centre, ''), stallLine(p)].filter(Boolean).join(', '))}</span>${S.rated[p.project_id] ? `<span class="voted-mark">${icon('check')}Rated</span>` : ''}</span></span>
   </a>`;
@@ -1400,6 +1590,10 @@ const jparse = (s, fb) => { try { return s ? JSON.parse(s) : fb; } catch (e) { r
 const splitList = v => String(v || '').split(';').map(x => x.trim());
 
 const ICONS = {
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  download: '<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>',
+  refresh: '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/>',
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17.5 14a5 5 0 0 1 4 6"/>',
   scan: '<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 12h10"/>',
   spk_s: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
@@ -2093,7 +2287,11 @@ function tickCountdown() {
   let s = Math.max(0, Math.floor((t.start - new Date()) / 1000));
   if (s === 0) { render(); return; }
   const v = { Days: Math.floor(s / 86400), Hours: Math.floor(s % 86400 / 3600), Mins: Math.floor(s % 3600 / 60), Secs: s % 60 };
-  Object.entries(v).forEach(([k, n]) => { const b = $(`[data-cd="${k}"]`, el); if (b) b.textContent = k === 'Days' ? n : String(n).padStart(2, '0'); });
+  Object.entries(v).forEach(([k, n]) => {
+    const b = $(`[data-cd="${k}"]`, el); if (!b) return;
+    const txt = k === 'Days' ? String(n) : String(n).padStart(2, '0');
+    if (b.textContent !== txt) { b.textContent = txt; b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); }
+  });
 }
 
 function heroLogos() {
@@ -2309,7 +2507,7 @@ VIEWS.project = (id) => {
       <a class="back" href="#/projects">${icon('back')}All models</a>
       <div class="pd-grid"><article class="c-${CAT_CLS[p.category]}">
         <div class="pd-head">${stallBadge(p, true)}<div><span class="ptag">${catLabel(p.category)} (${CAT_SUBJ[p.category] || p.category})${p.stall ? `, stall ${esc(p.stall)}` : ''}</span><h1>${esc(p.title)}</h1><p class="pmeta">Project ID ${esc(p.project_id)}${!isTbd(p.centre) ? `, ${esc(p.centre)}` : ''}</p></div></div>
-        ${photo ? `<img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.remove()">` : ''}
+        ${photo ? `<div class="pframe"><img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.parentNode.remove()"><span class="mfx" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></span></div>` : ''}
         ${!isTbd(p.description) ? `<div class="pdesc">${String(p.description).split(/\r?\n/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('')}</div>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><ul class="studs">${String(p.students).split(/[,;\r\n]+/).map(x => x.trim()).filter(Boolean).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       </article>
@@ -2692,15 +2890,16 @@ async function refreshJudgeScores() {
 function judgeLogin() {
   const pre = store.get('sf_jpre', true);
   return {
-    html: `<div class="wrap page narrow">
-      <div class="phead"><h1>Judge sign in</h1><p>Welcome! Choose your name and enter the PIN on your judge card.</p></div>
-      <div class="card" style="margin-top:18px;display:grid;gap:14px">
+    html: `<div class="wrap page signin"><div class="si-card">
+        <div class="si-side"><span class="si-icon">${icon('gavel')}</span><p class="si-kick">${esc((S.data && S.data.settings.event_name) || 'STEM FEST 2026')}</p><h1>Judge sign in</h1><p>Welcome! Choose your name and enter the PIN printed on your judge card.</p><div class="si-spark" aria-hidden="true">${[...'SPARK'].map((ch, i) => `<span style="--i:${i}">${ch}</span>`).join('')}</div></div>
+        <div class="si-form">
         <label class="field"><span>Your name</span><select id="jsel"><option value="">Loading names...</option></select></label>
         ${pwField('jpin', 'PIN', 'inputmode="numeric" maxlength="8"')}
         <p class="err" id="jerr" role="alert"></p>
         <button class="btn btn-primary btn-block" id="jgo">Sign in</button>
         ${DEMO ? '<p class="muted" style="font-size:14px">Preview mode PINs: Judge 1 is 4821, Judge 2 is 7390, Judge 3 is 1564.</p>' : ''}
-      </div>
+      </div></div>
+      <p class="si-switch">Organising team? <a href="#/admin">Organiser sign in</a></p>
     </div>`,
     async mount() {
       bindEyes(document);
@@ -2888,14 +3087,15 @@ function adminLogin(sub) {
     return { html: `<div class="loading"><div class="spin"></div>Opening dashboard</div>`, async mount() { try { await fetchAdmin(); } catch (e) { S.adminKey = null; store.del('sf_admin', true); } render(); } };
   }
   return {
-    html: `<div class="wrap page narrow">
-      <div class="phead"><h1>Organiser dashboard</h1><p>Live results, projector reveal, QR cards and judge cards. For the organising team only.</p></div>
-      <div class="card" style="margin-top:18px;display:grid;gap:14px">
+    html: `<div class="wrap page signin"><div class="si-card">
+        <div class="si-side"><span class="si-icon">${icon('lock')}</span><p class="si-kick">${esc((S.data && S.data.settings.event_name) || 'STEM FEST 2026')}</p><h1>Organiser sign in</h1><p>Live results, the Winner Announcement, QR cards and judge cards. For the organising team only.</p><div class="si-spark" aria-hidden="true">${[...'SPARK'].map((ch, i) => `<span style="--i:${i}">${ch}</span>`).join('')}</div></div>
+        <div class="si-form">
         ${pwField('akey', 'Admin key')}
         <p class="err" id="aerr" role="alert"></p>
         <button class="btn btn-primary btn-block" id="ago">Open dashboard</button>
         ${DEMO ? '<p class="muted" style="font-size:14px">Preview mode admin key: demo</p>' : ''}
-      </div>
+      </div></div>
+      <p class="si-switch">Judging today? <a href="#/judge">Judge sign in</a></p>
     </div>`,
     mount() {
       bindEyes(document);
@@ -2923,26 +3123,35 @@ function adminDash() {
   const ties = hasTies();
   return {
     html: `<div class="wrap page">
-      <div class="jhead"><div><h1>Organiser dashboard</h1><p class="muted">Updated at ${t}, refreshes every 30 seconds</p></div><button class="btn btn-ghost btn-sm" id="aout">Sign out</button></div>
+      <div class="adm-head">
+        <div><p class="adm-kick">${esc(s.event_name || 'STEM FEST')}</p><h1>Organiser dashboard</h1><p class="adm-time">Updated at ${t}, refreshes every 30 seconds</p></div>
+        <div class="adm-head-acts no-print"><button class="btn btn-primary btn-sm" id="arefresh">${icon('refresh')}Refresh now</button><button class="btn btn-ghost btn-sm" id="aout">Sign out</button></div>
+      </div>
       ${a.default_key ? '<p class="banner">The admin key is still the default one. Change admin_key in the Settings tab before the event.</p>' : ''}
       ${ties ? '<p class="banner" style="background:#FFF1F0;color:var(--err)">There is an exact tie affecting a winning place. Rows marked Tie below need a decision before the results are revealed.</p>' : ''}
-      <div class="stats">
-        <div class="stat"><b>${st.projects}</b><span>Models</span></div>
-        <div class="stat"><b>${st.ratings}</b><span>Visitor ratings</span></div>
-        <div class="stat"><b>${st.raters}</b><span>People who rated</span></div>
-        <div class="stat"><b>${st.scores}</b><span>Judge scores</span></div>
-      </div>
-      <div class="tools no-print">
-        <button class="btn btn-primary btn-sm" id="arefresh">Refresh now</button>
-        <a class="btn btn-gold btn-sm" href="#/reveal">${icon('screen')}Winners reveal</a>
-        <a class="btn btn-ghost btn-sm" href="#/admin/qr">Print QR cards</a>
-        <a class="btn btn-ghost btn-sm" href="#/admin/judgecards">Print judge cards</a>
-        <a class="btn btn-ghost btn-sm" href="#/admin/envelopes">Print judge envelopes</a>
-        ${a.codes.length ? `<a class="btn btn-ghost btn-sm" href="#/admin/codes">Print voter codes (${a.codes.length})</a>` : ''}
-        <button class="btn btn-ghost btn-sm" id="acsv">Download results (CSV)</button>
-      </div>
+      <nav class="dnav no-print" aria-label="Dashboard sections">${[['a-over', 'Overview'], ['a-actions', 'Announce and print'], ['a-switch', 'Switches'], ['a-raters', 'Top raters'], ['a-judges', 'Judges'], ['a-results', 'Results']].map(([id, l]) => `<button type="button" data-go="${id}">${l}</button>`).join('')}</nav>
 
-      <section class="block"><h2>Switches</h2>
+      <section class="dsec" id="a-over"><h2 class="dsec-h">Overview</h2>
+        <div class="stats">
+          <div class="stat"><b>${st.projects}</b><span>Models</span></div>
+          <div class="stat"><b>${st.ratings}</b><span>Visitor ratings</span></div>
+          <div class="stat"><b>${st.raters}</b><span>People who rated</span></div>
+          <div class="stat"><b>${st.scores}</b><span>Judge scores</span></div>
+        </div>
+      </section>
+
+      <section class="dsec no-print" id="a-actions"><h2 class="dsec-h">Announce and print</h2>
+        <div class="act-grid">
+          <a class="act act-main" href="#/reveal">${icon('screen')}<b>Winner Announcement</b><span>Projector slides, one corner at a time</span></a>
+          <a class="act" href="#/admin/qr">${icon('scan')}<b>QR cards</b><span>One card per model, with its stall code</span></a>
+          <a class="act" href="#/admin/judgecards">${icon('gavel')}<b>Judge cards</b><span>Name, PIN and corners for each judge</span></a>
+          <a class="act" href="#/admin/envelopes">${icon('mail')}<b>Judge envelopes</b><span>Two per A4 page</span></a>
+          ${a.codes.length ? `<a class="act" href="#/admin/codes">${icon('check')}<b>Voter codes</b><span>${a.codes.length} printed codes</span></a>` : ''}
+          <button type="button" class="act" id="acsv">${icon('download')}<b>Download results</b><span>CSV file for your records</span></button>
+        </div>
+      </section>
+
+      <section class="dsec" id="a-switch"><h2 class="dsec-h">Switches</h2>
         <div class="flags">
           ${flag('Visitor rating', toBool(s.voting_open), 'Open', 'Closed')}
           ${flag('Rating mode', true, votingModeLabel(s.voting_mode), '')}
@@ -2960,22 +3169,24 @@ function adminDash() {
         : '<p class="muted" style="font-size:14px;margin-top:8px">To change these, edit the Settings tab in the Google Sheet. The website picks up changes within a minute.</p>'}
       </section>
 
-      <section class="block"><h2>Top raters (goodies)</h2>
+      <section class="dsec" id="a-raters"><h2 class="dsec-h">Top raters (goodies)</h2>
         ${(a.top_raters || []).length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>Name</th><th>Mobile</th><th>Models counted</th><th>All ratings</th><th>Corners</th></tr></thead><tbody>
           ${a.top_raters.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.name)}</td><td><a href="tel:${esc(x.mobile)}">${esc(x.mobile)}</a></td><td class="num-c"><b>${x.counted}</b></td><td class="num-c">${x.total}</td><td class="num-c">${x.corners}</td></tr>`).join('')}
         </tbody></table></div>` : '<p class="muted">No named raters yet.</p>'}
         <p class="muted" style="font-size:14px;margin-top:8px">Models counted leaves out ratings made within ${esc(s.min_gap_seconds || '0')} seconds of the same phone's previous rating. All ratings shows every model they rated. Stall scanning is ${toBool(s.require_scan) ? 'on' : 'off'} (require_scan in Settings).</p>
       </section>
 
-      <section class="block"><h2>Judges' progress</h2>
+      <section class="dsec" id="a-judges"><h2 class="dsec-h">Judges' progress</h2>
         <div class="tbl-wrap"><table><thead><tr><th>Judge</th><th>Corners</th><th>Scored</th></tr></thead><tbody>
-          ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(String(j.categories || '').split(',').map(c => normCat(c)).filter(Boolean).map(catLabel).join(', ') || j.categories)}</td><td class="num-c">${j.done} of ${j.total}</td></tr>`).join('')}
+          ${st.judges.map(j => `<tr><td>${esc(j.name)}</td><td>${esc(String(j.categories || '').split(',').map(c => normCat(c)).filter(Boolean).map(catLabel).join(', ') || j.categories)}</td><td class="num-c"><span class="jprog"><span class="pbar"><i style="width:${j.total ? Math.round(j.done * 100 / j.total) : 0}%"></i></span>${j.done} of ${j.total}</span></td></tr>`).join('')}
         </tbody></table></div>
       </section>
 
+      <section class="dsec" id="a-results"><div class="dsec-top"><h2 class="dsec-h">Results by corner</h2>
+        <div class="rtabs adm-tabs no-print" role="group" aria-label="Show corner">${['All', ...CATS].map(c => `<button type="button" class="rtab ${c === 'All' ? 'c-all' : 'c-' + CAT_CLS[c]}" data-ac="${c}" aria-pressed="${c === 'All'}">${c === 'All' ? 'All corners' : catLabel(c)}</button>`).join('')}</div></div>
       ${CATS.map(c => {
         const r = a.results[c];
-        return `<section class="adm-cat c-${CAT_CLS[c]}"><h2>${catHtml(c)}</h2>
+        return `<section data-cat="${c}" class="adm-cat c-${CAT_CLS[c]}"><h2>${catHtml(c)}</h2>
           <h3>Judges' ranking, by average score (${places(c) === 1 ? '1 winner' : 'top ' + places(c) + ' win'})</h3>
           ${r.judges.length ? `<div class="tbl-wrap"><table class="wide"><thead><tr><th>Rank</th><th>ID</th><th>Model</th><th>Average</th><th>Judges</th></tr></thead><tbody>
             ${r.judges.map((x, i) => `<tr class="${x.tie ? 'tie' : ''}"><td>${i + 1}${x.tie ? '<br><span class="warn">Tie</span>' : ''}</td><td><b>${esc(x.project_id)}</b></td><td>${esc(x.title)}<br><span class="muted">${esc([x.centre, x.stall ? 'stall ' + x.stall : ''].filter(Boolean).join(', '))}</span></td><td class="num-c"><b>${x.avg}</b></td><td class="num-c">${x.n}${x.below_min ? '<br><span class="warn">Needs more judges</span>' : ''}</td></tr>`).join('')}
@@ -2987,6 +3198,7 @@ function adminDash() {
         </section>`;
       }).join('')}
       <p class="muted" style="font-size:14px;margin-top:22px">People's Choice ties are broken by total points, then average rating, then number of ratings. Rows marked Tie are still exactly equal and need a decision.</p>
+      </section>
     </div>`,
     mount() {
       const refresh = async (manual) => {
@@ -2996,6 +3208,11 @@ function adminDash() {
       $('#arefresh').addEventListener('click', () => refresh(true));
       $('#aout').addEventListener('click', () => { S.adminKey = null; S.admin = null; store.del('sf_admin', true); render(); });
       $('#acsv').addEventListener('click', downloadCsv);
+      $$('.dnav [data-go]').forEach(b => b.addEventListener('click', () => { const t2 = document.getElementById(b.dataset.go); if (t2) t2.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+      $$('.adm-tabs [data-ac]').forEach(b => b.addEventListener('click', () => {
+        $$('.adm-tabs [data-ac]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+        $$('.adm-cat[data-cat]').forEach(sec => { sec.hidden = b.dataset.ac !== 'All' && sec.dataset.cat !== b.dataset.ac; });
+      }));
       $$('[data-flip]').forEach(b => b.addEventListener('click', async () => {
         const k = b.dataset.flip; const cur = Demo.settings(); const o = jparse(store.get('sfd_set'), {});
         o[k] = k === 'voting_mode' ? (cur.voting_mode === 'code' ? 'device' : 'code') : (toBool(cur[k]) ? 'FALSE' : 'TRUE');
@@ -3295,7 +3512,7 @@ VIEWS.reveal = () => {
       const stage = $('#stage');
       const show = () => {
         const sl = slides[revealIdx];
-        stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : (sl.cat ? ' th c-' + CAT_CLS[sl.cat] : ''));
+        stage.className = 'stage' + (sl.type === 'cat' ? ' cat c-' + CAT_CLS[sl.cat] : (sl.cat ? ' th c-' + CAT_CLS[sl.cat] : '')) + (sl.type === 'intro' || sl.type === 'end' ? ' bright' : '');
         stage.innerHTML = slideHtml(sl) + `<span class="s-count">${revealIdx + 1} / ${slides.length}</span><span class="s-hint">Right arrow or click: next. Left arrow: back. F: full screen. Esc: dashboard.</span>`;
         $$('.poppers').forEach(x => x.remove());
         if (sl.type === 'place' || sl.type === 'people') setTimeout(() => confetti(130), 300);
@@ -3331,7 +3548,7 @@ function renderTop(page) {
   if (page === 'admin' || page === 'staff') { el.textContent = 'Organisers'; return; }
   const yl = S.data ? logoSrc(S.data.settings.yojak_logo) : '', bd = $('.brand');
   if (bd && yl) bd.innerHTML = `<img class="brand-logo" src="${esc(yl)}" alt="YOJAK" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-yojak',textContent:'YOJAK'}))">`;
-  el.innerHTML = (S.data ? brandBar() : '') + `<a class="judge-btn" href="#/judge">${icon('gavel')}<span>Judges</span></a>`;
+  el.innerHTML = (S.data ? brandBar() : '') + `<a class="judge-btn" href="#/judge" aria-label="Judge sign in">${icon('gavel')}<span>Judge sign in</span></a><a class="judge-btn org" href="#/admin" aria-label="Organiser sign in">${icon('lock')}<span>Organiser sign in</span></a>`;
 }
 
 function shellHtml(page) {
@@ -3345,6 +3562,39 @@ function shellHtml(page) {
     </div></div></section>
     <div class="wrap"><div class="corners-strip">${CATS.map(c => `<span class="ctile c-${CAT_CLS[c]}">${icon(CAT_ICON[c])}<span class="ctile-name">${catHtml(c)}</span></span>`).join('')}</div>
     <div class="sk" style="height:84px;margin-top:22px"></div><div class="sk" style="height:160px;margin-top:14px"></div></div>`;
+}
+
+/* Header: white everywhere; on Home it turns blue once you scroll down to the SPARK theme section */
+function topTone() {
+  const pg = route()[0] || 'home';
+  const sec = pg === 'home' && S.data ? $('.theme.spark') : null;
+  const topH = ($('.top') || {}).offsetHeight || 64;
+  const r = sec ? sec.getBoundingClientRect() : null;
+  /* blue once the SPARK section reaches the header (or the page is scrolled to its end on tall screens) */
+  const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+  document.body.classList.toggle('top-blue', !!r && (r.top <= topH || (atEnd && window.scrollY > 0)));
+}
+let toneQueued = false;
+window.addEventListener('scroll', () => { if (toneQueued) return; toneQueued = true; requestAnimationFrame(() => { toneQueued = false; topTone(); }); }, { passive: true });
+
+/* Results page: ask a signed in organiser once per visit whether to start the Winner Announcement */
+function annAsk() {
+  if (!S.adminKey) return;
+  try { if (sessionStorage.getItem('sf_annask')) return; sessionStorage.setItem('sf_annask', '1'); } catch (e) { if (window.__annAsked) return; window.__annAsked = true; }
+  const o = document.createElement('div'); o.className = 'annask';
+  o.innerHTML = `<div class="ann-box" role="dialog" aria-modal="true" aria-labelledby="annT">
+    <span class="ann-ic">${icon('trophy')}</span>
+    <h2 id="annT">Would you like to announce the winners now?</h2>
+    <p>Yes opens the Winner Announcement on this screen. No shows the Results page.</p>
+    <div class="ann-acts"><button class="btn btn-primary btn-block" id="annYes">Yes, Announce Winners</button><button class="btn btn-ghost btn-block" id="annNo">No, View Results</button></div>
+  </div>`;
+  document.body.appendChild(o); document.body.classList.add('ann-open');
+  const close = () => { o.remove(); document.body.classList.remove('ann-open'); window.removeEventListener('keydown', esc1); };
+  const esc1 = e => { if (e.key === 'Escape') close(); };
+  window.addEventListener('keydown', esc1);
+  $('#annYes').addEventListener('click', () => { close(); location.hash = '#/reveal'; });
+  $('#annNo').addEventListener('click', close);
+  setTimeout(() => { const y = $('#annYes'); if (y) y.focus(); }, 50);
 }
 
 let lastPage = null;
@@ -3374,6 +3624,8 @@ function render() {
   if (key !== lastPage) window.scrollTo(0, 0);
   lastPage = key;
   if (v.mount) v.mount(app);
+  topTone();
+  if (page === 'results') annAsk();
   observeReveals();
   floatNow();
 }
