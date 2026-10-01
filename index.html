@@ -1497,6 +1497,45 @@ body.ann-open{overflow:hidden}
   .mcard .mfx i{opacity:.75}
 }
 @media print{.dnav,.adm-head-acts,.annask{display:none!important}.dsec{border:0;padding:0}}
+
+/* ===== Header: one Sign in menu, logo variants for white and blue bars ===== */
+.top .lg-w{display:none}
+body.top-blue .top .lg-c{display:none}
+body.top-blue .top .lg-w{display:block}
+.top img.lg-c,body.top-blue .top img.lg-w{filter:none!important}
+body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
+.top .brandbar .bl img.pl-logo{height:38px;width:auto;max-width:140px;object-fit:contain}
+.top .brand{display:flex;align-items:center}
+.si-wrap{position:relative}
+#topright .si-trigger{width:auto;padding:0 12px 0 14px;gap:7px;cursor:pointer;font-family:inherit}
+#topright .si-trigger span{display:inline}
+.si-chev{width:16px;height:16px;transition:transform .2s}
+.si-trigger[aria-expanded="true"] .si-chev{transform:rotate(180deg)}
+.si-drop{position:absolute;right:0;top:calc(100% + 10px);z-index:60;width:290px;max-width:calc(100vw - 24px);padding:6px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 24px 48px -20px rgba(42,35,37,.55);animation:siDrop .18s ease-out both}
+.si-drop::before{content:"";position:absolute;right:22px;top:-7px;width:12px;height:12px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.si-drop a{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:var(--ink);text-decoration:none}
+.si-drop a:hover,.si-drop a:focus-visible{background:var(--soft);outline:none}
+.si-drop a > svg{flex:none;width:22px;height:22px;padding:8px;box-sizing:content-box;border-radius:10px;background:var(--maroon-tint);color:var(--maroon)}
+.si-drop b{display:block;font-size:15px}
+.si-drop small{display:block;font-size:13px;color:var(--muted);line-height:1.35}
+@keyframes siDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (max-width:1099px){#topright .si-trigger{width:auto;padding:0 10px 0 12px}#topright .si-trigger span{display:inline}}
+@media (max-width:719px){#topright .si-trigger{display:inline-flex;height:34px;font-size:13px}}
+@media (max-width:420px){#topright .si-trigger span{display:none}#topright .si-trigger{padding:0 8px}.si-drop{right:-4px}}
+@media (max-width:480px){.top .brandbar .bl img.pl-logo{height:28px;max-width:82px}}
+@media (prefers-reduced-motion:reduce){.si-drop{animation:none}}
+
+/* tablets and small laptops: keep logos, menu and Sign in on one row */
+.top .topnav{min-width:0}
+@media (min-width:720px) and (max-width:1099px){
+  .top .wrap{gap:10px;padding-left:16px;padding-right:16px}
+  .top .topnav{gap:0}
+  .top .topnav a{padding:6px 8px;font-size:14px}
+  .top .brand-logo{height:30px;max-width:96px}
+  .top .brandbar .bl img.pl-logo{height:30px;max-width:92px}
+  #topright{gap:10px}
+}
+@media (min-width:720px) and (max-width:860px){.top .wrap{gap:8px;padding-left:12px;padding-right:12px}.top .topnav a{padding:6px 5px;font-size:13.5px}.top .brand{margin-right:6px}.top .brand-logo{height:26px;max-width:78px}.top .brandbar .bl img.pl-logo{height:26px;max-width:64px}#topright{gap:8px}#topright .si-trigger span{display:none}#topright .si-trigger{padding:0 8px}}
 </style>
 </head>
 <body>
@@ -3546,10 +3585,41 @@ function renderTop(page) {
   const el = $('#topright');
   if (page === 'judge') { el.textContent = 'Judge portal'; return; }
   if (page === 'admin' || page === 'staff') { el.textContent = 'Organisers'; return; }
-  const yl = S.data ? logoSrc(S.data.settings.yojak_logo) : '', bd = $('.brand');
-  if (bd && yl) bd.innerHTML = `<img class="brand-logo" src="${esc(yl)}" alt="YOJAK" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-yojak',textContent:'YOJAK'}))">`;
-  el.innerHTML = (S.data ? brandBar() : '') + `<a class="judge-btn" href="#/judge" aria-label="Judge sign in">${icon('gavel')}<span>Judge sign in</span></a><a class="judge-btn org" href="#/admin" aria-label="Organiser sign in">${icon('lock')}<span>Organiser sign in</span></a>`;
+  const st = S.data ? S.data.settings : {}, bd = $('.brand');
+  const yl = logoSrc(st.yojak_logo), yw = logoSrc(st.yojak_logo_white);
+  if (bd && (yl || yw)) bd.innerHTML = hdrLogo(yl, yw, 'YOJAK', 'brand-logo');
+  el.innerHTML = (S.data ? hdrPartners() : '') + `<div class="si-wrap">
+      <button type="button" class="judge-btn org si-trigger" id="siBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="siMenu">${icon('lock')}<span>Sign in</span><svg class="si-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="si-drop" id="siMenu" role="menu" hidden>
+        <a role="menuitem" href="#/judge">${icon('gavel')}<span><b>Judge login</b><small>Score the models in your corners</small></span></a>
+        <a role="menuitem" href="#/admin">${icon('lock')}<span><b>Organiser login</b><small>Dashboard, results and printing</small></span></a>
+      </div>
+    </div>`;
+  const btn = $('#siBtn'), menu = $('#siMenu');
+  btn.addEventListener('click', e => { e.stopPropagation(); setSignMenu(menu.hidden); });
+  $$('a', menu).forEach(a => a.addEventListener('click', () => setSignMenu(false)));
 }
+/* Header logos: the coloured logo on the white bar, the white version on the blue bar.
+   White versions come from the Settings rows yojak_logo_white and partner_logo_white;
+   if a white file is not set, the coloured one is turned white automatically. */
+function hdrLogo(color, white, alt, cls) {
+  if (!color && !white) return '';
+  const hide = `onerror="this.style.display='none'"`;
+  return `<img class="${cls} lg-c" src="${esc(color || white)}" alt="${esc(alt)}" ${hide}><img class="${cls} lg-w${white ? '' : ' lg-auto'}" src="${esc(white || color)}" alt="" aria-hidden="true" ${hide}>`;
+}
+function hdrPartners() {
+  const whites = splitList(S.data.settings.partner_logo_white);
+  const pl = partnerList();
+  if (!pl.length) return '';
+  return `<div class="brandbar">${pl.map((p, i) => { const w = whites[i] ? logoSrc(whites[i]) : ''; return `<span class="bl">${p.logo || w ? hdrLogo(p.logo, w, p.name || 'Partner', 'pl-logo') : `<span>${esc(p.name || 'Partner')}</span>`}</span>`; }).join('')}</div>`;
+}
+function setSignMenu(open) {
+  const btn = $('#siBtn'), menu = $('#siMenu'); if (!btn || !menu) return;
+  menu.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+  if (open) { const first = $('a', menu); if (first) first.focus(); }
+}
+document.addEventListener('click', e => { const w = $('.si-wrap'); if (w && !w.contains(e.target)) setSignMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#siMenu') && !$('#siMenu').hidden) { setSignMenu(false); const b = $('#siBtn'); if (b) b.focus(); } });
 
 function shellHtml(page) {
   if (page && page !== 'home') return '<div class="loading"><div class="spin"></div>Loading STEM FEST</div>';
