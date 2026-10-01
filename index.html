@@ -1167,6 +1167,56 @@ body[data-pub] .res-head h2,.res-head h2 small{color:#fff}
 @media (min-width:1440px){.road{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.contacts{grid-template-columns:repeat(3,1fr)}}
 .partners,.spark,.res-cat,.contact{content-visibility:auto;contain-intrinsic-size:auto 420px}
 
+
+/* logos: light version on dark backgrounds, original on light; YOJAK a step smaller than the partner */
+.top .brandbar .bl img{filter:brightness(0) invert(1)}
+.top .brandbar .bl{height:46px}
+.top .brandbar .bl:first-child img{height:28px;max-width:84px}
+.top .brandbar .bl + .bl img{height:38px;max-width:124px}
+body[data-pub] .plogo img{filter:none;opacity:1}
+body[data-pub] .plogo span{color:var(--charcoal)}
+body[data-pub] .partners .plogo + .plogo::before{background:var(--line)}
+@media (max-width:480px){
+  .top .brandbar .bl{height:34px}
+  .top .brandbar .bl:first-child img{height:21px;max-width:50px}
+  .top .brandbar .bl + .bl img{height:28px;max-width:70px}
+}
+
+
+/* ===== header logos, hero stack, continuous road, team bands ===== */
+.brand-logo{display:block;height:32px;max-width:112px;filter:brightness(0) invert(1)}
+.brand-yojak{font-size:22px;font-weight:800;letter-spacing:.08em;color:#fff}
+.top .brandbar .bl,.top .brandbar .bl:first-child{height:46px}
+.top .brandbar .bl img,.top .brandbar .bl:first-child img{height:38px;max-width:124px}
+@media (max-width:480px){.brand-logo{height:24px;max-width:70px}.top .brandbar .bl,.top .brandbar .bl:first-child{height:34px}.top .brandbar .bl img,.top .brandbar .bl:first-child img{height:28px;max-width:70px}}
+.hero-spark{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:6px}
+.hero-spark svg{width:clamp(34px,7vw,58px);height:auto;filter:drop-shadow(0 0 12px rgba(227,190,120,.6))}
+.hero-spark span{font-size:clamp(34px,7vw,60px);font-weight:700;letter-spacing:.22em;line-height:1;color:var(--gold)}
+.hero.v2 .title{margin-top:2px}
+.hero.v2 .tagline{margin-top:14px;font-size:clamp(15px,2.4vw,20px)}
+.when{margin-top:18px}
+@media (prefers-reduced-motion:no-preference){.hero-spark .tw{transform-origin:29px 7px;animation:brandTw 2.4s ease-in-out infinite}}
+@media (min-width:720px){
+  .road{display:grid;grid-template-columns:1fr 1fr;column-gap:88px;row-gap:26px;padding:0;overflow:visible;align-items:start}
+  .road::before{display:block;left:calc(50% - 9px);width:18px;top:0;bottom:0}
+  .rd::after{display:none}
+  .rd-card{margin-top:0}
+  .rd:nth-child(odd){grid-column:1}
+  .rd:nth-child(even){grid-column:2;margin-top:64px}
+  .rd::before{top:16px}
+  .rd:nth-child(odd)::before{left:auto;right:-65px}
+  .rd:nth-child(even)::before{left:-65px}
+}
+.contacts{grid-template-columns:1fr;gap:16px}
+body[data-pub] .contact{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line)}
+.c-side{padding:20px 22px;color:#fff;background:linear-gradient(160deg,var(--maroon-deep),var(--maroon))}
+.c-side .role{padding:0;color:#fff}
+.c-side .resp{padding:10px 0 0;color:rgba(255,255,255,.86)}
+.c-side .resp small{color:var(--gold)}
+.c-people{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line)}
+.c-people .person{margin:0;padding:18px 20px;border:0;background:#fff}
+@media (min-width:900px){body[data-pub] .contact{grid-template-columns:300px 1fr}}
+
 /* printing stays on white paper */
 @media print{
   :root{--bg:#fff;--surface:#fff;--surface-2:#fff;--line:#DDD;--ink:#111;--muted:#555;--maroon:#7A1C24;--brand:#7A1C24;--gold:#B77F00;color-scheme:light}
@@ -1262,7 +1312,7 @@ body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bott
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#/" aria-label="SPARK, STEM FEST 2026 home"><svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#F2A900"/></linearGradient></defs><path fill="url(#spg)" d="M15 3l3.6 11.4L30 18l-11.4 3.6L15 33l-3.6-11.4L0 18l11.4-3.6z"/><path class="tw" fill="#FF6FA5" d="M29 2l1.3 3.7L34 7l-3.7 1.3L29 12l-1.3-3.7L24 7l3.7-1.3z"/></svg><span class="brand-word">SPARK</span></a>
+    <a class="brand" href="#/" aria-label="YOJAK, STEM FEST 2026 home"><span class="brand-yojak">YOJAK</span></a>
     <nav class="topnav" aria-label="Main">
       <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Team</a>
     </nav>
@@ -2074,7 +2124,7 @@ function heroStats() {
 function brandBar() {
   const s = S.data.settings; const yl = logoSrc(s.yojak_logo); const pl = partnerList();
   const chip = (src, name) => `<span class="bl">${src ? `<img src="${esc(src)}" alt="${esc(name)}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${esc(name).replace(/'/g, '')}'}))">` : `<span>${esc(name)}</span>`}</span>`;
-  return `<div class="brandbar">${chip(yl, 'YOJAK')}${pl.map(p => chip(p.logo, p.name || 'Partner')).join('')}</div>`;
+  return `<div class="brandbar">${pl.map(p => chip(p.logo, p.name || 'Partner')).join('')}</div>`;
 }
 
 function linksBlock() {
@@ -2109,11 +2159,11 @@ VIEWS.home = () => {
     html: `
     <section class="hero v2 ${heroImg ? 'has-img' : ''}" ${heroImg ? `style="--heroimg:url('${esc(heroImg)}')"` : ''}>${floaters()}<div class="wrap"><div class="hero-in">
       <p class="presents">YOJAK presents</p>
+      <div class="hero-spark"><svg viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="spg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9B0"/><stop offset="1" stop-color="#E3BE78"/></linearGradient></defs><path fill="url(#spg)" d="M15 3l3.6 11.4L30 18l-11.4 3.6L15 33l-3.6-11.4L0 18l11.4-3.6z"/><path class="tw" fill="#fff" d="M29 2l1.3 3.7L34 7l-3.7 1.3L29 12l-1.3-3.7L24 7l3.7-1.3z"/></svg><span>SPARK</span></div>
       <h1 class="title">${esc(s.event_name || 'STEM FEST 2026')}</h1>
-      <div class="when"><span>${icon('calendar')}${dateTxt ? esc(dateTxt) : 'Date to be announced'}</span><span>${icon('clock')}${isTbd(s.event_hours) ? 'Time to be announced' : esc(s.event_hours)}</span></div>
-      ${!isTbd(s.venue_name) ? `<p class="where-line">${icon('pin')}${esc(s.venue_name)}</p>` : ''}
+      <p class="tagline">Where Curiosity Becomes Career</p>
+      <div class="when"><span>${icon('calendar')}${dateTxt ? esc(dateTxt) : 'Date to be announced'}</span><span>${icon('clock')}${isTbd(s.event_hours) ? 'Time to be announced' : esc(s.event_hours)}</span><span>${icon('pin')}${isTbd(s.venue_name) ? 'Venue to be announced' : esc(s.venue_name)}</span></div>
       ${heroTimer()}
-      ${s.tagline ? `<p class="tagline">${esc(s.tagline)}</p>` : ''}
       <div class="hero-actions">${map}<a class="btn btn-outline-light" href="#/schedule">See the schedule</a></div>
       ${heroStats()}
     </div></div></section>
@@ -2552,12 +2602,12 @@ VIEWS.help = () => {
       <div class="phead"><h1>Event Team</h1><p>Who is responsible for what, and how to reach them.</p></div>
       <div class="contacts">
         ${groups.map(g => `<div class="card contact" data-reveal>
-          <p class="role">${icon('users')}${esc(g.role)}</p>
-          ${g.resp.length ? `<p class="resp"><small>Responsible for</small>${esc(g.resp.join('. '))}</p>` : ''}
-          ${g.people.map(c => {
+          <div class="c-side"><p class="role">${icon('users')}${esc(g.role)}</p>
+          ${g.resp.length ? `<p class="resp"><small>Responsible for</small>${esc(g.resp.join('. '))}</p>` : ''}</div>
+          <div class="c-people">${g.people.map(c => {
             const d = phoneDigits(c.phone);
             return `<div class="person"><span class="av" aria-hidden="true">${isTbd(c.name) ? '•' : esc(String(c.name).trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase())}</span><h3>${esc(orTbd(c.name, 'To be announced'))}</h3>${d ? `<p class="pnum">+${d.slice(0, 2)} ${d.slice(2)}</p><div class="acts"><a class="btn btn-primary btn-sm" href="tel:+${d}">${icon('phone')}Call</a><a class="btn btn-ghost btn-sm" href="https://wa.me/${d}" target="_blank" rel="noopener">${icon('chat')}WhatsApp</a></div>` : ''}</div>`;
-          }).join('')}
+          }).join('')}</div>
         </div>`).join('')}
       </div>
     </div>`
@@ -3279,6 +3329,8 @@ function renderTop(page) {
   const el = $('#topright');
   if (page === 'judge') { el.textContent = 'Judge portal'; return; }
   if (page === 'admin' || page === 'staff') { el.textContent = 'Organisers'; return; }
+  const yl = S.data ? logoSrc(S.data.settings.yojak_logo) : '', bd = $('.brand');
+  if (bd && yl) bd.innerHTML = `<img class="brand-logo" src="${esc(yl)}" alt="YOJAK" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-yojak',textContent:'YOJAK'}))">`;
   el.innerHTML = (S.data ? brandBar() : '') + `<a class="judge-btn" href="#/judge">${icon('gavel')}<span>Judges</span></a>`;
 }
 
