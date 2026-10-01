@@ -1504,7 +1504,7 @@ body.top-blue .top img.lg-c{display:none!important}
 body.top-blue .top img.lg-w{display:block!important}
 .top img.lg-c,body.top-blue .top img.lg-w{filter:none!important}
 body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
-.top .brandbar .bl img.pl-logo{height:50px;width:auto;max-width:190px;object-fit:contain;border:0;box-shadow:none;background:transparent;clip-path:inset(3px 0)}
+.top .brandbar .bl img.pl-logo{height:50px;width:auto;max-width:190px;object-fit:contain;border:0;box-shadow:none;background:transparent}
 .top .brand{display:flex;align-items:center}
 .si-wrap{position:relative}
 #topright .si-trigger{width:auto;padding:0 12px 0 14px;gap:7px;cursor:pointer;font-family:inherit}
@@ -3611,7 +3611,8 @@ function hdrPartners() {
   const whites = splitList(S.data.settings.partner_logo_white);
   const pl = partnerList();
   if (!pl.length) return '';
-  return `<div class="brandbar">${pl.map((p, i) => { const w = whites[i] ? logoSrc(whites[i]) : ''; return `<span class="bl">${p.logo || w ? hdrLogo(p.logo, w, p.name || 'Partner', 'pl-logo') : `<span>${esc(p.name || 'Partner')}</span>`}</span>`; }).join('')}</div>`;
+    const heads = splitList(S.data.settings.partner_logo_header);   /* optional tightly cropped logo used only in the header */
+  return `<div class="brandbar">${pl.map((p, i) => { const w = whites[i] ? logoSrc(whites[i]) : ''; const c = heads[i] ? logoSrc(heads[i]) : p.logo; return `<span class="bl">${c || w ? hdrLogo(c, w, p.name || 'Partner', 'pl-logo') : `<span>${esc(p.name || 'Partner')}</span>`}</span>`; }).join('')}</div>`;
 }
 function setSignMenu(open) {
   const btn = $('#siBtn'), menu = $('#siMenu'); if (!btn || !menu) return;
