@@ -1330,7 +1330,7 @@ body:has(#floatnow) .scanfab{bottom:calc(var(--nav-h) + env(safe-area-inset-bott
 .top .brandbar .bl + .bl::before{background:var(--line)}
 /* original logos at a matched size */
 .top .brand-logo{height:36px;max-width:130px;filter:none}
-.top .brandbar .bl,.top .brandbar .bl:first-child{height:44px;padding:0;background:transparent}
+.top .brandbar .bl,.top .brandbar .bl:first-child{height:54px;padding:0;background:transparent;border:0;box-shadow:none}
 .top .brandbar .bl img,.top .brandbar .bl:first-child img,.top .brandbar .bl + .bl img{height:38px;max-width:140px;object-fit:contain;filter:none}
 /* Home: blue once the SPARK section has scrolled past */
 body.top-blue .top{background:linear-gradient(100deg,var(--navblue-dk),var(--navblue) 60%,var(--navblue-lt));border-bottom-color:transparent;box-shadow:0 12px 28px -16px rgba(19,38,94,.75)}
@@ -1504,7 +1504,7 @@ body.top-blue .top img.lg-c{display:none!important}
 body.top-blue .top img.lg-w{display:block!important}
 .top img.lg-c,body.top-blue .top img.lg-w{filter:none!important}
 body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
-.top .brandbar .bl img.pl-logo{height:38px;width:auto;max-width:140px;object-fit:contain}
+.top .brandbar .bl img.pl-logo{height:50px;width:auto;max-width:190px;object-fit:contain;border:0;box-shadow:none;background:transparent;clip-path:inset(3px 0)}
 .top .brand{display:flex;align-items:center}
 .si-wrap{position:relative}
 #topright .si-trigger{width:auto;padding:0 12px 0 14px;gap:7px;cursor:pointer;font-family:inherit}
@@ -1522,7 +1522,7 @@ body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
 @media (max-width:1099px){#topright .si-trigger{width:auto;padding:0 10px 0 12px}#topright .si-trigger span{display:inline}}
 @media (max-width:719px){#topright .si-trigger{display:inline-flex;height:34px;font-size:13px}}
 @media (max-width:420px){#topright .si-trigger span{display:none}#topright .si-trigger{padding:0 8px}.si-drop{right:-4px}}
-@media (max-width:480px){.top .brandbar .bl img.pl-logo{height:28px;max-width:82px}}
+@media (max-width:480px){.top .brandbar .bl,.top .brandbar .bl:first-child{height:40px}.top .brandbar .bl img.pl-logo{height:36px;max-width:110px}}
 @media (prefers-reduced-motion:reduce){.si-drop{animation:none}}
 
 /* tablets and small laptops: keep logos, menu and Sign in on one row */
@@ -1532,7 +1532,7 @@ body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
   .top .topnav{gap:0}
   .top .topnav a{padding:6px 8px;font-size:14px}
   .top .brand-logo{height:30px;max-width:96px}
-  .top .brandbar .bl img.pl-logo{height:30px;max-width:92px}
+  .top .brandbar .bl img.pl-logo{height:40px;max-width:130px}
   #topright{gap:10px}
 }
 @media (min-width:720px) and (max-width:860px){.top .wrap{gap:8px;padding-left:12px;padding-right:12px}.top .topnav a{padding:6px 5px;font-size:13.5px}.top .brand{margin-right:6px}.top .brand-logo{height:26px;max-width:78px}.top .brandbar .bl img.pl-logo{height:26px;max-width:64px}#topright{gap:8px}#topright .si-trigger span{display:none}#topright .si-trigger{padding:0 8px}}
