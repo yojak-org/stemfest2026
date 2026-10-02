@@ -1561,6 +1561,9 @@ body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
   .poster .pt-qr,.poster .pt-qr img,.poster .pt-qr canvas{width:120mm!important;height:120mm!important}
   .pt-cta{font-size:20pt}.pt-code{font-size:13pt}.pt-code b{font-size:24pt}.pt-hint{font-size:11pt}
 }
+
+/* quiet redraws: no entrance animations or fades */
+body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet #app{animation:none!important;transition:none!important}
 </style>
 </head>
 <body>
@@ -1976,7 +1979,7 @@ function queueFailed(it, r) {
     if (r.code === 'badcode') store.del('sf_code');
     if (r.code === 'noscan') { const pp = findProject(it.pid); if (pp) dropScan(pp.category); }
     toast(r.code === 'closed' ? 'Rating had closed, so one rating could not be counted.' : (r.error || 'One rating could not be saved. Please rate that model again.'));
-    if (route()[0] === 'project' && route()[1] === it.pid) render();
+    if (route()[0] === 'project' && route()[1] === it.pid) quietRender();
   } else if (it.type === 'score') {
     if (S.judgeScores) { delete S.judgeScores[it.pid]; saveJudgeScores(); }
     toast(r.error || `The score for ${it.pid} could not be saved. Please score it again.`);
@@ -2052,15 +2055,32 @@ function prepData(d) {
   d.corners = d.corners || []; d.contacts = d.contacts || []; d.settings = d.settings || {}; d.links = d.links || [];
   return d;
 }
+/* Fingerprint of the fest data, ignoring the leaderboard's own timestamp, so a refresh that brings
+   nothing new does not redraw the page */
+let lastDataSig = '';
+function dataSig(d) { try { const c = JSON.parse(JSON.stringify(d)); if (c.leaderboard) delete c.leaderboard.updated; return JSON.stringify(c); } catch (e) { return String(Math.random()); } }
 async function loadData() {
   try {
     const d = await apiGet({ action: 'data' });
     if (!d.ok) throw new Error(d.error || 'load');
-    S.data = prepData(d); S.error = null;
+    const sig = dataSig(d); const changed = sig !== lastDataSig; lastDataSig = sig;
+    if (changed || !S.data) S.data = prepData(d);
+    S.error = null;
     if (!DEMO) store.set('sf_cache', JSON.stringify(d));
+    return changed;
   } catch (e) {
     if (!S.data) S.error = 'The fest details could not load. Check your internet connection and reload the page.';
+    return false;
   }
+}
+/* Redraw the same page in place: no entrance animations, same scroll position */
+function quietRender() {
+  const y = window.scrollY;
+  document.body.classList.add('quiet');
+  render();
+  $$('[data-reveal]').forEach(e => e.classList.add('in'));
+  window.scrollTo(0, y);
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.remove('quiet')));
 }
 
 /* ---------------- helpers for views ---------------- */
@@ -3285,7 +3305,7 @@ function adminDash() {
     </div>`,
     mount() {
       const refresh = async (manual) => {
-        try { await fetchAdmin(manual); const r = route(); if (r[0] === 'admin' && !r[1]) render(); if (manual) toast('Dashboard updated'); }
+        try { await fetchAdmin(manual); const r = route(); if (r[0] === 'admin' && !r[1]) quietRender(); if (manual) toast('Dashboard updated'); }
         catch (e) { if (manual) toast('Could not refresh. Check the connection.'); if (!S.adminKey) render(); }
       };
       $('#arefresh').addEventListener('click', () => refresh(true));
@@ -3354,6 +3374,31 @@ async function drawQRs() {
   $$('.qr-box').forEach(el => { el.innerHTML = ''; new QRCode(el, { text: el.dataset.url, width: 340, height: 340, correctLevel: QRCode.CorrectLevel.M }); });
 }
 
+/* One PNG per model with only its QR code, saved as <project id>.png */
+async function downloadQRs(list, base) {
+  const btn = $('#dlqr'), msg = $('#dlqrmsg');
+  if (!(await waitForQR())) { toast('QR tool did not load. Check the internet and reload.'); return; }
+  btn.disabled = true;
+  const holder = document.createElement('div'); holder.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(holder);
+  const SIZE = 1000, PAD = 60;
+  try {
+    for (let i = 0; i < list.length; i++) {
+      const p = list[i];
+      holder.innerHTML = '';
+      new QRCode(holder, { text: base + '#/project/' + encodeURIComponent(p.project_id), width: SIZE, height: SIZE, correctLevel: QRCode.CorrectLevel.M });
+      const src = holder.querySelector('canvas'); if (!src) continue;
+      const out = document.createElement('canvas'); out.width = out.height = SIZE + PAD * 2;
+      const ctx = out.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, out.width, out.height); ctx.drawImage(src, PAD, PAD, SIZE, SIZE);
+      const blob = await new Promise(res => out.toBlob(res, 'image/png'));
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = String(p.project_id).replace(/[^A-Za-z0-9_-]/g, '_') + '.png';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      if (msg) msg.textContent = `Saving ${i + 1} of ${list.length}: ${p.project_id}.png`;
+      await sleep(250);   /* small pause so the browser accepts every download */
+    }
+    if (msg) msg.textContent = `Done. ${list.length} QR codes saved to your Downloads folder.`;
+  } finally { holder.remove(); btn.disabled = false; }
+}
+
 function qrSheet() {
   const base = siteBase(); const list = S.data.projects.slice().sort((a, b) => String(a.project_id).localeCompare(String(b.project_id), undefined, { numeric: true }));
   const { head, foot } = cardBits();
@@ -3361,7 +3406,8 @@ function qrSheet() {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
         <div class="phead"><h1>QR cards</h1><p>One card for the entrance and one for each model, labelled with its project ID. Prints 4 cards per A4 sheet.</p></div>
-        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button></div>
+        <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><button class="btn btn-ghost" id="dlqr">${icon('download')}Download QR codes only (${list.length} files)</button></div>
+        <p class="muted" id="dlqrmsg" style="font-size:14px;margin-top:8px">Saves one PNG per model, named by its project ID (for example P01.png), with just the QR code. If your browser asks to allow multiple downloads, choose Allow.</p>
         ${DEMO ? '<p class="banner">Preview mode: these QR codes point to this preview. Print the real ones from the live site.</p>' : ''}
       </div>
       <div class="qr-grid">
@@ -3369,7 +3415,7 @@ function qrSheet() {
         ${list.map(p => { return `<div class="qr-card c-${CAT_CLS[p.category]}">${head}<span class="qcat">${catFull(p.category)}</span><span class="qid"><small>Project ID</small><b>${esc(p.project_id)}</b></span><span class="qtitle">${esc(p.title)}</span><div class="qr-box" data-url="${esc(base + '#/project/' + encodeURIComponent(p.project_id))}"></div><span class="qhint">Scan to read about this model</span>${foot}</div>`; }).join('')}
       </div>
     </div>`,
-    mount() { $('#doprint').addEventListener('click', () => window.print()); drawQRs(); }
+    mount() { $('#doprint').addEventListener('click', () => window.print()); $('#dlqr').addEventListener('click', () => downloadQRs(list, base)); drawQRs(); }
   };
 }
 
@@ -3768,7 +3814,6 @@ function render() {
   lastPage = key;
   if (v.mount) v.mount(app);
   topTone();
-  if (page === 'results') annAsk();
   observeReveals();
   floatNow();
 }
@@ -3781,7 +3826,8 @@ function floatNow() {
     box = document.createElement('div'); box.id = 'floatnow'; box.className = 'floatnow'; document.body.appendChild(box);
     box.addEventListener('click', e => { if (e.target.closest('.fn-x')) { floatHidden = true; box.remove(); } });
   }
-  box.innerHTML = html + '<button class="fn-x" type="button" aria-label="Hide this box">×</button>';
+  const next = html + '<button class="fn-x" type="button" aria-label="Hide this box">×</button>';
+  if (box.dataset.html !== next) { box.innerHTML = next; box.dataset.html = next; }
 }
 setInterval(floatNow, 30000);
 
@@ -3792,23 +3838,24 @@ setInterval(async () => {
   if (document.hidden) return;
   const page = route()[0] || 'home';
   if (!['home', 'schedule', 'venue', 'help', 'results', 'raters'].includes(page)) return;
-  await loadData(); render();
+  if (await loadData()) quietRender();
 }, REFRESH_MS);
 
 (async function start() {
   if (!DEMO) {
     const cached = jparse(store.get('sf_cache'), null);
-    if (cached) S.data = prepData(cached);
+    if (cached) { S.data = prepData(cached); lastDataSig = dataSig(cached); }
   }
   if (S.data) { const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {}; }
   buildPageFx();
   render();                       /* show something immediately */
   syncPill(); processQueue();     /* send anything saved earlier but not yet sent */
-  await loadData();
+  const hadData = !!S.data && !S.error;
+  const fresh = await loadData();
   const vid = voterId(); S.rated = vid ? jparse(store.get('sf_rated:' + vid), {}) : {};
-  render();
+  if (!hadData) render(); else if (fresh) quietRender();
   const changed = await syncRatings(false);   /* in the background */
-  if (changed && ['home', 'projects', ''].includes(route()[0] || '')) render();
+  if (changed && ['home', 'projects', ''].includes(route()[0] || '')) quietRender();
 })();
 </script>
 </body>
