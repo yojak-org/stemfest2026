@@ -1570,6 +1570,24 @@ body.top-blue .top img.lg-auto{filter:brightness(0) invert(1)!important}
 
 /* quiet redraws: no entrance animations or fades */
 body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet #app{animation:none!important;transition:none!important}
+
+/* ===== Team page: guests and judges ===== */
+.ppl-sec{margin-top:20px}
+.ppl-h{font-size:clamp(20px,3.6vw,26px);display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.ppl-h::before{content:"";width:6px;height:22px;border-radius:3px;background:var(--maroon)}
+.ppl-team{margin-top:26px}
+.ppl-grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:560px){.ppl-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.ppl-grid{grid-template-columns:repeat(3,1fr)}}
+.ppl-card{display:flex;gap:14px;align-items:center;padding:14px;border-radius:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold)}
+.ppl-av{position:relative;flex:none;width:64px;height:64px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--maroon-tint);color:var(--maroon);font-weight:800;font-size:18px}
+.ppl-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ppl-body{min-width:0}
+.ppl-body h3{font-size:17px;margin:0;line-height:1.25}
+.ppl-body p{font-size:14px;color:var(--muted);margin:2px 0 0;line-height:1.35}
+.ppl-badge{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;background:var(--gold-t);color:#7A5410;font-size:12px;font-weight:700}
+.ppl-cats{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.ppl-cats span{padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;background:var(--t);color:var(--c)}
 </style>
 </head>
 <body>
@@ -1863,10 +1881,10 @@ const Demo = {
     await sleep(200);
     if (p.action === 'data') {
       const s = this.settings();
-      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, links: SAMPLE.links, contacts: SAMPLE.contacts, projects: SAMPLE.projects, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })), results: toBool(s.results_revealed) ? this.publicResults() : null };
+      return { ok: true, settings: s, schedule: SAMPLE.schedule, corners: SAMPLE.corners, links: SAMPLE.links, contacts: SAMPLE.contacts, guests: [{ name: 'Guest name (sample)', role: 'Chief Guest', designation: 'Designation', organisation: 'Organisation', photo_url: '', order: '1' }, { name: 'Guest name (sample)', role: 'Guest of Honour', designation: 'Designation', organisation: 'Organisation', photo_url: '', order: '2' }], projects: SAMPLE.projects, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name, designation: 'Designation (sample)', organisation: '', photo_url: '', categories: j.categories })), results: toBool(s.results_revealed) ? this.publicResults() : null };
     }
     if (p.action === 'myratings') { const out = {}; this.ratings().filter(v => v.voter_id === p.voter_id).forEach(v => out[v.project_id] = v.scores); return { ok: true, ratings: out }; }
-    if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name })) };
+    if (p.action === 'judges') return { ok: true, judges: SAMPLE.judges.map(j => ({ judge_id: j.judge_id, name: j.name, designation: 'Designation (sample)', organisation: '', photo_url: '', categories: j.categories })) };
     return { ok: false, error: 'Unknown action' };
   },
   async post(b) {
@@ -2893,7 +2911,28 @@ function phoneDigits(v) {
   if (d.length === 10) d = '91' + d;
   return d.length >= 10 ? d : '';
 }
+/* Guest or judge card for the Team page: photo or initials, name, role, designation and organisation */
+function pcardHtml(p, opt = {}) {
+  const name = String(p.name || '').trim();
+  const ini = name.split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  const ph = imgUrl(p.photo_url);
+  const line = [p.designation, p.organisation].map(x => String(x || '').trim()).filter(x => x && !isTbd(x)).join(', ');
+  const cats = /^all$/i.test(String(p.categories || '').trim()) ? CATS.slice() : (opt.cats || []);
+  return `<div class="ppl-card" data-reveal>
+    <span class="ppl-av" aria-hidden="true">${ph ? `<img src="${esc(ph)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<b>${esc(ini)}</b></span>
+    <div class="ppl-body">
+      ${opt.badge && !isTbd(opt.badge) ? `<span class="ppl-badge">${esc(opt.badge)}</span>` : ''}
+      <h3>${esc(name)}</h3>
+      ${line ? `<p>${esc(line)}</p>` : ''}
+      ${cats.length ? `<div class="ppl-cats">${cats.map(c => `<span class="c-${CAT_CLS[c]}">${esc(catLabel(c))}</span>`).join('')}</div>` : ''}
+    </div>
+  </div>`;
+}
+
 VIEWS.help = () => {
+  const named = x => { const n = String(x.name || '').trim(); return n && !isTbd(n); };
+  const guests = (S.data.guests || []).filter(named).sort((a, b) => (parseFloat(a.order) || 999) - (parseFloat(b.order) || 999));
+  const judges = String(S.data.settings.show_judges || 'TRUE').toUpperCase() === 'FALSE' ? [] : (S.data.judges || []).filter(named);
   const groups = [];
   S.data.contacts.forEach(c => {
     const role = String(c.role || '').trim() || 'Contact';
@@ -2904,7 +2943,10 @@ VIEWS.help = () => {
   });
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Event Team</h1><p>Who is responsible for what, and how to reach them.</p></div>
+      <div class="phead"><h1>Team</h1><p>Our guests, the judges, and the event team who make STEM FEST happen.</p></div>
+      ${guests.length ? `<section class="ppl-sec"><h2 class="ppl-h">Guests</h2><div class="ppl-grid">${guests.map(g => pcardHtml(g, { badge: g.role })).join('')}</div></section>` : ''}
+      ${judges.length ? `<section class="ppl-sec"><h2 class="ppl-h">Judges</h2><div class="ppl-grid">${judges.map(j => pcardHtml(j, { cats: String(j.categories || '').split(/[,;]/).map(c => normCat(c)).filter(Boolean) })).join('')}</div></section>` : ''}
+      ${guests.length || judges.length ? '<h2 class="ppl-h ppl-team">Event team</h2>' : ''}
       <div class="contacts">
         ${groups.map(g => `<div class="card contact" data-reveal>
           <div class="c-side"><p class="role">${icon('users')}${esc(g.role)}</p>
