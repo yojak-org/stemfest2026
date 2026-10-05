@@ -1588,6 +1588,25 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
 .ppl-badge{display:inline-block;margin-bottom:4px;padding:2px 8px;border-radius:999px;background:var(--gold-t);color:#7A5410;font-size:12px;font-weight:700}
 .ppl-cats{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .ppl-cats span{padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;background:var(--t);color:var(--c)}
+
+/* ===== Logo lockup (partner | YOJAK) on printed cards ===== */
+.lockup{display:flex;align-items:center;justify-content:center;gap:14px;width:100%}
+.lockup img{height:42px;width:auto;max-width:42%;object-fit:contain}
+.lockup i{flex:none;width:1px;align-self:stretch;min-height:34px;background:#B9AEB0}
+.qr-foot .lockup{flex-wrap:nowrap}
+.jc-logos.lockup{justify-content:flex-start;gap:2.5mm;margin-top:1.2mm}
+.jc-logos.lockup img{height:6mm;width:auto;max-width:18mm}
+.jc-logos.lockup i{min-height:5mm}
+@media print{.lockup img{height:10mm}.jc-logos.lockup img{height:6mm}}
+/* ===== Director's message ===== */
+.dir-sec{margin-top:26px}
+.dir-card{display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--maroon)}
+.dir-av{width:76px;height:76px;font-size:22px}
+.dir-body p{font-family:var(--fs, Georgia, serif);font-size:17px;line-height:1.6;margin:0 0 10px;text-align:justify}
+.dir-body p.dir-sign{font-family:inherit;text-align:left;margin:12px 0 0;display:flex;flex-direction:column}
+.dir-sign b{font-size:16px;color:var(--ink)}
+.dir-sign span{font-size:14px;color:var(--muted)}
+@media (max-width:520px){.dir-card{flex-direction:column}.dir-av{width:64px;height:64px}}
 </style>
 </head>
 <body>
@@ -2484,6 +2503,7 @@ VIEWS.home = () => {
       </section>
       ${open || ratingProgress().count ? progressCard() : ''}
       ${partnersBlock()}
+      ${linksBlock()}
       <a class="staff-link" href="#/staff">Judges and organisers sign in</a>
     </div>`,
     mount() {
@@ -2957,9 +2977,29 @@ VIEWS.help = () => {
           }).join('')}</div>
         </div>`).join('')}
       </div>
+      ${directorBlock()}
     </div>`
   };
 };
+
+/* Director's welcome message from the Settings rows director_name, director_title, director_photo and director_message */
+function directorBlock() {
+  const st = S.data.settings;
+  const msg = String(st.director_message || '').trim(); if (!msg || isTbd(msg)) return '';
+  const name = String(st.director_name || '').trim(), title = String(st.director_title || '').trim();
+  const ph = imgUrl(st.director_photo);
+  const ini = name.split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  return `<section class="dir-sec" data-reveal>
+    <h2 class="ppl-h">Message from the Director</h2>
+    <div class="dir-card">
+      <span class="ppl-av dir-av" aria-hidden="true">${ph ? `<img src="${esc(ph)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<b>${esc(ini || 'Y')}</b></span>
+      <div class="dir-body">
+        ${msg.split(/\r?\n/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('')}
+        ${name ? `<p class="dir-sign"><b>${esc(name)}</b>${title && !isTbd(title) ? `<span>${esc(title)}</span>` : ''}</p>` : ''}
+      </div>
+    </div>
+  </section>`;
+}
 
 /* ---------- Results ---------- */
 function podium(list) {
@@ -3409,12 +3449,20 @@ function printLogos() {
   const pl = partnerList().map((p, i) => ({ ...p, logo: alt[i] ? logoSrc(alt[i]) : p.logo })).filter(p => p.logo);
   return { fl, yl, pl };
 }
+/* Partner logo(s) on the left, a thin divider, YOJAK on the right */
+function lockupHtml(cls = '') {
+  const { yl, pl } = printLogos();
+  if (!yl && !pl.length) return '';
+  const parts = pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name || 'Partner')}">`);
+  return `<div class="lockup ${cls}">${parts.join('<i aria-hidden="true"></i>')}${parts.length && yl ? '<i aria-hidden="true"></i>' : ''}${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}</div>`;
+}
 function cardBits() {
   const st = S.data.settings; const { fl, yl } = printLogos();
   const head = fl ? `<img class="qr-head-logo" src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>';
   const { pl } = printLogos();
   const lab = (t, img) => `<span class="qf-item"><small>${esc(t)}</small>${img}</span>`;
-  const foot = (yl || pl.length) ? `<div class="qr-foot"><div>${yl ? lab('Presented by', `<img src="${esc(yl)}" alt="YOJAK">`) : ''}${pl.map(p => lab(orTbd(st.partner_label, 'Supported by'), `<img src="${esc(p.logo)}" alt="${esc(p.name || 'Partner')}">`)).join('')}</div></div>` : '';
+  const lk = lockupHtml('lk-card');
+  const foot = lk ? `<div class="qr-foot">${lk}</div>` : '';
   return { head, foot };
 }
 async function drawQRs() {
@@ -3516,7 +3564,7 @@ function judgeCards() {
             <div class="jc-spark">${theme().words.map(w => `<span>${esc(w.charAt(0))}</span>`).join('')}</div>
             <p class="jc-url">Or open <b>${esc(siteBase().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b> and tap Judges</p>
             <div class="jc-bottom"><div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
-            <div class="jc-logos">${yl ? `<img src="${esc(yl)}" alt="YOJAK">` : ''}${pl.map(p => `<img src="${esc(p.logo)}" alt="${esc(p.name)}">`).join('')}</div></div>
+            ${lockupHtml('jc-logos')}</div>
           </div>
         </div>`).join('')}
       </div>
@@ -3532,7 +3580,7 @@ function envelopeSvg(j) {
   const ico = (n, x, y, sz, col, op) => `<svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 48 48" fill="none" stroke="${col}" stroke-width="2" opacity="${op}">${STEM[n]}</svg>`;
   const front = [[40, 36], [118, 58], [124, 80], [92, 48], [104, 86], [80, 36]].map(([x, y], i) => ico(icons[i % 8], x, y, 9, '#F2A900', .33)).join('');
   const flaps = [[52, 14], [106, 14], [12, 52], [148, 52], [12, 76], [148, 76], [56, 108], [102, 110], [80, 118]].map(([x, y], i) => ico(icons[(i + 3) % 8], x, y, 8, '#7A1C24', .22)).join('');
-  const logoRow = [yl, ...pl.map(p => p.logo)].filter(Boolean).slice(0, 3);
+  const lkImgs = [...pl.map(p => p.logo).slice(0, 2), yl].filter(Boolean);
   /* Pocket 101 x 66 mm (card 95 x 60). Flaps are attached along the full length of every edge. */
   return `<svg viewBox="0 0 170 136" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
     <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32 Z" fill="#F8EDEE"/>
@@ -3548,7 +3596,7 @@ function envelopeSvg(j) {
     <text x="129" y="44" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
     <text x="41" y="67" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
     <text x="41" y="74" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}</text>
-    ${logoRow.map((src, i) => `<rect x="${41 + i * 24}" y="82" width="22" height="11" rx="2" fill="#fff"/><image href="${esc(src)}" x="${42 + i * 24}" y="83" width="20" height="9" preserveAspectRatio="xMidYMid meet"/>`).join('')}
+    ${lkImgs.length ? `<rect x="41" y="81" width="${lkImgs.length * 28 + 2}" height="13" rx="2" fill="#fff"/>${lkImgs.map((src, i) => `<image href="${esc(src)}" x="${43 + i * 28}" y="82.5" width="24" height="10" preserveAspectRatio="xMidYMid meet"/>${i < lkImgs.length - 1 ? `<line x1="${69 + i * 28}" y1="83" x2="${69 + i * 28}" y2="92" stroke="#9A8A8C" stroke-width=".25"/>` : ''}`).join('')}` : ''}
     <text x="129" y="92" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
     <g fill="none" stroke="#2B1517" stroke-width=".3">
       <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32"/>
