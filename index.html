@@ -1599,7 +1599,7 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
 .jc-logos.lockup i{min-height:5mm}
 @media print{.lockup img{height:10mm}.jc-logos.lockup img{height:6mm}}
 /* ===== Director's message ===== */
-.dir-sec{margin-top:26px}
+.dir-sec{margin-top:20px}
 .dir-card{display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--maroon)}
 .dir-av{width:76px;height:76px;font-size:22px}
 .dir-body p{font-family:var(--fs, Georgia, serif);font-size:17px;line-height:1.6;margin:0 0 10px;text-align:justify}
@@ -2964,6 +2964,7 @@ VIEWS.help = () => {
   return {
     html: `<div class="wrap page">
       <div class="phead"><h1>Team</h1><p>Our guests, the judges, and the event team who make STEM FEST happen.</p></div>
+      ${directorBlock()}
       ${guests.length ? `<section class="ppl-sec"><h2 class="ppl-h">Guests</h2><div class="ppl-grid">${guests.map(g => pcardHtml(g, { badge: g.role })).join('')}</div></section>` : ''}
       ${judges.length ? `<section class="ppl-sec"><h2 class="ppl-h">Judges</h2><div class="ppl-grid">${judges.map(j => pcardHtml(j, { cats: String(j.categories || '').split(/[,;]/).map(c => normCat(c)).filter(Boolean) })).join('')}</div></section>` : ''}
       ${guests.length || judges.length ? '<h2 class="ppl-h ppl-team">Event team</h2>' : ''}
@@ -2977,7 +2978,6 @@ VIEWS.help = () => {
           }).join('')}</div>
         </div>`).join('')}
       </div>
-      ${directorBlock()}
     </div>`
   };
 };
