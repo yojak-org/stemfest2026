@@ -79,7 +79,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* Bottom tabs */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-.tabs .wrap{display:grid;grid-template-columns:repeat(6,1fr);height:var(--nav-h);padding:0 2px}
+.tabs .wrap{display:grid;grid-template-columns:repeat(7,1fr);height:var(--nav-h);padding:0 2px}
 .tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:500;position:relative}
 .tabs a svg{width:23px;height:23px;transition:transform .2s}
 .tabs a.on{color:var(--maroon);font-weight:600}
@@ -1607,6 +1607,8 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
 .dir-sign b{font-size:16px;color:var(--ink)}
 .dir-sign span{font-size:14px;color:var(--muted)}
 @media (max-width:520px){.dir-card{flex-direction:column}.dir-av{width:64px;height:64px}}
+
+@media (max-width:400px){.tabs a{font-size:10.5px}.tabs a svg{width:20px;height:20px}}
 </style>
 </head>
 <body>
@@ -1614,7 +1616,7 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
   <div class="wrap">
     <a class="brand" href="#/" aria-label="YOJAK, STEM FEST 2026 home"><span class="brand-yojak">YOJAK</span></a>
     <nav class="topnav" aria-label="Main">
-      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Team</a>
+      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/guests" data-p="guests">Guests</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Team</a>
     </nav>
     <span id="topright" class="by"></span>
   </div>
@@ -1629,6 +1631,7 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
     <a href="#/" data-p="home"></a>
     <a href="#/schedule" data-p="schedule"></a>
     <a href="#/projects" data-p="projects"></a>
+    <a href="#/guests" data-p="guests"></a>
     <a href="#/venue" data-p="venue"></a>
     <a href="#/results" data-p="results"></a>
     <a href="#/help" data-p="help"></a>
@@ -1745,7 +1748,7 @@ const ICONS = {
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
-[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['pin', 'Venue'], ['trophy', 'Results'], ['users', 'Team']].forEach(([i, t], k) => {
+[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['medal', 'Guests'], ['pin', 'Venue'], ['trophy', 'Results'], ['users', 'Team']].forEach(([i, t], k) => {
   $$('.tabs a')[k].innerHTML = icon(i) + `<span>${t}</span>`;
 });
 
@@ -2835,14 +2838,14 @@ async function openScanner() {
   $('.sc-x', o).addEventListener('click', closeScanner);
   const msg = t => { const m = $('.sc-msg', o); if (m) m.textContent = t; };
   const video = $('video', o);
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { msg('This browser cannot open the camera. Type the stall code on the model page instead.'); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { msg('This browser cannot open the camera. Open any model in that corner and type the 4 letter code printed on the corner poster.'); return; }
   try {
     scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
-  } catch (e) { msg('The camera was not allowed. Allow the camera for this site in your browser settings, or type the stall code on the model page.'); return; }
+  } catch (e) { msg('The camera was not allowed. Allow the camera for this site in your browser settings, or open any model in that corner and type the 4 letter code printed on the corner poster.'); return; }
   if (!$('#scanner')) { closeScanner(); return; }
   video.srcObject = scanStream; try { await video.play(); } catch (e) {}
   let detector = await qrDetector();
-  if (!detector && !(await loadJsQR())) { msg('The scanner could not load. Check the connection, or type the stall code on the model page.'); return; }
+  if (!detector && !(await loadJsQR())) { msg('The scanner could not load. Check the connection, or open any model in that corner and type the 4 letter code printed on the corner poster.'); return; }
   msg('Point the camera at the QR code on the corner poster.');
   const cv = document.createElement('canvas'); const ctx = cv.getContext('2d', { willReadFrequently: true });
   let busy = false;
@@ -2949,10 +2952,26 @@ function pcardHtml(p, opt = {}) {
   </div>`;
 }
 
-VIEWS.help = () => {
+/* ---------- Guests and Judges ---------- */
+function peopleLists() {
   const named = x => { const n = String(x.name || '').trim(); return n && !isTbd(n); };
   const guests = (S.data.guests || []).filter(named).sort((a, b) => (parseFloat(a.order) || 999) - (parseFloat(b.order) || 999));
   const judges = String(S.data.settings.show_judges || 'TRUE').toUpperCase() === 'FALSE' ? [] : (S.data.judges || []).filter(named);
+  return { guests, judges };
+}
+VIEWS.guests = () => {
+  const { guests, judges } = peopleLists();
+  return {
+    html: `<div class="wrap page">
+      <div class="phead"><h1>Guests and Judges</h1><p>Our honoured guests, and the judges who evaluate the models in each corner.</p></div>
+      ${guests.length ? `<section class="ppl-sec"><h2 class="ppl-h">Guests</h2><div class="ppl-grid">${guests.map(g => pcardHtml(g, { badge: g.role })).join('')}</div></section>` : ''}
+      ${judges.length ? `<section class="ppl-sec"><h2 class="ppl-h">Judges</h2><div class="ppl-grid">${judges.map(j => pcardHtml(j, { cats: String(j.categories || '').split(/[,;]/).map(c => normCat(c)).filter(Boolean) })).join('')}</div></section>` : ''}
+      ${!guests.length && !judges.length ? '<p class="muted" style="margin-top:18px">Our guests and judges will be announced soon.</p>' : ''}
+    </div>`
+  };
+};
+
+VIEWS.help = () => {
   const groups = [];
   S.data.contacts.forEach(c => {
     const role = String(c.role || '').trim() || 'Contact';
@@ -2963,11 +2982,9 @@ VIEWS.help = () => {
   });
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Team</h1><p>Our guests, the judges, and the event team who make STEM FEST happen.</p></div>
+      <div class="phead"><h1>Team</h1><p>Who is responsible for what, and how to reach them.</p></div>
       ${directorBlock()}
-      ${guests.length ? `<section class="ppl-sec"><h2 class="ppl-h">Guests</h2><div class="ppl-grid">${guests.map(g => pcardHtml(g, { badge: g.role })).join('')}</div></section>` : ''}
-      ${judges.length ? `<section class="ppl-sec"><h2 class="ppl-h">Judges</h2><div class="ppl-grid">${judges.map(j => pcardHtml(j, { cats: String(j.categories || '').split(/[,;]/).map(c => normCat(c)).filter(Boolean) })).join('')}</div></section>` : ''}
-      ${guests.length || judges.length ? '<h2 class="ppl-h ppl-team">Event team</h2>' : ''}
+      ${directorBlock() ? '<h2 class="ppl-h ppl-team">Event team</h2>' : ''}
       <div class="contacts">
         ${groups.map(g => `<div class="card contact" data-reveal>
           <div class="c-side"><p class="role">${icon('users')}${esc(g.role)}</p>
@@ -3888,7 +3905,7 @@ function render() {
   window.onkeydown = null;
   if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   const [page = 'home', a] = route();
-  document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','venue','results','help','raters'].includes(page));
+  document.body.toggleAttribute('data-pub', ['home','schedule','projects','project','guests','venue','results','help','raters'].includes(page));
   if (page !== 'reveal') document.body.classList.remove('projector');
   const printPage = page === 'admin' && ['qr', 'codes', 'judgecards', 'envelopes', 'posters'].includes(a);
   if (page === 'reveal' || printPage) setBgFx(null);
@@ -3933,7 +3950,7 @@ window.addEventListener('hashchange', () => { closeScanner(); render(); });
 setInterval(async () => {
   if (document.hidden) return;
   const page = route()[0] || 'home';
-  if (!['home', 'schedule', 'venue', 'help', 'results', 'raters'].includes(page)) return;
+  if (!['home', 'schedule', 'guests', 'venue', 'help', 'results', 'raters'].includes(page)) return;
   if (await loadData()) quietRender();
 }, REFRESH_MS);
 
