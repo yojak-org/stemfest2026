@@ -1610,6 +1610,8 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
 @media (max-width:520px){.dir-card{flex-direction:column}.dir-av{width:64px;height:64px}}
 
 @media (max-width:400px){.tabs a{font-size:10.5px}.tabs a svg{width:20px;height:20px}}
+.tabs a span{text-align:center;line-height:1.1}
+.tabs a[data-p="guests"] span{font-size:10px;max-width:56px}
 
 /* judge card logos: room for both logos in the wider card */
 .jc-bottom{gap:3mm}
@@ -1625,7 +1627,7 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
   <div class="wrap">
     <a class="brand" href="#/" aria-label="YOJAK, STEM FEST 2026 home"><span class="brand-yojak">YOJAK</span></a>
     <nav class="topnav" aria-label="Main">
-      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/guests" data-p="guests">Guests</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Team</a>
+      <a href="#/" data-p="home">Home</a><a href="#/schedule" data-p="schedule">Schedule</a><a href="#/projects" data-p="projects">Models</a><a href="#/guests" data-p="guests">Guests &amp; Judges</a><a href="#/venue" data-p="venue">Venue</a><a href="#/results" data-p="results">Results</a><a href="#/help" data-p="help">Team</a>
     </nav>
     <span id="topright" class="by"></span>
   </div>
@@ -1757,7 +1759,7 @@ const ICONS = {
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
-[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['medal', 'Guests'], ['pin', 'Venue'], ['trophy', 'Results'], ['users', 'Team']].forEach(([i, t], k) => {
+[['home', 'Home'], ['clock', 'Schedule'], ['grid', 'Models'], ['medal', 'Guests & Judges'], ['pin', 'Venue'], ['trophy', 'Results'], ['users', 'Team']].forEach(([i, t], k) => {
   $$('.tabs a')[k].innerHTML = icon(i) + `<span>${t}</span>`;
 });
 
@@ -2992,7 +2994,6 @@ VIEWS.help = () => {
   });
   return {
     html: `<div class="wrap page">
-      <div class="phead"><h1>Team</h1><p>Who is responsible for what, and how to reach them.</p></div>
       ${directorBlock()}
       ${directorBlock() ? '<h2 class="ppl-h ppl-team">Event team</h2>' : ''}
       <div class="contacts">
