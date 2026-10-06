@@ -593,11 +593,11 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .sk{background:linear-gradient(90deg,var(--line),#F6EEEF,var(--line));background-size:200% 100%;animation:sk 1.2s linear infinite;border-radius:12px}
 @keyframes sk{to{background-position:-200% 0}}
 /* ===== Judge cards 95 x 60 mm ===== */
-.jc-grid{display:grid;grid-template-columns:repeat(auto-fill,95mm);gap:4mm;justify-content:center}
-.jc{width:95mm;height:60mm;display:grid;grid-template-columns:34mm 1fr;background:#fff;border-radius:3mm;overflow:hidden;outline:.3mm dashed #BBB;outline-offset:1.5mm;break-inside:avoid;page-break-inside:avoid;position:relative}
+.jc-grid{display:grid;grid-template-columns:repeat(auto-fill,110mm);gap:4mm;justify-content:center}
+.jc{width:110mm;height:66mm;display:grid;grid-template-columns:36mm 1fr;background:#fff;border-radius:3mm;overflow:hidden;outline:.3mm dashed #BBB;outline-offset:1.5mm;break-inside:avoid;page-break-inside:avoid;position:relative}
 .jc-l{background:var(--maroon);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5mm;padding:2mm;position:relative;overflow:hidden}
 .jc-l::before{content:"";position:absolute;inset:0;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60' fill='none' stroke='%23F2A900' stroke-width='1'%3E%3Cpath d='M0 15h15l8 8h14l8-8h15M0 45h12l8-8h12l8 8h20'/%3E%3Ccircle cx='23' cy='23' r='1.5'/%3E%3Ccircle cx='37' cy='23' r='1.5'/%3E%3C/svg%3E")}
-.jc-qr{width:27mm;height:27mm;background:#fff;border-radius:1.5mm;padding:1.2mm;position:relative}
+.jc-qr{width:29mm;height:29mm;background:#fff;border-radius:1.5mm;padding:1.2mm;position:relative}
 .jc-qr img,.jc-qr canvas{width:100%!important;height:100%!important}
 .jc-l small{font-size:2.3mm;position:relative;text-align:center;line-height:1.2}
 .jc-r{padding:3mm 3.5mm 2.5mm;display:flex;flex-direction:column;min-width:0;border-top:1.2mm solid var(--gold)}
@@ -605,7 +605,8 @@ body.projector .top,body.projector .tabs,body.projector #notice{display:none}
 .jc-top img{height:8mm;width:30mm;object-fit:contain;object-position:left center}
 .jc-top .qh{font-size:4.2mm}
 .jc-tag{font-size:2.3mm;font-weight:700;letter-spacing:.08em;color:var(--maroon);border:.3mm solid var(--maroon);border-radius:1mm;padding:.3mm 1.2mm}
-.jc-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:5.2mm;line-height:1.05;margin-top:2mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jc-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:5mm;line-height:1.1;margin-top:2mm;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.jc-name.long{font-size:4.2mm}
 .jc-cats{font-size:2.6mm;color:var(--muted)}
 .jc-pin{margin-top:auto;display:flex;align-items:baseline;gap:2mm}
 .jc-pin small{font-size:2.3mm;color:var(--muted);font-weight:600}
@@ -704,7 +705,7 @@ body.projector #bgfx{display:none}
 .jc-bottom .jc-pin{margin-top:0}
 /* ===== Envelopes, two per page ===== */
 .env-sheet{display:flex;flex-direction:column;align-items:center;gap:6mm;margin-bottom:10mm}
-.env-sheet > svg{width:170mm;height:136mm;max-width:100%;height:auto;background:#fff}
+.env-sheet > svg{width:160mm;height:118mm;max-width:100%;height:auto;background:#fff}
 
 
 /* ===== Hero: brand bar and the big SPARK logo ===== */
@@ -1250,7 +1251,7 @@ body[data-pub] .contact{display:grid;grid-template-columns:1fr;border-top:1px so
   #bgfx,#syncpill,#pagefx{display:none!important}
   .page{padding-top:0}
   .env-sheet{page-break-after:always;break-after:page;margin:0;gap:4mm}
-  .env-sheet > svg{width:170mm!important;height:136mm!important}
+  .env-sheet > svg{width:160mm!important;height:118mm!important}
   .jc{box-shadow:none}
   .qr-card .qid b{font-size:44px}
   .qr-card .qtitle{font-size:16px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -1258,7 +1259,7 @@ body[data-pub] .contact{display:grid;grid-template-columns:1fr;border-top:1px so
   .qr-foot img{height:10mm}
   .code-grid{grid-template-columns:repeat(4,1fr);gap:0}
   .code-card{border-radius:0;break-inside:avoid}
-  .jc-grid{grid-template-columns:repeat(2,95mm);gap:3mm}
+  .jc-grid{grid-template-columns:110mm;gap:4mm}
   .jc{outline:.2mm dashed #999;outline-offset:0}
   .env-page{page-break-after:always;break-after:page;margin:0}
   .env-page > svg{width:181mm!important;height:190mm!important}
@@ -1609,6 +1610,14 @@ body.quiet #app *,body.quiet #app *::before,body.quiet #app *::after,body.quiet 
 @media (max-width:520px){.dir-card{flex-direction:column}.dir-av{width:64px;height:64px}}
 
 @media (max-width:400px){.tabs a{font-size:10.5px}.tabs a svg{width:20px;height:20px}}
+
+/* judge card logos: room for both logos in the wider card */
+.jc-bottom{gap:3mm}
+.jc-bottom .jc-pin b{font-size:6.4mm;letter-spacing:.12em}
+.jc-bottom .jc-logos.lockup{width:auto;flex:0 1 auto;min-width:0;max-width:44mm;justify-content:flex-end;gap:2mm;margin-top:0}
+.jc-bottom .jc-logos.lockup img{height:7mm;width:auto;max-width:20mm;min-width:0;object-fit:contain}
+.jc-bottom .jc-logos.lockup i{min-height:6mm}
+@media print{.jc-bottom .jc-logos.lockup img{height:7mm}}
 </style>
 </head>
 <body>
@@ -2641,6 +2650,7 @@ VIEWS.project = (id) => {
         ${photo ? `<div class="pframe"><img class="pphoto" src="${esc(photo)}" alt="Photo of ${esc(p.title)}" loading="lazy" onerror="this.parentNode.remove()"><span class="mfx" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></span></div>` : ''}
         ${!isTbd(p.description) ? `<div class="pdesc">${String(p.description).split(/\r?\n/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('')}</div>` : ''}
         ${!isTbd(p.students) ? `<h2 class="h-sm">Presented by</h2><ul class="studs">${String(p.students).split(/[,;\r\n]+/).map(x => x.trim()).filter(Boolean).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        ${!isTbd(p.mentors) ? `<h2 class="h-sm">Guided by</h2><ul class="studs">${String(p.mentors).split(/[,;\r\n]+/).map(x => x.trim()).filter(Boolean).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
       </article>
       <div id="votebox"></div></div>
     </div>`,
@@ -3568,7 +3578,7 @@ function judgeCards() {
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
-        <div class="phead"><h1>Judge cards</h1><p>95 x 60 mm, a little bigger than a visiting card. 8 cards per A4 sheet. Print at 100% scale (not "fit to page"), then cut along the dashed lines.</p></div>
+        <div class="phead"><h1>Judge cards</h1><p>110 x 66 mm. 4 cards per A4 sheet. Print at 100% scale (not "fit to page"), then cut along the dashed lines.</p></div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><a class="btn btn-ghost" href="#/admin/envelopes">Envelopes for these cards</a></div>
       </div>
       <div class="jc-grid">
@@ -3576,10 +3586,10 @@ function judgeCards() {
           <div class="jc-l"><div class="qr-box jc-qr" data-url="${esc(base + '#/judgein/' + encodeURIComponent(j.judge_id))}"></div><small>Scan to sign in</small></div>
           <div class="jc-r">
             <div class="jc-top">${fl ? `<img src="${esc(fl)}" alt="STEM FEST">` : '<span class="qh">STEM FEST</span>'}<span class="jc-tag">JUDGE</span></div>
-            <span class="jc-name">${esc(j.name)}</span>
+            <span class="jc-name${String(j.name || '').length > 24 ? ' long' : ''}">${esc(j.name)}</span>
             <div class="jc-chips">${String(j.categories).split(',').map(c => normCat(c)).filter(Boolean).map(c => `<span class="jc-chip c-${CAT_CLS[c]}">${catFull(c)}</span>`).join('')}</div>
             <div class="jc-spark">${theme().words.map(w => `<span>${esc(w.charAt(0))}</span>`).join('')}</div>
-            <p class="jc-url">Or open <b>${esc(siteBase().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b> and tap Judges</p>
+            <p class="jc-url">Or open <b>${esc(siteBase().replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b> and tap Sign in, then Judge login</p>
             <div class="jc-bottom"><div class="jc-pin"><small>PIN</small><b>${esc(j.pin || '')}</b></div>
             ${lockupHtml('jc-logos')}</div>
           </div>
@@ -3595,34 +3605,48 @@ function envelopeSvg(j) {
   const th = theme();
   const icons = ['atom', 'gear', 'pi', 'flask', 'circuit', 'bulb', 'dna', 'rocket'];
   const ico = (n, x, y, sz, col, op) => `<svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 48 48" fill="none" stroke="${col}" stroke-width="2" opacity="${op}">${STEM[n]}</svg>`;
-  const front = [[40, 36], [118, 58], [124, 80], [92, 48], [104, 86], [80, 36]].map(([x, y], i) => ico(icons[i % 8], x, y, 9, '#F2A900', .33)).join('');
-  const flaps = [[52, 14], [106, 14], [12, 52], [148, 52], [12, 76], [148, 76], [56, 108], [102, 110], [80, 118]].map(([x, y], i) => ico(icons[(i + 3) % 8], x, y, 8, '#7A1C24', .22)).join('');
+  /* Pocket 114 x 70 mm, just bigger than the 110 x 66 mm judge card. Flaps on every edge. */
+  const W = 114, H = 70, X0 = 23, Y0 = 21, X1 = X0 + W, Y1 = Y0 + H, CX = (X0 + X1) / 2;
+  const front = [[X0 + 82, Y0 + 20], [X0 + 96, Y0 + 36], [X0 + 74, Y0 + 50], [X0 + 102, Y0 + 54]].map(([x, y], i) => ico(icons[i % 8], x, y, 8, '#F2A900', .3)).join('');
+  const flaps = [[CX - 30, 8], [CX + 22, 8], [8, Y0 + 14], [146, Y0 + 14], [8, Y0 + 44], [146, Y0 + 44], [CX - 28, Y1 + 8], [CX + 20, Y1 + 8]].map(([x, y], i) => ico(icons[(i + 3) % 8], x, y, 7, '#7A1C24', .22)).join('');
   const lkImgs = [...pl.map(p => p.logo).slice(0, 2), yl].filter(Boolean);
-  /* Pocket 101 x 66 mm (card 95 x 60). Flaps are attached along the full length of every edge. */
-  return `<svg viewBox="0 0 170 136" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
-    <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32 Z" fill="#F8EDEE"/>
-    <path d="M34 98 L135 98 L125 129 Q84.5 137 44 129 Z" fill="#F8EDEE"/>
-    <path d="M34 32 L7 38 Q3 65 7 92 L34 98 Z" fill="#FBF4F4"/>
-    <path d="M135 32 L162 38 Q166 65 162 92 L135 98 Z" fill="#FBF4F4"/>
+  /* judge name: one line if it fits, otherwise two lines, never cut off */
+  const name = String(j.name || '').trim(), avail = W - 12, cw = .56;
+  let nameSvg;
+  const fs1 = Math.min(7.5, avail / Math.max(1, name.length * cw));
+  if (fs1 >= 5 || !name.includes(' ')) {
+    nameSvg = `<text x="${X0 + 6}" y="${Y0 + 34}" font-size="${Math.max(4, fs1).toFixed(2)}" font-weight="800" fill="#fff">${esc(name)}</text>`;
+  } else {
+    const words = name.split(/\s+/); let best = 1, diff = 1e9;
+    for (let k = 1; k < words.length; k++) { const d = Math.abs(words.slice(0, k).join(' ').length - words.slice(k).join(' ').length); if (d < diff) { diff = d; best = k; } }
+    const l1 = words.slice(0, best).join(' '), l2 = words.slice(best).join(' ');
+    const fs2 = Math.min(6.5, avail / (Math.max(l1.length, l2.length) * cw));
+    nameSvg = `<text x="${X0 + 6}" y="${Y0 + 30}" font-size="${fs2.toFixed(2)}" font-weight="800" fill="#fff">${esc(l1)}</text><text x="${X0 + 6}" y="${(Y0 + 30 + fs2 * 1.1).toFixed(2)}" font-size="${fs2.toFixed(2)}" font-weight="800" fill="#fff">${esc(l2)}</text>`;
+  }
+  return `<svg viewBox="0 0 160 118" xmlns="http://www.w3.org/2000/svg" font-family="Hind, sans-serif">
+    <path d="M${X0} ${Y0} L${X0 + 12} 5 Q${CX} 1 ${X1 - 12} 5 L${X1} ${Y0} Z" fill="#F8EDEE"/>
+    <path d="M${X0} ${Y1} L${X1} ${Y1} L${X1 - 9} 112 Q${CX} 117 ${X0 + 9} 112 Z" fill="#F8EDEE"/>
+    <path d="M${X0} ${Y0} L6 ${Y0 + 5} Q2 ${(Y0 + Y1) / 2} 6 ${Y1 - 5} L${X0} ${Y1} Z" fill="#FBF4F4"/>
+    <path d="M${X1} ${Y0} L154 ${Y0 + 5} Q158 ${(Y0 + Y1) / 2} 154 ${Y1 - 5} L${X1} ${Y1} Z" fill="#FBF4F4"/>
     ${flaps}
-    <circle cx="84.5" cy="17" r="7" fill="#F2A900"/>${ico('atom', 79, 11.5, 11, '#7A1C24', 1)}
-    <rect x="34" y="32" width="101" height="66" fill="#7A1C24"/>
+    <circle cx="${CX}" cy="12" r="6" fill="#F2A900"/>${ico('atom', CX - 5, 7, 10, '#7A1C24', 1)}
+    <rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="#7A1C24"/>
     ${front}
-    <rect x="40" y="37" width="38" height="14" rx="2.5" fill="#fff"/>
-    ${fl ? `<image href="${esc(fl)}" x="41.5" y="38" width="35" height="12" preserveAspectRatio="xMidYMid meet"/>` : `<text x="59" y="46.5" font-size="6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
-    <text x="129" y="44" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
-    <text x="41" y="67" font-size="7.5" font-weight="800" fill="#fff">${esc(j.name)}</text>
-    <text x="41" y="74" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}</text>
-    ${lkImgs.length ? `<rect x="41" y="81" width="${lkImgs.length * 28 + 2}" height="13" rx="2" fill="#fff"/>${lkImgs.map((src, i) => `<image href="${esc(src)}" x="${43 + i * 28}" y="82.5" width="24" height="10" preserveAspectRatio="xMidYMid meet"/>${i < lkImgs.length - 1 ? `<line x1="${69 + i * 28}" y1="83" x2="${69 + i * 28}" y2="92" stroke="#9A8A8C" stroke-width=".25"/>` : ''}`).join('')}` : ''}
-    <text x="129" y="92" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
+    <rect x="${X0 + 6}" y="${Y0 + 5}" width="38" height="13" rx="2.5" fill="#fff"/>
+    ${fl ? `<image href="${esc(fl)}" x="${X0 + 7.5}" y="${Y0 + 6}" width="35" height="11" preserveAspectRatio="xMidYMid meet"/>` : `<text x="${X0 + 25}" y="${Y0 + 13.6}" font-size="5.6" font-weight="800" fill="#7A1C24" text-anchor="middle">STEM FEST</text>`}
+    <text x="${X1 - 6}" y="${Y0 + 12}" font-size="3" fill="#F2A900" text-anchor="end" font-weight="700" letter-spacing=".3">JUDGE KIT</text>
+    ${nameSvg}
+    <text x="${X0 + 6}" y="${Y0 + 47}" font-size="3.2" fill="#fff" opacity=".85">${esc(st.event_name || 'STEM FEST')}</text>
+    ${lkImgs.length ? `<rect x="${X0 + 6}" y="${Y1 - 18}" width="${lkImgs.length * 28 + 2}" height="13" rx="2" fill="#fff"/>${lkImgs.map((src, i) => `<image href="${esc(src)}" x="${X0 + 8 + i * 28}" y="${Y1 - 16.5}" width="24" height="10" preserveAspectRatio="xMidYMid meet"/>${i < lkImgs.length - 1 ? `<line x1="${X0 + 34 + i * 28}" y1="${Y1 - 16}" x2="${X0 + 34 + i * 28}" y2="${Y1 - 7}" stroke="#9A8A8C" stroke-width=".25"/>` : ''}`).join('')}` : ''}
+    <text x="${X1 - 6}" y="${Y1 - 7}" font-size="3.4" fill="#F2A900" text-anchor="end" font-weight="800" letter-spacing=".6">${esc(th.words.map(w => w.charAt(0)).join(''))}</text>
     <g fill="none" stroke="#2B1517" stroke-width=".3">
-      <path d="M34 32 L48 9 Q84.5 -1 121 9 L135 32"/>
-      <path d="M34 98 L44 129 Q84.5 137 125 129 L135 98"/>
-      <path d="M34 32 L7 38 Q3 65 7 92 L34 98"/>
-      <path d="M135 32 L162 38 Q166 65 162 92 L135 98"/>
+      <path d="M${X0} ${Y0} L${X0 + 12} 5 Q${CX} 1 ${X1 - 12} 5 L${X1} ${Y0}"/>
+      <path d="M${X0} ${Y1} L${X0 + 9} 112 Q${CX} 117 ${X1 - 9} 112 L${X1} ${Y1}"/>
+      <path d="M${X0} ${Y0} L6 ${Y0 + 5} Q2 ${(Y0 + Y1) / 2} 6 ${Y1 - 5} L${X0} ${Y1}"/>
+      <path d="M${X1} ${Y0} L154 ${Y0 + 5} Q158 ${(Y0 + Y1) / 2} 154 ${Y1 - 5} L${X1} ${Y1}"/>
     </g>
     <g stroke="#9A8A8C" stroke-width=".3">
-      <path d="M28 32 H31.5 M137.5 32 H141 M28 98 H31.5 M137.5 98 H141 M34 25 V28.5 M34 101.5 V105 M135 25 V28.5 M135 101.5 V105"/>
+      <path d="M${X0 - 6} ${Y0} H${X0 - 2.5} M${X1 + 2.5} ${Y0} H${X1 + 6} M${X0 - 6} ${Y1} H${X0 - 2.5} M${X1 + 2.5} ${Y1} H${X1 + 6} M${X0} ${Y0 - 6} V${Y0 - 2.5} M${X0} ${Y1 + 2.5} V${Y1 + 6} M${X1} ${Y0 - 6} V${Y0 - 2.5} M${X1} ${Y1 + 2.5} V${Y1 + 6}"/>
     </g>
   </svg>`;
 }
@@ -3633,7 +3657,7 @@ function judgeEnvelopes() {
   return {
     html: `<div class="wrap page">
       <div class="no-print"><a class="back" href="#/admin">${icon('back')}Dashboard</a>
-        <div class="phead"><h1>Judge envelopes</h1><p>Two envelopes per A4 page, each with the judge's name on the front. Print at 100% scale (not "fit to page").</p></div>
+        <div class="phead"><h1>Judge envelopes</h1><p>Two envelopes per A4 page, each with the judge's name on the front. The pocket is 114 x 70 mm, sized for the 110 x 66 mm judge card. Print at 100% scale (not "fit to page").</p></div>
         <div class="card" style="margin-top:14px;font-size:15px"><b>How to make them:</b> cut along the solid outline. The small grey ticks outside the outline show where each fold goes. Fold the two side flaps in, glue the bottom flap over them, slide the card in and close the top flap. Nothing is printed where it would show on the outside.</div>
         <div class="print-bar"><button class="btn btn-primary" id="doprint">Print</button><a class="btn btn-ghost" href="#/admin/judgecards">Judge cards</a></div>
       </div>
